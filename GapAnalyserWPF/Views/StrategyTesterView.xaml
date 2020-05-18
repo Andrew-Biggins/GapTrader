@@ -7,47 +7,57 @@
              xmlns:userControls="clr-namespace:GapAnalyserWPF.UserControls"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance {x:Type viewModels:StrategyTesterViewModel}}"
-             d:DesignHeight="580" d:DesignWidth="710">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="10" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="90" />
-            <RowDefinition Height="40" />
-            <RowDefinition Height="80" />
-            <RowDefinition Height="284" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="470"/>
-            <ColumnDefinition Width="200"/>
-        </Grid.ColumnDefinitions>
+             d:DesignHeight="580" d:DesignWidth="680">
+    <Border BorderBrush="Black" BorderThickness="2">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="90" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="80" />
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="314" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="475"/>
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
 
-        <Button Content="Calculate" HorizontalAlignment="Center" 
+            <TextBlock Text="Strategy Tester" FontWeight="Bold" Grid.Row="0" FontSize="15" Grid.ColumnSpan="2" HorizontalAlignment="Center" />
+
+            <Button Content="Calculate" HorizontalAlignment="Center" 
                     Grid.Row="3" Grid.Column="1" Width="70" 
                     Margin="5" VerticalAlignment="Top" 
                     Command="{Binding TestStrategyCommand}"
                     IsEnabled="{Binding CanCalculate, Mode=OneWay}"/>
 
-        <userControls:GapStrategySetupContainer Grid.Row="1" Grid.Column="0" Grid.RowSpan="3"/>
+            <userControls:GapStrategySetupContainer Grid.Row="1" Grid.Column="0" Grid.RowSpan="3" Margin="5,0,0,0"/>
 
-        <userControls:DateAndTimePicker Grid.Column="1" Grid.Row="2" Margin="5,0,0,0"/>
+            <userControls:DateAndTimePicker Grid.Column="1" Grid.Row="2" Margin="5,0,0,0"/>
 
-        <ContentControl Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,0,0,10"
+            <TextBlock Text="Strategy Statistics" FontWeight="Bold" Grid.Row="4" Grid.Column="0" FontSize="12" HorizontalAlignment="Center" Grid.ColumnSpan="2" />
+
+            <ContentControl Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="5,0,0,10"
                             Content="{Binding StrategyResultsStatsViewModel}">
-            <ContentControl.Resources>
-                <DataTemplate DataType="{x:Type viewModels:StrategyResultsStatsViewModel}">
-                    <userControls:StrategyResultsStats />
-                </DataTemplate>
-            </ContentControl.Resources>
-        </ContentControl>
+                <ContentControl.Resources>
+                    <DataTemplate DataType="{x:Type viewModels:StrategyResultsStatsViewModel}">
+                        <userControls:StrategyResultsStats />
+                    </DataTemplate>
+                </ContentControl.Resources>
+            </ContentControl>
 
-        <ContentControl Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center"
+            <TextBlock Text="Strategy Finder" FontWeight="Bold" Grid.Row="6" Grid.Column="0" FontSize="12" HorizontalAlignment="Center" Grid.ColumnSpan="2" />
+
+            <ContentControl Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="5,0,0,0"
                         Content="{Binding StrategyFinderViewModel}">
-            <ContentControl.Resources>
-                <DataTemplate DataType="{x:Type viewModels:StrategyFinderViewModel}">
-                    <userControls:StrategyFinder />
-                </DataTemplate>
-            </ContentControl.Resources>
-        </ContentControl>
-    </Grid>
+                <ContentControl.Resources>
+                    <DataTemplate DataType="{x:Type viewModels:StrategyFinderViewModel}">
+                        <userControls:StrategyFinder />
+                    </DataTemplate>
+                </ContentControl.Resources>
+            </ContentControl>
+        </Grid>
+    </Border>
 </UserControl>

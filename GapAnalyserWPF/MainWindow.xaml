@@ -8,8 +8,8 @@
         xmlns:views="clr-namespace:GapAnalyserWPF.Views"
         d:DataContext="{d:DesignInstance {x:Type viewModels:MainViewModel}}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1290"
-        MinWidth="1290">
+        Title="MainWindow" Height="680" Width="1290"
+        MinWidth="1290" MinHeight="680">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="110" />
@@ -18,8 +18,8 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="580"/>
-            <ColumnDefinition Width="10"/>
-            <ColumnDefinition Width="680"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="690"/>
         </Grid.ColumnDefinitions>
         <ContentControl Grid.Row="0" Grid.Column="0" Margin="5,0,5,0"
                         Content="{Binding DataUploaderViewModel}">
@@ -48,7 +48,7 @@
             </ContentControl.Resources>
         </ContentControl>
 
-        <ContentControl Grid.Row="0" Grid.Column="2" Grid.RowSpan="3"
+        <ContentControl Grid.Row="0" Grid.Column="2" Grid.RowSpan="3" Margin="0,0,5,0"
                         Content="{Binding StrategyTesterViewModel, Mode=OneWay}">
             <ContentControl.Resources>
                 <DataTemplate DataType="{x:Type viewModels:StrategyTesterViewModel}">
