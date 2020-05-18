@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="GapAnalyserWPF.UserControls.DateAndTimePicker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GapAnalyserWPF.UserControls"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:viewModels="clr-namespace:GapAnalyser.ViewModels;assembly=GapAnalyser"
+             d:DataContext="{d:DesignInstance {x:Type viewModels:StrategyTesterViewModel}}"
+             mc:Ignorable="d" 
+             d:DesignHeight="90" d:DesignWidth="195">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type DatePickerTextBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <TextBox x:Name="PART_TextBox"
+                                 Text="{Binding Path=SelectedDate, StringFormat='dd/MM/yy', 
+                                    RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" 
+                                 Width="55"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Border BorderBrush="Black" BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20" />
+                <RowDefinition Height="25" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="25" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="97"/>
+                <ColumnDefinition Width="97"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Start Date" HorizontalAlignment="Center"/>
+            <TextBlock Text="End Date" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center"/>
+
+            <DatePicker Grid.Row="1" Grid.Column="0" DisplayDateStart="{Binding Market.DataDetails.StartDate, Mode=OneWay}"
+                    DisplayDateEnd="{Binding Market.DataDetails.EndDate, Mode=OneWay}" SelectedDate="{Binding TestStartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    HorizontalAlignment="Center" VerticalAlignment="Top" IsTodayHighlighted="False" />
+            <DatePicker Grid.Row="1" Grid.Column="1" DisplayDateStart="{Binding Market.DataDetails.StartDate, Mode=OneWay}"
+                        DisplayDateEnd="{Binding Market.DataDetails.EndDate, Mode=OneWay}" SelectedDate="{Binding TestEndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        HorizontalAlignment="Center" VerticalAlignment="Top" IsTodayHighlighted="False"/>
+
+            <TextBlock Text="Start Time" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center"/>
+            <TextBlock Text="End Time" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center"/>
+
+            <xctk:TimePicker Grid.Row="3" Grid.Column="0" Width="75" Margin="5,0,5,5" Value="{Binding TestStartTime}"/>
+            <xctk:TimePicker Grid.Row="3" Grid.Column="1" Width="75" Margin="5,0,5,5" Value="{Binding TestEndTime}"/>
+
+
+        </Grid>
+    </Border>
+</UserControl>

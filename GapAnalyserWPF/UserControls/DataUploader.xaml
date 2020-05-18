@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="GapAnalyserWPF.UserControls.DataUploader"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GapAnalyserWPF.UserControls"
+             xmlns:converters="clr-namespace:GapAnalyserWPF.Converters"
+             xmlns:viewModels="clr-namespace:GapAnalyser.ViewModels;assembly=GapAnalyser"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance {x:Type viewModels:DataUploaderViewModel}}"
+             d:DesignHeight="110" d:DesignWidth="580">
+    <Border BorderBrush="Black" BorderThickness="2">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="8" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="1" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="45"/>
+                <ColumnDefinition Width="395"/>
+                <ColumnDefinition Width="135"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="1" Grid.Row="0" Text="Daily Data Filepath:" FontSize="11" FontStyle="Italic" VerticalAlignment="Bottom" Margin="5,0,0,-10"/>
+
+            <Button Content="Select" Height="20" Width="40" 
+                Grid.Row="1" Grid.Column="0"
+               
+                Click="SelectDailyDataFileButtonClick" 
+                IsEnabled="{Binding DeriveDailyFromMinute, Converter={converters:InverseBoolConverter}}"/>
+            <TextBox x:Name="DailyDataFileNameTextBox" HorizontalAlignment="Left" 
+                 Margin="5" Grid.Row="1" Grid.Column="1" 
+                 TextWrapping="Wrap" VerticalAlignment="Center" 
+                 Width="385" Height="20" IsReadOnly="True"
+                 IsEnabled="{Binding DeriveDailyFromMinute, Converter={converters:InverseBoolConverter}}">
+                <TextBox.Text>
+                    <Binding Path="DailyDataFileName"
+                        Mode="OneWayToSource"
+                        UpdateSourceTrigger="PropertyChanged"/>
+                </TextBox.Text>
+            </TextBox>
+
+            <RadioButton Grid.Column="2" Grid.Row="1"
+                     HorizontalAlignment="Center" Margin="-11,10,0,0"   
+                     VerticalAlignment="Top" IsChecked="{Binding DeriveDailyFromMinute}">
+                <RadioButton.Content>
+                    <TextBlock Text="Derive Daily Levels from Minute Data" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
+                </RadioButton.Content>
+            </RadioButton>
+
+            <TextBlock Grid.Column="1" Grid.Row="2" Text="Minute Data Filepath:" FontSize="11" FontStyle="Italic" VerticalAlignment="Bottom" Margin="5,0,0,-10"/>
+
+            <Button Content="Select" Height="20" Width="40"
+                Grid.Row="3" Grid.Column="0" 
+                Click="SelectMinuteDataFileButtonClick"/>
+
+            <TextBox x:Name="MinuteDataFileNameTextBox" HorizontalAlignment="Left" 
+                 Margin="5" Grid.Row="3" Grid.Column="1" 
+                 TextWrapping="Wrap" VerticalAlignment="Center" 
+                 Width="385" Height="20" IsReadOnly="True">
+                <TextBox.Text >
+                    <Binding Path="MinuteDataFileName"
+                         Mode="OneWayToSource"
+                         UpdateSourceTrigger="PropertyChanged"/>
+                </TextBox.Text>
+            </TextBox>
+            <StackPanel Grid.Column="2" Grid.Row="2" Grid.RowSpan="2" Orientation="Horizontal" Margin="2,0,0,0">
+                <RadioButton Content="UK" 
+                         HorizontalAlignment="Center" Margin="2,10,10,10" 
+                         VerticalAlignment="Top" IsChecked="{Binding UkData}"/>
+                <RadioButton Content="US" 
+                         HorizontalAlignment="Center" Margin="10" 
+                         VerticalAlignment="Top" IsChecked="{Binding UkData, Converter={converters:BoolToInverseNullableBoolConverter}}"/>
+            </StackPanel>
+
+            <Button Content="Process" HorizontalAlignment="Center"
+                    Grid.Row="4" Grid.Column="2" 
+                    Margin="0, -8 , 12,0" VerticalAlignment="Top" 
+                    Command="{Binding SelectFileCommand}" Width="55"/>
+        </Grid>
+    </Border>
+</UserControl>
