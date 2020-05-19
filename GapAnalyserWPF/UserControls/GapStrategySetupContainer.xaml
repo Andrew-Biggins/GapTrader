@@ -58,12 +58,12 @@
                      HorizontalAlignment="Center" Margin="0,10,0,0" 
                      VerticalAlignment="Top" IsChecked="{Binding TradeIntoGap, Converter={converters:BoolToInverseNullableBoolConverter}}"/>
 
-        <TextBlock Grid.Column="4" Grid.Row="0" Grid.ColumnSpan="2" Text="Minimum Gap Size (points)" 
-                   HorizontalAlignment="Right" VerticalAlignment="Center"
-                   Width="120" Height="40" TextWrapping="Wrap"/>
+        <TextBlock Grid.Column="5" Grid.Row="0" Grid.ColumnSpan="3"  Text="Minimum Gap Size (points)" 
+                   VerticalAlignment="Bottom"
+                    Height="40"/>
         <TextBox HorizontalAlignment="Left" 
-                 Margin="10" Grid.Row="0" Grid.Column="6" 
-                 VerticalAlignment="Center" 
+                 Margin="7,0,10,20" Grid.Row="0" Grid.Column="7" 
+                 VerticalAlignment="Bottom" VerticalContentAlignment="Center"
                  Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
                  helpers:HasErrorUtility.MvvmHasError="{Binding Path=MinimumGapHasError}">
             <TextBox.Text>

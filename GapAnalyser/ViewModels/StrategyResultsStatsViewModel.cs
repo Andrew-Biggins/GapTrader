@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using GapAnalyser.Interfaces;
+﻿using GapAnalyser.Interfaces;
 
 namespace GapAnalyser.ViewModels
 {
@@ -45,11 +42,27 @@ namespace GapAnalyser.ViewModels
             LongestLosingStreak = $"{strategy.Stats.LongestLosingStreak}";
             Profit = $"{strategy.Stats.Profit:N1}";
             BiggestWin = $"{strategy.Stats.BiggestWin:N1}";
-            AverageWin = $"{strategy.Stats.AverageWin:N1}";
-            AverageLoss = $"{strategy.Stats.AverageLoss:N1}";
-            WinProbability = $"{strategy.Stats.WinProbability:P}";
-            ProfitFactor = $"{strategy.Stats.ProfitFactor:N1}";
-            Expectancy = $"{strategy.Stats.Expectancy:N1}";
+
+            AverageLoss = double.IsNaN(strategy.Stats.AverageLoss) 
+                ? "---" 
+                : $"{strategy.Stats.AverageLoss:N1}";
+
+            AverageWin = double.IsNaN(strategy.Stats.AverageWin)
+                ? "---"
+                : $"{strategy.Stats.AverageWin:N1}";
+
+            WinProbability = double.IsNaN(strategy.Stats.WinProbability)
+                ? "---"
+                : $"{strategy.Stats.WinProbability:P}";
+
+            ProfitFactor = double.IsNaN(strategy.Stats.ProfitFactor) ||
+                           double.IsInfinity(strategy.Stats.ProfitFactor)
+                ? "---"
+                : $"{strategy.Stats.ProfitFactor:N1}";
+
+            Expectancy = double.IsNaN(strategy.Stats.Expectancy)
+                ? "---"
+                : $"{strategy.Stats.Expectancy:N1}";
         }
     }
 

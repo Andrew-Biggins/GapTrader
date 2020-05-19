@@ -10,8 +10,6 @@ namespace GapAnalyser.StrategyTesters
 {
     public abstract class StrategyTester : BindableBase
     {
-        public IStrategy Strategy { get; protected set; }
-
         protected StrategyTester(ITradeLevelCalculator tradeLevelCalculator)
         {
             TradeLevelCalculator = tradeLevelCalculator;

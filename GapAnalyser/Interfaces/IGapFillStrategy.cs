@@ -2,8 +2,6 @@
 {
     public interface IGapFillStrategy : IStrategy
     {
-        FibonacciLevel FibEntry { get; }
-
-        FibonacciLevel FibTarget { get; }
+        double MinimumGapSize { get; }
     }
 }

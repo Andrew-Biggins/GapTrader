@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace GapAnalyserWPF.Converters
 {
-    public sealed class StopIncrementToIntegerConverter : MarkupConverter, IValueConverter
+    public sealed class IncrementToIntegerConverter : MarkupConverter, IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

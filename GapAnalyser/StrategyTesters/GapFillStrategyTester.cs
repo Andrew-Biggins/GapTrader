@@ -5,6 +5,8 @@ namespace GapAnalyser.StrategyTesters
 {
     public abstract class GapFillStrategyTester : StrategyTester
     {
+        public IGapFillStrategy Strategy { get; protected set; }
+
         public FibonacciLevel FibLevelEntry { get; set; }
 
         public double PointsEntry
@@ -17,7 +19,7 @@ namespace GapAnalyser.StrategyTesters
             }
         }
 
-        public double Stop { get; set; } = 100;
+        public double Stop { get; set; } = DefaultStopSize;
 
         public FibonacciLevel FibLevelTarget { get; set; }
 
@@ -78,9 +80,17 @@ namespace GapAnalyser.StrategyTesters
         {
         }
 
+        public virtual void ResetLevels()
+        {
+            Stop = DefaultStopSize;
+            RaisePropertyChanged(nameof(Stop));
+        }
+
         public void TestStrategy(IMarket market, StrategyTestFilters filters, double minimumGapSize)
         {
-            foreach (var candle in market.DailyCandles.Where(candle => candle.Gap.AbsoluteGapPoints > minimumGapSize))
+            MinimumGapSize = minimumGapSize;
+
+            foreach (var candle in market.DailyCandles.Where(candle => candle.Gap.AbsoluteGapPoints > MinimumGapSize))
             {
                 if (candle.Date.Date >= filters.StartDate.Date && candle.Date.Date <= filters.EndDate.Date)
                 {
@@ -144,6 +154,10 @@ namespace GapAnalyser.StrategyTesters
             PointsEntry = isFib ? 0 : 50;
             RaisePropertyChanged(nameof(PointsEntry));
         }
+
+        protected double MinimumGapSize;
+
+        private const double DefaultStopSize = 100;
 
         private double _pointsEntry;
         private double _pointsTarget;

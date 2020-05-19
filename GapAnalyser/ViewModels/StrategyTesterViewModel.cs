@@ -48,7 +48,6 @@ namespace GapAnalyser.ViewModels
 
         public DateTime TestEndTime
         {
-
             get => _testEndTime;
             set => SetProperty(ref _testEndTime, value);
         }
@@ -63,7 +62,7 @@ namespace GapAnalyser.ViewModels
 
         public ICommand TestStrategyCommand => new BasicCommand(TestStrategy);
 
-        public StrategyTesterViewModel() { }
+        protected StrategyTesterViewModel() { }
 
         protected StrategyTesterViewModel(IMarket market)
         {
@@ -71,16 +70,22 @@ namespace GapAnalyser.ViewModels
             StrategyTester = new OutOfGapStrategyTester(new GapTradeLevelCalculator());
             StrategyFinderViewModel = new StrategyFinderViewModel(StrategyTester, Market);
             UpdateFilters();
+            StrategyFinderViewModel.StrategySearchEventHandler += FindStrategies;
+        }
+
+        private void FindStrategies(object sender, EventArgs e)
+        {
+            var filters = new StrategyTestFilters(TestStartDate, TestEndDate, TestStartTime.TimeOfDay,
+                TestEndTime.TimeOfDay);
+            StrategyFinderViewModel.FindStrategies(filters);
         }
 
         private void UpdateFilters()
         {
-            if (Market.UkData)
-            {
-                TestStartTime = new DateTime(1, 1, 1, 8, 00, 00);
-                TestEndTime = new DateTime(1, 1, 1, 16, 30, 00);
-            }
-
+            TestStartTime = new DateTime(1, 1, 1, Market.DataDetails.OpenTime.Hours,
+                Market.DataDetails.OpenTime.Minutes, Market.DataDetails.OpenTime.Seconds);
+            TestEndTime = new DateTime(1, 1, 1, Market.DataDetails.CloseTime.Hours,
+                Market.DataDetails.CloseTime.Minutes, Market.DataDetails.CloseTime.Seconds);
             TestStartDate = Market.DataDetails.StartDate;
             TestEndDate = Market.DataDetails.EndDate;
         }

@@ -5,10 +5,13 @@ using GapAnalyser.Interfaces;
 
 namespace GapAnalyser.Strategies
 {
-    internal sealed class OutOfGapStrategy<TEntry, TTarget> : Strategy<TEntry, TTarget>
+    internal sealed class OutOfGapStrategy<TEntry, TTarget> : Strategy<TEntry, TTarget>, IGapFillStrategy
     {
-        public OutOfGapStrategy(object entry, double stop, object target, StrategyStats stats) : base(entry, stop, target, stats)
+        public double MinimumGapSize { get; }
+
+        public OutOfGapStrategy(object entry, double stop, object target, StrategyStats stats, double minimumGapSize) : base(entry, stop, target, stats)
         {
+            MinimumGapSize = minimumGapSize;
         }
     }
 }

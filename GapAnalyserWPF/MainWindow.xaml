@@ -9,8 +9,8 @@
         d:DataContext="{d:DesignInstance {x:Type viewModels:MainViewModel}}"
         mc:Ignorable="d"
         Title="MainWindow" Height="680" Width="1290"
-        MinWidth="1290" MinHeight="680">
-    <Grid>
+        MinWidth="1290" MinHeight="680" >
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.RowDefinitions>
             <RowDefinition Height="110" />
             <RowDefinition Height="240" />

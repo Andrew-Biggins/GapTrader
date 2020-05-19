@@ -11,8 +11,11 @@ namespace GapAnalyser
         public double Low { get; }
         public DateTime LowDate { get; }
         public double AverageGapSize { get; }
+        public TimeSpan OpenTime { get; }
+        public TimeSpan CloseTime { get; }
 
-        public DataDetails(DateTime startDate, DateTime endDate, double high, DateTime highDate, double low, DateTime lowDate, double averageGapSize)
+        public DataDetails(DateTime startDate, DateTime endDate, double high, DateTime highDate, double low,
+            DateTime lowDate, double averageGapSize, TimeSpan openTime, TimeSpan closeTime)
         {
             StartDate = startDate;
             EndDate = endDate;
@@ -21,6 +24,8 @@ namespace GapAnalyser
             Low = low;
             LowDate = lowDate;
             AverageGapSize = averageGapSize;
+            OpenTime = openTime;
+            CloseTime = closeTime;
         }
     }
 }

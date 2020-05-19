@@ -17,42 +17,51 @@
         <Style TargetType="TextBox">
             <Setter Property="Height" Value="20" />
             <Setter Property="Width" Value="40" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="DataGrid">
+
         </Style>
     </UserControl.Resources>
     <Border BorderBrush="Black" BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="60" />
+                <RowDefinition Height="70" />
                 <RowDefinition Height="250" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="205"/>
-                <ColumnDefinition Width="455"/>
+                <ColumnDefinition Width="205"/>
+                <ColumnDefinition Width="250"/>
             </Grid.ColumnDefinitions>
             <Border BorderBrush="Black" BorderThickness="1" Margin="5">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="20" />
-                        <RowDefinition Height="30" />
+                        <RowDefinition Height="16" />
+                        <RowDefinition Height="14" />
+                        <RowDefinition Height="40" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60"/>
                         <ColumnDefinition Width="65"/>
                         <ColumnDefinition Width="60"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Min Stop" VerticalAlignment="Top"
-                       Grid.Column="0"
-                       Grid.Row="0" />
+                    <TextBlock Text="Stop Size" VerticalAlignment="Top"
+                               Grid.Column="0" Grid.ColumnSpan="3"
+                               Grid.Row="0" />
+                    <TextBlock Text="Min" VerticalAlignment="Top"
+                       Grid.Column="0" FontSize="11"
+                       Grid.Row="1" />
                     <TextBlock Text="Increments" VerticalAlignment="Top"
-                       Grid.Column="1"
-                       Grid.Row="0" />
-                    <TextBlock Text="Max Stop" VerticalAlignment="Top"
-                       Grid.Column="2"
-                       Grid.Row="0" />
+                       Grid.Column="1" FontSize="11"
+                       Grid.Row="1" />
+                    <TextBlock Text="Stop" VerticalAlignment="Top"
+                       Grid.Column="2" FontSize="11"
+                       Grid.Row="1" />
                     <TextBox Grid.Column="0" VerticalAlignment="Top"
-                     Grid.Row="1" Text="{Binding MinStop}"/>
-                    <ComboBox Grid.Row="1" Grid.Column="1" Width="50" Height="22" 
-                      SelectedIndex="{Binding StopIncrement, Converter={converters:StopIncrementToIntegerConverter}, Mode=TwoWay}"
+                     Grid.Row="2" Text="{Binding MinStop}"/>
+                    <ComboBox Grid.Row="2" Grid.Column="1" Width="50" Height="22" 
+                      SelectedIndex="{Binding StopIncrement, Converter={converters:IncrementToIntegerConverter}, Mode=TwoWay}"
                       SelectedItem="0" VerticalAlignment="Top">
                         <ComboBoxItem Content="5" />
                         <ComboBoxItem Content="10" />
@@ -62,36 +71,124 @@
                         <ComboBoxItem Content="200" />
                     </ComboBox>
                     <TextBox Grid.Column="2" VerticalAlignment="Top"
-                     Grid.Row="1" Text="{Binding MaxStop}"/>
+                     Grid.Row="2" Text="{Binding MaxStop}"/>
                 </Grid>
             </Border>
 
-            <Button Content="Search" HorizontalAlignment="Right" VerticalAlignment="Bottom" Command="{Binding FindStrategiesCommand}"
-                    Grid.Row="0" Grid.Column="1" Height="20" Margin="0,0,5,0"/>
+            <Border BorderBrush="Black" BorderThickness="1" Margin="5" Grid.Column="1" Grid.Row="0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="16" />
+                        <RowDefinition Height="14" />
+                        <RowDefinition Height="40" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="65"/>
+                        <ColumnDefinition Width="60"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Minimum Gap Size" VerticalAlignment="Top"
+                               Grid.Column="0" Grid.ColumnSpan="3"
+                               Grid.Row="0" />
+                    <TextBlock Text="Min" VerticalAlignment="Top"
+                               Grid.Column="0" FontSize="11"
+                               Grid.Row="1" />
+                    <TextBlock Text="Increments" VerticalAlignment="Top"
+                               Grid.Column="1" FontSize="11"
+                               Grid.Row="1" />
+                    <TextBlock Text="Max" VerticalAlignment="Top"
+                               Grid.Column="2" FontSize="11"
+                               Grid.Row="1" />
+                    <TextBox Grid.Column="0" VerticalAlignment="Top"
+                             Grid.Row="2" Text="{Binding MinMinGapSize}"/>
+                    <ComboBox Grid.Row="2" Grid.Column="1" Width="50" Height="22" 
+                              SelectedIndex="{Binding GapSizeIncrement, Converter={converters:IncrementToIntegerConverter}, Mode=TwoWay}"
+                              SelectedItem="0" VerticalAlignment="Top">
+                        <ComboBoxItem Content="5" />
+                        <ComboBoxItem Content="10" />
+                        <ComboBoxItem Content="20" />
+                        <ComboBoxItem Content="50" />
+                        <ComboBoxItem Content="100" />
+                        <ComboBoxItem Content="200" />
+                    </ComboBox>
+                    <TextBox Grid.Column="2" VerticalAlignment="Top"
+                             Grid.Row="2" Text="{Binding MaxMinGapSize}"/>
+                </Grid>
+            </Border>
 
-            <DataGrid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" CanUserResizeRows="False"
-                      AutoGenerateColumns="False" Margin="5"
+            <RadioButton Grid.Column="2" Grid.Row="0" Content="Apply Date and Time Filters" 
+                         VerticalAlignment="Center" IsChecked="{Binding ApplyDateTimeFilters}"
+                         ToolTip="Applies the date and time filters from the above tester"/>
+
+
+            <Button Content="Search" HorizontalAlignment="Right" VerticalAlignment="Bottom" Command="{Binding FindStrategiesCommand}"
+                    Grid.Row="0" Grid.Column="2" Height="25" Width="60" Margin="0,0,5,0" />
+
+            <DataGrid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" CanUserResizeRows="False"
+                      AutoGenerateColumns="False" Margin="5" HorizontalContentAlignment="Center" 
                       ItemsSource="{Binding Strategies, Mode=OneWay}">
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                    </Style>
+                </DataGrid.CellStyle>
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Entry"
-                                        Binding="{Binding Entry, Converter={converters:FibLevelToNumericStringConverter}}" Width="*" />
+                                        Binding="{Binding Entry, Converter={converters:FibLevelToNumericStringConverter}}" Width="50" >
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Right" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
                     <DataGridTextColumn Header="Target"
-                                        Binding="{Binding Target, Converter={converters:FibLevelToNumericStringConverter}}" Width="*" />
+                                        Binding="{Binding Target, Converter={converters:FibLevelToNumericStringConverter}}" Width="50" >
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Right" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
                     <DataGridTextColumn Header="Stop"
-                                        Binding="{Binding Stop}" Width="*" />
-                    <DataGridTextColumn Header="Trades"
-                                        Binding="{Binding Stats.TradeCount}" Width="*" />
+                                        Binding="{Binding Stop}" Width="*" >
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Right" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="MGS"
+                                        Binding="{Binding MinimumGapSize}" Width="*" >
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Right" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="ToolTip" Value="Minimum Gap Size"/>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Trades" 
+                                        Binding="{Binding Stats.TradeCount}" Width="45" />
                     <DataGridTextColumn Header="Profit"
-                                        Binding="{Binding Stats.Profit, StringFormat=N1}" Width="*" />
+                                        Binding="{Binding Stats.Profit, StringFormat=N1}" Width="50" />
                     <DataGridTextColumn Header="Wins"
                                         Binding="{Binding Stats.Wins}" Width="*" />
                     <DataGridTextColumn Header="Loses"
-                                        Binding="{Binding Stats.Loses}" Width="*" />
+                                        Binding="{Binding Stats.Loses}" Width="40" />
                     <DataGridTextColumn Header="LWS" 
                                         Binding="{Binding Stats.LongestWinningStreak}" Width="*">
                         <DataGridTextColumn.HeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
                                 <Setter Property="ToolTip" Value="Longest Winning Streak"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.HeaderStyle>
                     </DataGridTextColumn>
@@ -100,13 +197,20 @@
                         <DataGridTextColumn.HeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
                                 <Setter Property="ToolTip" Value="Longest Losing Streak"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.HeaderStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Win Probability" 
-                                        Binding="{Binding Stats.WinProbability, StringFormat=P}" Width="95" />
+                    <DataGridTextColumn Header="Win Prob" 
+                                        Binding="{Binding Stats.WinProbability, Converter={converters:InvalidDoubleToStringConverter}, StringFormat=P}" Width="60">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="ToolTip" Value="Win Probability"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
                     <DataGridTextColumn Header="Profit Factor" 
-                                        Binding="{Binding Stats.ProfitFactor, StringFormat=N1}" Width="75">
+                                        Binding="{Binding Stats.ProfitFactor, Converter={converters:InvalidDoubleToStringConverter}, StringFormat=N1}" Width="75">
                         <DataGridTextColumn.HeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
                                 <Setter Property="ToolTip" Value="Profit Factor"/>
@@ -114,7 +218,7 @@
                         </DataGridTextColumn.HeaderStyle>
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="Expectancy" 
-                                        Binding="{Binding Stats.Expectancy, StringFormat=N1}" Width="70" >
+                                        Binding="{Binding Stats.Expectancy, Converter={converters:InvalidDoubleToStringConverter}, StringFormat=N1}" Width="70" >
                         <DataGridTextColumn.HeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
                                 <Setter Property="ToolTip" Value="Expectancy"/>

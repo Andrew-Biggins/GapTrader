@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using GapAnalyser.Candles;
+﻿using GapAnalyser.Candles;
 using GapAnalyser.Interfaces;
 using GapAnalyser.Strategies;
 
@@ -14,6 +11,13 @@ namespace GapAnalyser.StrategyTesters
         {
             FibLevelEntry = FibonacciLevel.FivePointNine;
             FibLevelTarget = FibonacciLevel.OneHundredAndTwentySevenPointOne;
+        }
+
+        public override void ResetLevels()
+        {
+            FibLevelTarget = FibonacciLevel.OneHundredAndTwentySevenPointOne;
+            FibLevelEntry = FibonacciLevel.FivePointNine;
+            base.ResetLevels();
         }
 
         protected override void UpdateFibLevelEntry(bool isFib)
@@ -34,7 +38,7 @@ namespace GapAnalyser.StrategyTesters
 
         protected override void NewStrategy<TEntry, TTarget>(object entry, object target)
         {
-            Strategy = new OutOfGapStrategy<TEntry, TTarget>(entry, Stop, target, Stats);
+            Strategy = new OutOfGapStrategy<TEntry, TTarget>(entry, Stop, target, Stats, MinimumGapSize);
         }
 
         protected override (double, double, double) CalculateTradeLevels(DailyCandle candle)

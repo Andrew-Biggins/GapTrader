@@ -457,7 +457,17 @@ namespace GapAnalyser
                 date = date.AddDays(1);
             }
 
-            DataDetails = new DataDetails(startDate, endDate, high, highTime, low, lowTime, _averageGapSize);
+            var openTime = new TimeSpan(14,30,00);
+            var closeTime = new TimeSpan(21, 00,00);
+
+            if (UkData)
+            {
+                openTime = new TimeSpan(8, 00, 00);
+                closeTime = new TimeSpan(16, 30, 00);
+            }
+
+            DataDetails = new DataDetails(startDate, endDate, high, highTime, low, lowTime, _averageGapSize, openTime,
+                closeTime);
         }
 
         private DateTime _firstMinuteDataDate;
