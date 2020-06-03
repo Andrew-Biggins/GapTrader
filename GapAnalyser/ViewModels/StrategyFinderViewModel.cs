@@ -1,102 +1,100 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Input;
-using Foundations;
+﻿using Foundations;
 using GapAnalyser.Interfaces;
 using GapAnalyser.StrategyTesters;
+using System;
+using System.Threading;
+using System.Windows.Input;
 
 namespace GapAnalyser.ViewModels
 {
-    public sealed class StrategyFinderViewModel : BindableBase
+    public abstract class StrategyFinderViewModel : BindableBase
     {
-        public EventHandler? StrategySearchEventHandler;
+        public EventHandler? StartSearchEventHandler;
 
-        public int MaxStop { get; set; } = 1000;
-        public int MinStop { get; set; } = 10;
-        public int StopIncrement { get; set; } = 100;
+        public IGapFillStrategy SelectedStrategy
+        {
+            get => _selectedStrategy;
+            set => SetProperty(ref _selectedStrategy, value);
+        }
 
-        public int MaxMinGapSize { get; set; } = 1000;
-        public int MinMinGapSize { get; set; } = 10;
-        public int GapSizeIncrement { get; set; } = 100;
+        public BindableBase VariableSelector
+        {
+            get => _variableSelector;
+            set => SetProperty(ref _variableSelector, value);
+        }
 
-        public List<IGapFillStrategy> Strategies { get; private set; } = new List<IGapFillStrategy>();
-
-        public GapFillStrategyTester StrategyTester { get; set; }
-
-        public bool ApplyDateTimeFilters { get; set; }
+        public bool SearchEnabled
+        {
+            get => _searchEnabled;
+            protected set => SetProperty(ref _searchEnabled, value);
+        }
 
         public ICommand FindStrategiesCommand => new BasicCommand(StartStrategySearch);
 
-        public StrategyFinderViewModel(GapFillStrategyTester strategyTester, IMarket market)
+        protected StrategyFinderViewModel(GapFillStrategyTester strategyTester, IMarket market, IRunner runner)
         {
+            Runner = runner;
             StrategyTester = strategyTester;
-            _market = market;
+            Market = market;
+
+            if (Market.DailyCandles.Count != 0)
+            {
+                SearchEnabled = true;
+            }
         }
 
-        private void StartStrategySearch()
+        public void UpdateTester(GapFillStrategyTester tester)
         {
-            StrategySearchEventHandler.Raise(this);
+            StrategyTester = tester;
         }
 
-        public void FindStrategies(StrategyTestFilters filters)
+        public abstract void FindStrategies(StrategyTestFilters filters);
+
+        protected void FinishSearch()
         {
-            const int firstFibIndex = 0;
-            const int firstFibExtensionIndex = 10;
-            const int lastFibIndex = 18;
-
-            var entryStartIndex = firstFibIndex;
-            var entryEndIndex = firstFibExtensionIndex - 1;
-            var targetStartIndex = firstFibExtensionIndex;
-            var targetEndIndex = lastFibIndex;
-
-            if (StrategyTester is IntoGapStrategyTester)
-            {
-                entryStartIndex = firstFibExtensionIndex;
-                entryEndIndex = lastFibIndex;
-                targetStartIndex = firstFibIndex;
-                targetEndIndex = firstFibExtensionIndex - 1;
-            }
-
-            StrategyTester.FibEntry = true;
-            StrategyTester.FibTarget = true;
-
-            var dateTimeFilters = ApplyDateTimeFilters 
-                ? filters 
-                : new StrategyTestFilters(_market.DataDetails.StartDate, _market.DataDetails.EndDate,
-                    _market.DataDetails.OpenTime, _market.DataDetails.CloseTime);
-
-            var fibs = (FibonacciLevel[])Enum.GetValues(typeof(FibonacciLevel));
-
-            var list = new List<IGapFillStrategy>();
-
-            for (var m = MinMinGapSize; m <= MaxMinGapSize; m += GapSizeIncrement)
-            {
-                for (var k = MinStop; k <= MaxStop; k += StopIncrement)
-                {
-                    for (var i = entryStartIndex; i <= entryEndIndex; i++)
-                    {
-                        for (var j = targetStartIndex; j <= targetEndIndex; j++)
-                        {
-                            StrategyTester.FibLevelEntry = fibs[i];
-                            StrategyTester.FibLevelTarget = fibs[j];
-                            StrategyTester.Stop = k;
-                            StrategyTester.TestStrategy(_market, dateTimeFilters, m);
-                            list.Add(StrategyTester.Strategy);
-                        }
-                    }
-                }
-            }
-            
-            
-            list.Sort((x, y) => x.Stats.Profit.CompareTo(y.Stats.Profit));
-            list.Reverse();
-            Strategies = list;
-            RaisePropertyChanged(nameof(Strategies));
-
+            SearchEnabled = true;
+            LoadingBar.Progress = 0;
             StrategyTester.ResetLevels();
         }
 
-        private readonly IMarket _market;
+        protected virtual void StartStrategySearch()
+        {
+            VariableSelector = LoadingBar;
+            SearchEnabled = false;
+
+            // Raise the event to start the search on a separate thread to allow the UI to update  
+            new Thread(() =>
+            {
+                //Thread.CurrentThread.IsBackground = true;
+                StartSearchEventHandler.Raise(this);
+            }).Start();
+        }
+
+        protected (int, int, int, int) SetFibIndexes()
+        {
+            var entryStartIndex = FibonacciServices.FirstFibRetraceIndex;
+            var entryEndIndex = FibonacciServices.LastFibRetraceIndex;
+            var targetStartIndex = FibonacciServices.FirstFibExtensionIndex;
+            var targetEndIndex = FibonacciServices.LastFibExtensionIndex;
+
+            if (StrategyTester is IntoGapStrategyTester)
+            {
+                entryStartIndex = FibonacciServices.FirstFibExtensionIndex;
+                entryEndIndex = FibonacciServices.LastFibExtensionIndex;
+                targetStartIndex = FibonacciServices.FirstFibRetraceIndex;
+                targetEndIndex = FibonacciServices.LastFibRetraceIndex;
+            }
+
+            return (entryStartIndex, entryEndIndex, targetStartIndex, targetEndIndex);
+        }
+
+        protected readonly IRunner Runner;
+        protected readonly IMarket Market;
+        protected GapFillStrategyTester StrategyTester;
+        protected readonly LoadingBar LoadingBar = new LoadingBar();
+
+        private BindableBase _variableSelector;
+        private bool _searchEnabled;
+        private IGapFillStrategy _selectedStrategy;
     }
 }

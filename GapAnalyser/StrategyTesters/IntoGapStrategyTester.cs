@@ -9,39 +9,18 @@ namespace GapAnalyser.StrategyTesters
         public IntoGapStrategyTester(ITradeLevelCalculator tradeLevelCalculator) : base(
             tradeLevelCalculator)
         {
-            FibLevelEntry = FibonacciLevel.OneHundredAndTwentySevenPointOne;
-            FibLevelTarget = FibonacciLevel.FivePointNine;
+            DefaultFibEntry = FibonacciLevel.OneHundredAndTwentySevenPointOne;
+            DefaultFibTarget = FibonacciLevel.FivePointNine;
+            FibLevelEntry = DefaultFibEntry;
+            FibLevelTarget = DefaultFibTarget;
         }
 
-        public override void ResetLevels()
+        protected override void NewStrategy<TEntry, TTarget>(object entry, object target, string title = "")
         {
-            FibLevelEntry = FibonacciLevel.OneHundredAndTwentySevenPointOne;
-            FibLevelTarget = FibonacciLevel.FivePointNine;
-            base.ResetLevels();
+            Strategy = new IntoGapStrategy<TEntry, TTarget>(entry, Stop, target, Stats, MinimumGapSize, Trades, title);
         }
 
-        protected override void UpdateFibLevelEntry(bool isFib)
-        {
-            FibLevelEntry = isFib
-                ? FibonacciLevel.OneHundredAndTwentySevenPointOne
-                : 0;
-            RaisePropertyChanged(nameof(FibLevelEntry));
-        }
-
-        protected override void UpdateFibLevelTarget(bool isFib)
-        {
-            FibLevelTarget = isFib
-                ? FibonacciLevel.FivePointNine
-                : 0;
-            RaisePropertyChanged(nameof(FibLevelTarget));
-        }
-
-        protected override void NewStrategy<TEntry, TTarget>(object entry, object target)
-        {
-            Strategy = new IntoGapStrategy<TEntry, TTarget>(entry, Stop, target, Stats, MinimumGapSize);
-        }
-
-        protected override (double, double, double) CalculateTradeLevels(DailyCandle candle)
+        protected override (double, double, double, double) CalculateTradeLevels(DailyCandle candle)
         {
             var gap = candle.Gap.GapPoints;
             var open = candle.Open;

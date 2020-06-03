@@ -9,39 +9,18 @@ namespace GapAnalyser.StrategyTesters
         public OutOfGapStrategyTester(ITradeLevelCalculator tradeLevelCalculator) : base(
             tradeLevelCalculator)
         {
-            FibLevelEntry = FibonacciLevel.FivePointNine;
-            FibLevelTarget = FibonacciLevel.OneHundredAndTwentySevenPointOne;
+            DefaultFibEntry = FibonacciLevel.FivePointNine;
+            DefaultFibTarget = FibonacciLevel.OneHundredAndTwentySevenPointOne;
+            FibLevelEntry = DefaultFibEntry;
+            FibLevelTarget = DefaultFibTarget;
         }
 
-        public override void ResetLevels()
+        protected override void NewStrategy<TEntry, TTarget>(object entry, object target, string title = "")
         {
-            FibLevelTarget = FibonacciLevel.OneHundredAndTwentySevenPointOne;
-            FibLevelEntry = FibonacciLevel.FivePointNine;
-            base.ResetLevels();
+            Strategy = new OutOfGapStrategy<TEntry, TTarget>(entry, Stop, target, Stats, MinimumGapSize, Trades, title);
         }
 
-        protected override void UpdateFibLevelEntry(bool isFib)
-        {
-            FibLevelEntry = isFib
-                ? FibonacciLevel.FivePointNine
-                : 0;
-            RaisePropertyChanged(nameof(FibLevelEntry));
-        }
-
-        protected override void UpdateFibLevelTarget(bool isFib)
-        {
-            FibLevelTarget = isFib
-                ? FibonacciLevel.OneHundredAndTwentySevenPointOne
-                : 0;
-            RaisePropertyChanged(nameof(FibLevelTarget));
-        }
-
-        protected override void NewStrategy<TEntry, TTarget>(object entry, object target)
-        {
-            Strategy = new OutOfGapStrategy<TEntry, TTarget>(entry, Stop, target, Stats, MinimumGapSize);
-        }
-
-        protected override (double, double, double) CalculateTradeLevels(DailyCandle candle)
+        protected override (double, double, double, double) CalculateTradeLevels(DailyCandle candle)
         {
             // Invert gap to get the correct trade levels for out of gap trade direction
             var gap = candle.Gap.GapPoints * -1;

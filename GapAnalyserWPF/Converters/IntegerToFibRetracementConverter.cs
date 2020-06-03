@@ -25,6 +25,7 @@ namespace GapAnalyserWPF.Converters
                 FibonacciLevel.SeventyEightPointSix => 6,
                 FibonacciLevel.EightyEightPointSix => 7,
                 FibonacciLevel.NinetyFourPointOne => 8,
+                FibonacciLevel.OneHundred => 9,
                 _ => throw new ArgumentOutOfRangeException()
             };
         }

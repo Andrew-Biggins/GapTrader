@@ -14,7 +14,9 @@ namespace GapAnalyser.ViewModels
 
         public string LongestLosingStreak { get; } = string.Empty;
 
-        public string Profit { get; } = string.Empty;
+        public string PointsProfit { get; } = string.Empty;
+
+        public string CashProfit { get; } = string.Empty;
 
         public string BiggestWin { get; } = string.Empty;
 
@@ -40,16 +42,17 @@ namespace GapAnalyser.ViewModels
             Loses = $"{strategy.Stats.Loses}";
             LongestWinningStreak = $"{strategy.Stats.LongestWinningStreak}";
             LongestLosingStreak = $"{strategy.Stats.LongestLosingStreak}";
-            Profit = $"{strategy.Stats.Profit:N1}";
-            BiggestWin = $"{strategy.Stats.BiggestWin:N1}";
+            PointsProfit = $"{strategy.Stats.PointsTotal:N1}";
+            CashProfit = $"{strategy.Stats.CashProfit:N1}";
+            BiggestWin = $"{strategy.Stats.BiggestCashWin:N1}";
 
-            AverageLoss = double.IsNaN(strategy.Stats.AverageLoss) 
+            AverageLoss = double.IsNaN(strategy.Stats.AveragePointsLoss) 
                 ? "---" 
-                : $"{strategy.Stats.AverageLoss:N1}";
+                : $"{strategy.Stats.AveragePointsLoss:N1}";
 
-            AverageWin = double.IsNaN(strategy.Stats.AverageWin)
+            AverageWin = double.IsNaN(strategy.Stats.AverageCashWin)
                 ? "---"
-                : $"{strategy.Stats.AverageWin:N1}";
+                : $"{strategy.Stats.AverageCashWin:N1}";
 
             WinProbability = double.IsNaN(strategy.Stats.WinProbability)
                 ? "---"

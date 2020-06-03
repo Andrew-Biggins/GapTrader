@@ -58,19 +58,33 @@ namespace GapAnalyser.ViewModels
             set => SetProperty(ref _canCalculate, value, nameof(CanCalculate));
         }
 
+        public bool IsDynamicTest
+        {
+            get => _isDynamicTest;
+            set
+            {
+                if (_isDynamicTest != value)
+                {
+                    _isDynamicTest = value;
+                    SwitchStrategyFinder();
+                }
+            }
+        }
+
         public IMarket Market { get; }
 
         public ICommand TestStrategyCommand => new BasicCommand(TestStrategy);
 
         protected StrategyTesterViewModel() { }
 
-        protected StrategyTesterViewModel(IMarket market)
+        protected StrategyTesterViewModel(IMarket market, IRunner runner)
         {
             Market = market;
+            _runner = runner;
             StrategyTester = new OutOfGapStrategyTester(new GapTradeLevelCalculator());
-            StrategyFinderViewModel = new StrategyFinderViewModel(StrategyTester, Market);
+            StrategyFinderViewModel = new StaticStrategyFinderViewModel(StrategyTester, Market, _runner);
             UpdateFilters();
-            StrategyFinderViewModel.StrategySearchEventHandler += FindStrategies;
+            StrategyFinderViewModel.StartSearchEventHandler += FindStrategies;
         }
 
         private void FindStrategies(object sender, EventArgs e)
@@ -90,15 +104,32 @@ namespace GapAnalyser.ViewModels
             TestEndDate = Market.DataDetails.EndDate;
         }
 
+        private void SwitchStrategyFinder()
+        {
+            if (_isDynamicTest)
+            {
+                StrategyFinderViewModel = new DynamicStrategyFinderViewModel(StrategyTester, Market, _runner);
+            }
+            else
+            {
+                StrategyFinderViewModel = new StaticStrategyFinderViewModel(StrategyTester, Market, _runner);
+            }
+
+            StrategyFinderViewModel.StartSearchEventHandler += FindStrategies;
+        }
+
         protected abstract void TestStrategy();
+
+        private readonly IRunner _runner;
 
         private StrategyResultsStatsViewModel _strategyResultsStatsViewModel = new StrategyResultsStatsViewModel();
         private GapFillStrategyTester _strategyTester;
         private DateTime _testStartDate;
         private DateTime _testEndDate;
-        private DateTime _testStartTime = new DateTime(1, 1, 1, 14, 30, 00);
-        private DateTime _testEndTime = new DateTime(1, 1, 1, 21, 00, 00);
+        private DateTime _testStartTime;
+        private DateTime _testEndTime;
         private bool _canCalculate;
         private StrategyFinderViewModel _strategyFinderViewModel;
+        private bool _isDynamicTest;
     }
 }

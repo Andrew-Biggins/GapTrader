@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:GapAnalyser.ViewModels;assembly=GapAnalyser"
              xmlns:userControls="clr-namespace:GapAnalyserWPF.UserControls"
+             xmlns:converters="clr-namespace:GapAnalyserWPF.Converters"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance {x:Type viewModels:StrategyTesterViewModel}}"
              d:DesignHeight="580" d:DesignWidth="680">
@@ -12,11 +13,11 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="20" />
-                <RowDefinition Height="50" />
-                <RowDefinition Height="90" />
                 <RowDefinition Height="30" />
-                <RowDefinition Height="18"/>
                 <RowDefinition Height="80" />
+                <RowDefinition Height="25" />
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="70" />
                 <RowDefinition Height="18"/>
                 <RowDefinition Height="314" />
             </Grid.RowDefinitions>
@@ -29,7 +30,7 @@
 
             <Button Content="Calculate" HorizontalAlignment="Center" 
                     Grid.Row="3" Grid.Column="1" Width="70" 
-                    Margin="5" VerticalAlignment="Top" 
+                    Margin="5,5,5,-5" VerticalAlignment="Top" 
                     Command="{Binding TestStrategyCommand}"
                     IsEnabled="{Binding CanCalculate, Mode=OneWay}"/>
 
@@ -39,7 +40,7 @@
 
             <TextBlock Text="Strategy Statistics" FontWeight="Bold" Grid.Row="4" Grid.Column="0" FontSize="12" HorizontalAlignment="Center" Grid.ColumnSpan="2" />
 
-            <ContentControl Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="5,0,0,10"
+            <ContentControl Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="5,0,0,5"
                             Content="{Binding StrategyResultsStatsViewModel}">
                 <ContentControl.Resources>
                     <DataTemplate DataType="{x:Type viewModels:StrategyResultsStatsViewModel}">
@@ -48,13 +49,25 @@
                 </ContentControl.Resources>
             </ContentControl>
 
-            <TextBlock Text="Strategy Finder" FontWeight="Bold" Grid.Row="6" Grid.Column="0" FontSize="12" HorizontalAlignment="Center" Grid.ColumnSpan="2" />
+            <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" 
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <RadioButton Content="Find Static Strategies" 
+                         HorizontalAlignment="Center" Margin="0,0,10,0" 
+                         VerticalAlignment="Top" IsChecked="{Binding IsDynamicTest , Converter={converters:BoolToInverseNullableBoolConverter}}"/>
+                <RadioButton Content="Test Dynamic Strategy"
+                         HorizontalAlignment="Center" 
+                         VerticalAlignment="Top" IsChecked="{Binding IsDynamicTest}"/>
+            </StackPanel>
 
-            <ContentControl Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="5,0,0,0"
+            <ContentControl Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="5,0,0,-50"
                         Content="{Binding StrategyFinderViewModel}">
                 <ContentControl.Resources>
-                    <DataTemplate DataType="{x:Type viewModels:StrategyFinderViewModel}">
-                        <userControls:StrategyFinder />
+                    <DataTemplate DataType="{x:Type viewModels:StaticStrategyFinderViewModel}">
+                        <userControls:StaticStrategyFinder />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewModels:DynamicStrategyFinderViewModel}">
+                        <userControls:DynamicStrategyTester />
                     </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>

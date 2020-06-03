@@ -1,4 +1,6 @@
-﻿namespace GapAnalyser.Interfaces
+﻿using System.Collections.Generic;
+
+namespace GapAnalyser.Interfaces
 {
     public interface IStrategy
     {
@@ -9,5 +11,9 @@
         object Target { get; }
 
         double Stop { get; }
+
+        List<ITrade> Trades { get; }
+
+        string Title { get; }
     }
 }

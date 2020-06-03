@@ -10,7 +10,7 @@
              xmlns:helpers="clr-namespace:GapAnalyserWPF.Helpers"
              xmlns:validationRules="clr-namespace:GapAnalyserWPF.ValidationRules"
              d:DataContext="{d:DesignInstance {x:Type strategyTesters:IntoGapStrategyTester}}"
-             d:DesignHeight="110" d:DesignWidth="475">
+             d:DesignHeight="95" d:DesignWidth="475">
     <UserControl.Resources>
         <ControlTemplate x:Key="ValidationErrorTemplate">
             <DockPanel>
@@ -46,7 +46,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20" />
                     <RowDefinition Height="20" />
-                    <RowDefinition Height="20" />
+                    <RowDefinition Height="15" />
                     <RowDefinition Height="45" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -135,7 +135,7 @@
                 <TextBlock Text="Stop" Margin="0,2,0,0"
                            HorizontalAlignment="Center"/>
                 <TextBlock Text="Size (points)" 
-                       HorizontalAlignment="Center" TextWrapping="Wrap" Margin="0,15,0,0"/>
+                       HorizontalAlignment="Center" TextWrapping="Wrap" Margin="0,10,0,0"/>
                 <TextBox Margin="5" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" 
                          helpers:HasErrorUtility.MvvmHasError="{Binding Path=StopHasError}">
                     <TextBox.Text >
@@ -158,7 +158,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20" />
                     <RowDefinition Height="20" />
-                    <RowDefinition Height="20" />
+                    <RowDefinition Height="15" />
                     <RowDefinition Height="45" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -213,7 +213,7 @@
                     <ComboBoxItem Content="38.2%" />
                     <ComboBoxItem Content="50%" />
                     <ComboBoxItem Content="61.8%" />
-                    <ComboBoxItem Content="78.5%" />
+                    <ComboBoxItem Content="78.6%" />
                     <ComboBoxItem Content="88.6%" />
                     <ComboBoxItem Content="94.1%" />
                 </ComboBox>

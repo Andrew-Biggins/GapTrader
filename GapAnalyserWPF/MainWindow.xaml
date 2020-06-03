@@ -31,9 +31,9 @@
         </ContentControl>
 
         <ContentControl Grid.Row="1" Grid.Column="0" Margin="5,10,5,0"
-                        Content="{Binding MarketDetailsViewModel}">
+                        Content="{Binding DataUploaderViewModel}">
             <ContentControl.Resources>
-                <DataTemplate DataType="{x:Type viewModels:MarketDetailsViewModel}">
+                <DataTemplate DataType="{x:Type viewModels:DataUploaderViewModel}">
                     <userControls:MarketDetails />
                 </DataTemplate>
             </ContentControl.Resources>

@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using Foundations;
+﻿using Foundations;
 using Foundations.Optional;
 using GapAnalyser.Candles;
 using GapAnalyser.Interfaces;
-using static GapAnalyser.CsvServices;
-using static GapAnalyser.FibonacciServices;
+using GapAnalyser.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using static GapAnalyser.DataProcessor;
+using static GapAnalyser.FibonacciServices;
 
 namespace GapAnalyser
 {
@@ -17,9 +16,9 @@ namespace GapAnalyser
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public List<DailyCandle> DailyCandles { get; } = new List<DailyCandle>();
+        public List<DailyCandle> DailyCandles { get; set; } = new List<DailyCandle>();
 
-        public Dictionary<DateTime, List<MinuteCandle>> MinuteData { get; } =
+        public Dictionary<DateTime, List<MinuteCandle>> MinuteData { get; set; } =
             new Dictionary<DateTime, List<MinuteCandle>>();
 
         public List<Gap> UnfilledGaps { get; } = new List<Gap>();
@@ -28,83 +27,9 @@ namespace GapAnalyser
 
         public DataDetails DataDetails { get; private set; }
 
-        public bool UkData { get; private set; }
+        public bool IsUkData { get; set; }
 
-        public void ReadInData(string filePath)
-        {
-            using var csvParser = SetUpParser(filePath);
-            double firstClose = 0;
-            var adding = false;
-            var firstCloseRead = false;
-
-            while (!csvParser.EndOfData)
-            {
-                var candle = ParseDailyCandle(csvParser.ReadFields());
-
-                if (candle.Date >= _firstMinuteDataDate && firstCloseRead)
-                {
-                    DailyCandles.Add(candle);
-                    adding = true;
-                }
-
-                if (!adding)
-                {
-                    firstClose = candle.Close;
-                }
-
-                firstCloseRead = true;
-            }
-
-            ProcessGaps(firstClose);
-        }
-
-        public void ReadInMinuteData(string filePath, bool ukData)
-        {
-            UkData = ukData;
-
-            using var csvParser = SetUpParser(filePath);
-
-            var date = DateTime.MinValue;
-            var mc = new List<MinuteCandle>();
-
-            var firstDateRead = false;
-
-            while (!csvParser.EndOfData)
-            {
-                var candle = UkData
-                    ? ParseUkMinuteCandle(csvParser.ReadFields())
-                    : ParseUsMinuteCandle(csvParser.ReadFields());
-
-                if (Math.Abs(candle.Volume) > 0)
-                {
-                    if (!firstDateRead)
-                    {
-                        _firstMinuteDataDate = candle.Date;
-                        firstDateRead = true;
-                    }
-
-                    if (candle.Date.Date != date.Date)
-                    {
-                        if (mc.Count != 0)
-                        {
-                            MinuteData.Add(date.Date, mc);
-                        }
-
-                        mc = new List<MinuteCandle>();
-                    }
-
-                    date = candle.Date.Date;
-                    mc.Add(candle);
-                }
-            }
-
-            if (mc.Count != 0)
-            {
-                MinuteData.Add(date.Date, mc);
-            }
-        }
-
-        public void DeriveDailyFromMinute()
+        public void DeriveDailyFromMinute(Del counter)
         {
             foreach (var (date, minuteCandles) in MinuteData)
             {
@@ -146,17 +71,62 @@ namespace GapAnalyser
                 {
                     var dailyCandle = new DailyCandle(date, open, high, low, close, 0);
                     DailyCandles.Add(dailyCandle);
+                    counter();
                 }
             }
-
-            // First candle is only used for gap calculation so removed from list
-            var firstClose = DailyCandles[0].Close;
-            DailyCandles.RemoveAt(0);
-
-            ProcessGaps(firstClose);
         }
 
-        public void CalculateGapLevelNextDayHitPercentages()
+        public void ClearData()
+        {
+            DailyCandles.Clear();
+            MinuteData.Clear();
+            UnfilledGaps.Clear();
+            GapFibLevels = NewFibRetraceDictionary();
+        }
+
+        public void CalculateStats(bool ukData, Optional<double> previousClose)
+        {
+            IsUkData = ukData;
+
+            CalculateGaps(previousClose);
+            CalculateGapFillPercentages();
+            UpdateGapFilledFlags();
+            CalculateFiftyPercentGapFillLevels();
+            CalculateGapLevelNextDayHitPercentages();
+            CalculateGapFibLevelPreHitAdverseExcursions();
+            GenerateDetails();
+            PropertyChanged.Raise(this, string.Empty);
+        }
+
+        private void CalculateGaps(Optional<double> previousClose)
+        {
+            double pc = 0;
+
+            previousClose.IfExistsThen( x =>
+            {
+                pc = x;
+            }).IfEmpty(() =>
+            {
+                // First candle is only used for gap calculation on new data
+                // (when previous close is not passed in) so removed from list
+                pc = DailyCandles[0].Close;
+                DailyCandles.RemoveAt(0);
+            });
+
+            double total = 0;
+
+            foreach (var candle in DailyCandles)
+            {
+                var gap = new Gap(pc, candle.Open, candle.Date.Date);
+                total += gap.AbsoluteGapPoints;
+                candle.Gap = gap;
+                pc = candle.Close;
+            }
+
+            _averageGapSize = total / DailyCandles.Count;
+        }
+
+        private void CalculateGapLevelNextDayHitPercentages()
         {
             var fivePointNineCount = 0;
             var elevenPointFourCount = 0;
@@ -227,42 +197,8 @@ namespace GapAnalyser
             GapFibLevels[FibonacciLevel.OneHundred].NextDayHitPercentage = oneHundredCount * multiplier;
         }
 
-        public void ClearData()
+        private void CalculateGapFibLevelPreHitAdverseExcursions()
         {
-            DailyCandles.Clear();
-            MinuteData.Clear();
-            UnfilledGaps.Clear();
-            GapFibLevels = NewFibRetraceDictionary();
-        }
-
-        private void ProcessGaps(double firstClose)
-        {
-            CalculateGaps(firstClose);
-            CalculateGapFillPercentages();
-            UpdateGapFilledFlags();
-            CalculateFiftyPercentGapFillLevels();
-            CalculateGapLevelNextDayHitPercentages();
-        }
-
-        private void CalculateGaps(double previousClose)
-        {
-            double total = 0;
-
-            foreach (var candle in DailyCandles)
-            {
-                var gap = new Gap(previousClose, candle.Open, candle.Date.Date);
-                total += gap.AbsoluteGapPoints;
-                candle.Gap = gap;
-                previousClose = candle.Close;
-            }
-
-            _averageGapSize = total / DailyCandles.Count;
-        }
-
-        public void CalculateGapFibLevelPreHitAdverseExcursions()
-        {
-            //foreach (FibonacciLevel fib in Enum.GetValues(typeof(FibonacciLevel)))
-            //{
             var retraces = (FibonacciLevel[])Enum.GetValues(typeof(FibonacciLevel));
 
             for (var i = 0; i < 10; i++)
@@ -284,13 +220,11 @@ namespace GapAnalyser
 
                     if (MinuteData.TryGetValue(dailyCandle.Date, out var minuteCandles))
                     {
-                        var phae = CompareMinuteData(minuteCandles, dailyCandle.Open, level, false);
+                        var excursions = CompareMinuteData(minuteCandles, dailyCandle.Open, level, false);
 
-                        phae.IfExistsThen(x =>
+                        excursions.IfExistsThen(x =>
                         {
-                            var preHitMax = x.Item1;
-                            var postHitMaxFavourable = x.Item2;
-                            var postHitMaxAdverse = x.Item3;
+                            var (preHitMax, postHitMaxFavourable, postHitMaxAdverse) = x;
 
                             if (preHitMax > highestPreHitMax)
                             {
@@ -333,9 +267,6 @@ namespace GapAnalyser
                     fibLevel.DateOfHighestPostHitAdverseExcursion = highestPostHitMaxAdverseDate;
                 }
             }
-
-            GenerateDetails();
-            PropertyChanged.Raise(this, string.Empty);
         }
 
         private void CalculateGapFillPercentages()
@@ -347,8 +278,6 @@ namespace GapAnalyser
                     : (candle.Open - candle.Low) / candle.Gap.GapPoints * 100;
 
                 candle.Gap.GapFillPercentage = gfp > 100 ? 100 : gfp;
-
-                Debug.WriteLine(candle.Gap.GapFillPercentage);
             }
         }
 
@@ -398,10 +327,10 @@ namespace GapAnalyser
 
         private void CalculateFiftyPercentGapFillLevels()
         {
-            for (var i = 1; i < DailyCandles.Count; i++)
+            foreach (var candle in DailyCandles)
             {
-                DailyCandles[i].Gap.FiftyPercentGapFillLevel =
-                    DailyCandles[i].Open - DailyCandles[i].Gap.GapPoints * 0.5;
+                candle.Gap.FiftyPercentGapFillLevel =
+                    candle.Open - candle.Gap.GapPoints * 0.5;
             }
         }
 
@@ -410,13 +339,10 @@ namespace GapAnalyser
             var startDate = DateTime.MinValue;
             var endDate = DateTime.MaxValue;
 
-            foreach (var dailyCandle in DailyCandles)
+            foreach (var dailyCandle in DailyCandles.Where(dailyCandle => MinuteData.ContainsKey(dailyCandle.Date)))
             {
-                if (MinuteData.ContainsKey(dailyCandle.Date))
-                {
-                    startDate = dailyCandle.Date;
-                    break;
-                }
+                startDate = dailyCandle.Date;
+                break;
             }
 
             for (var i = DailyCandles.Count - 1; i > 0; i--)
@@ -460,7 +386,7 @@ namespace GapAnalyser
             var openTime = new TimeSpan(14,30,00);
             var closeTime = new TimeSpan(21, 00,00);
 
-            if (UkData)
+            if (IsUkData)
             {
                 openTime = new TimeSpan(8, 00, 00);
                 closeTime = new TimeSpan(16, 30, 00);
@@ -470,7 +396,6 @@ namespace GapAnalyser
                 closeTime);
         }
 
-        private DateTime _firstMinuteDataDate;
         private double _averageGapSize;
     }
 }

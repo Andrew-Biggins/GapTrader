@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using GapAnalyser.Interfaces;
 
 namespace GapAnalyser.StrategyTesters
@@ -80,17 +82,23 @@ namespace GapAnalyser.StrategyTesters
         {
         }
 
-        public virtual void ResetLevels()
+        public void ResetLevels()
         {
             Stop = DefaultStopSize;
+            FibLevelEntry = DefaultFibEntry;
+            FibLevelTarget = DefaultFibTarget;
             RaisePropertyChanged(nameof(Stop));
+            RaisePropertyChanged(nameof(FibLevelTarget));
+            RaisePropertyChanged(nameof(FibLevelEntry));
         }
 
-        public void TestStrategy(IMarket market, StrategyTestFilters filters, double minimumGapSize)
+        public void TestStrategy(IMarket market, StrategyTestFilters filters, double minimumGapSize,
+            double maximumGapSize = double.PositiveInfinity)
         {
             MinimumGapSize = minimumGapSize;
 
-            foreach (var candle in market.DailyCandles.Where(candle => candle.Gap.AbsoluteGapPoints > MinimumGapSize))
+            foreach (var candle in market.DailyCandles.Where(candle =>
+                candle.Gap.AbsoluteGapPoints >= MinimumGapSize && candle.Gap.AbsoluteGapPoints <= maximumGapSize))
             {
                 if (candle.Date.Date >= filters.StartDate.Date && candle.Date.Date <= filters.EndDate.Date)
                 {
@@ -100,13 +108,10 @@ namespace GapAnalyser.StrategyTesters
 
             FinalizeStats();
             CreateNewStrategy();
+            Trades = new List<ITrade>();
         }
 
-        protected abstract void UpdateFibLevelEntry(bool isFib);
-
-        protected abstract void UpdateFibLevelTarget(bool isFib);
-
-        protected abstract void NewStrategy<TEntry, TTarget>(object entry, object target);
+        protected abstract void NewStrategy<TEntry, TTarget>(object entry, object target, string title = "");
 
         protected void CreateNewStrategy()
         {
@@ -114,7 +119,11 @@ namespace GapAnalyser.StrategyTesters
             {
                 if (FibEntry)
                 {
-                    NewStrategy<FibonacciLevel, FibonacciLevel>(FibLevelEntry, FibLevelTarget);
+                    var entry = (double) FibLevelEntry / 10;
+                    var target = (double) FibLevelTarget / 10;
+                    var title =
+                        $"Entry: {entry}% | Target: {target}% | Stop Size: {Stop}pts | Min Gap Size: {MinimumGapSize}pts";
+                    NewStrategy<FibonacciLevel, FibonacciLevel>(FibLevelEntry, FibLevelTarget, title);
                 }
                 else
                 {
@@ -134,13 +143,29 @@ namespace GapAnalyser.StrategyTesters
             }
         }
 
-        protected (double, double, double) GetTradeLevels(double gap, double open)
+        protected (double, double, double, double) GetTradeLevels(double gap, double open)
         {
             var entry = TradeLevelCalculator.GetEntryLevel(gap, open, PointsEntry, FibEntry, FibLevelEntry);
-            var stop = TradeLevelCalculator.GetStopLevel(gap, entry, Stop);
+            var stopLevel = TradeLevelCalculator.GetStopLevel(gap, entry, Stop);
             var target = TradeLevelCalculator.GetTargetLevel(gap, entry, open, PointsTarget, FibTarget, FibLevelTarget);
 
-            return (entry, stop, target);
+            return (entry, stopLevel, target, Stop);
+        }
+
+        private void UpdateFibLevelEntry(bool isFib)
+        {
+            FibLevelEntry = isFib
+                ? DefaultFibEntry
+                : 0;
+            RaisePropertyChanged(nameof(FibLevelEntry));
+        }
+
+        private void UpdateFibLevelTarget(bool isFib)
+        {
+            FibLevelTarget = isFib
+                ? DefaultFibTarget
+                : 0;
+            RaisePropertyChanged(nameof(FibLevelTarget));
         }
 
         private void UpdatePointsTarget(bool isFib)
@@ -156,6 +181,8 @@ namespace GapAnalyser.StrategyTesters
         }
 
         protected double MinimumGapSize;
+        protected FibonacciLevel DefaultFibEntry;
+        protected FibonacciLevel DefaultFibTarget;
 
         private const double DefaultStopSize = 100;
 

@@ -36,8 +36,8 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
-            <RowDefinition Height="110" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="100" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="70"/>
@@ -59,10 +59,9 @@
                      VerticalAlignment="Top" IsChecked="{Binding TradeIntoGap, Converter={converters:BoolToInverseNullableBoolConverter}}"/>
 
         <TextBlock Grid.Column="5" Grid.Row="0" Grid.ColumnSpan="3"  Text="Minimum Gap Size (points)" 
-                   VerticalAlignment="Bottom"
-                    Height="40"/>
+                   Height="16"/>
         <TextBox HorizontalAlignment="Left" 
-                 Margin="7,0,10,20" Grid.Row="0" Grid.Column="7" 
+                 Margin="7,0,10,5" Grid.Row="0" Grid.Column="7" Height="18" 
                  VerticalAlignment="Bottom" VerticalContentAlignment="Center"
                  Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
                  helpers:HasErrorUtility.MvvmHasError="{Binding Path=MinimumGapHasError}">

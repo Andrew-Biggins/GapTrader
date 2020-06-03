@@ -4,6 +4,8 @@ namespace GapAnalyser.Interfaces
 {
     public interface IRunner
     {
+        void ShowTrades(object sender, IStrategy strategy);
+
         void Run(object sender, IRunnable runnable);
 
         void RunConcurrently(object sender, IRunnable runnable);
@@ -12,6 +14,10 @@ namespace GapAnalyser.Interfaces
 
         bool RunForResult(object sender, Message message);
 
-       // Optional<string> OpenSaveDialog(object sender, string fileName, string filter);
+        void GetSaveName(object sender);
+
+        void ShowLoadDataWindow(object sender);
+
+        // Optional<string> OpenSaveDialog(object sender, string fileName, string filter);
     }
 }

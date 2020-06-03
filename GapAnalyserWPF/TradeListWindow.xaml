@@ -1,0 +1,56 @@
+﻿<Window x:Class="GapAnalyserWPF.TradeListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GapAnalyserWPF"
+        xmlns:interfaces="clr-namespace:GapAnalyser.Interfaces;assembly=GapAnalyser"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance {x:Type interfaces:IStrategy}}"
+        Title="{Binding Title}" Height="350" Width="660"
+        MinWidth="660" MaxWidth="660" MinHeight="350">
+    <Grid>
+        <DataGrid CanUserResizeRows="False" IsReadOnly="True" Width="625"
+                  AutoGenerateColumns="False" Margin="5" HorizontalContentAlignment="Center" 
+                  ItemsSource="{Binding Trades, Mode=OneWay}" >
+        <DataGrid.CellStyle>
+            <Style TargetType="DataGridCell">
+                <Setter Property="TextBlock.TextAlignment" Value="Center" />
+            </Style>
+        </DataGrid.CellStyle>
+        <DataGrid.ColumnHeaderStyle>
+            <Style TargetType="DataGridColumnHeader">
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
+            </Style>
+        </DataGrid.ColumnHeaderStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Date"
+                                    Binding="{Binding OpenTime, StringFormat=dd-MM-yy}" Width="60" />
+          
+                <DataGridTextColumn Header="Open Level"
+                                    Binding="{Binding OpenLevel, StringFormat=N1}" Width="70" />
+          
+                <DataGridTextColumn Header="Open Time"
+                                    Binding="{Binding OpenTime, StringFormat=HH:mm}" Width="70" />
+           
+                <DataGridTextColumn Header="Stop"
+                                    Binding="{Binding StopLevel, StringFormat=N1}" Width="60" />
+
+                <DataGridTextColumn Header="Target"
+                                    Binding="{Binding Target, StringFormat=N1}" Width="60" />
+
+                <DataGridTextColumn Header="Close Level"
+                                    Binding="{Binding CloseLevel, StringFormat=N1}" Width="70" />
+
+                <DataGridTextColumn Header="Close Time"
+                                    Binding="{Binding CloseTime, StringFormat=HH:mm}" Width="70" />
+
+                <DataGridTextColumn Header="Total Points"
+                                Binding="{Binding PointsProfit, StringFormat=N1}" Width="70" />
+
+                <DataGridTextColumn Header="Profit/Loss"
+                                    Binding="{Binding CashProfit, StringFormat=N1}" Width="70" />
+                </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Text;
+using System.Xml.Serialization;
 using GapAnalyser.Interfaces;
 
 namespace GapAnalyser.Candles
 {
+    [XmlInclude(typeof(UsMinuteCandle))]
+    [Serializable]
     public abstract class MinuteCandle : Candle, IMinuteCandle
     {
         public bool IsCash { get; set; }

@@ -13,35 +13,5 @@ namespace GapAnalyserWPF.UserControls
         {
             InitializeComponent();
         }
-
-        private void SelectDailyDataFileButtonClick(object sender, RoutedEventArgs e)
-        {
-            var fileDialog = new OpenFileDialog
-            {
-                Multiselect = false,
-                Filter = "CSV Files|*.csv",
-                DefaultExt = "*.csv"
-            };
-
-            if (fileDialog.ShowDialog() == true)
-            {
-                DailyDataFileNameTextBox.Text = fileDialog.FileName;
-            }
-        }
-
-        private void SelectMinuteDataFileButtonClick(object sender, RoutedEventArgs e)
-        {
-            var fileDialog = new OpenFileDialog
-            {
-                Multiselect = false,
-                Filter = "CSV Files|*.csv",
-                DefaultExt = "*.csv"
-            };
-
-            if (fileDialog.ShowDialog() == true)
-            {
-                MinuteDataFileNameTextBox.Text = fileDialog.FileName;
-            }
-        }
     }
 }

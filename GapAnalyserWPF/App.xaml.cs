@@ -1,8 +1,14 @@
-﻿using Foundations;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using Foundations;
 using Foundations.Interfaces;
 using GapAnalyser.ViewModels;
 using System.Threading;
 using System.Windows;
+using GapAnalyser;
 
 namespace GapAnalyserWPF
 {
@@ -17,7 +23,8 @@ namespace GapAnalyserWPF
             var runner = new Runner(context);
             Window window = new MainWindow();
             window.Show();
-            var mainViewModel = new MainViewModel(runner);
+            var savedData = GetSavedMarkets();
+            var mainViewModel = new MainViewModel(runner, savedData);
             window.DataContext = mainViewModel;
         }
 
@@ -32,6 +39,27 @@ namespace GapAnalyserWPF
 
             var context = new Context(dispatcherContext);
             return context;
+        }
+
+        private List<SavedData> GetSavedMarkets()
+        {
+            var markets = new List<SavedData>();
+
+            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+            path += "\\Saved Data";
+
+            var d = new DirectoryInfo(path);
+            IFormatter formatter = new BinaryFormatter();
+
+            foreach (var file in d.GetFiles("*.txt"))
+            {
+                var stream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read);
+                var savedData = (SavedData) formatter.Deserialize(stream);
+                markets.Add(savedData);
+            }
+
+            return markets;
         }
     }
 }

@@ -24,10 +24,12 @@ namespace GapAnalyser.ViewModels
             get => _tradeIntoGap;
             set
             {
-                _tradeIntoGap = value;
-                SwitchStrategyTester();
-                RaisePropertyChanged(nameof(StrategyTester));
-                StrategyTester.PropertyChanged += OnStrategyTesterDataChanged;
+                if (_tradeIntoGap != value)
+                {
+                    _tradeIntoGap = value;
+                    SwitchStrategyTester();
+                    StrategyTester.PropertyChanged += OnStrategyTesterDataChanged;
+                }
             }
         }
 
@@ -35,7 +37,7 @@ namespace GapAnalyser.ViewModels
         {
         }
 
-        public GapFillStrategyTesterViewModel(IMarket market) : base(market)
+        public GapFillStrategyTesterViewModel(IMarket market, IRunner runner) : base(market, runner)
         {
             StrategyTester.PropertyChanged += OnStrategyTesterDataChanged;
             VerifyInputs();
@@ -45,7 +47,7 @@ namespace GapAnalyser.ViewModels
         {
             var filters = new StrategyTestFilters(TestStartDate, TestEndDate, TestStartTime.TimeOfDay,
                 TestEndTime.TimeOfDay);
-
+            StrategyTester.SetSizing(10000,1,true);
             StrategyTester.TestStrategy(Market, filters, MinimumGapSize);
             StrategyResultsStatsViewModel = new StrategyResultsStatsViewModel(StrategyTester.Strategy);
         }
@@ -88,7 +90,7 @@ namespace GapAnalyser.ViewModels
                 StrategyTester = new OutOfGapStrategyTester(new GapTradeLevelCalculator());
             }
 
-            StrategyFinderViewModel.StrategyTester = StrategyTester;
+            StrategyFinderViewModel.UpdateTester(StrategyTester);
         }
 
         private bool _tradeIntoGap;

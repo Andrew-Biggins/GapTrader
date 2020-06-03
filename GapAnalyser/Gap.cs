@@ -23,6 +23,10 @@ namespace GapAnalyser
 
         public DateTime Date { get; }
 
+        private Gap()
+        {
+        }
+
         public Gap(double previousClose, double open, DateTime date)
         {
             Close = previousClose;

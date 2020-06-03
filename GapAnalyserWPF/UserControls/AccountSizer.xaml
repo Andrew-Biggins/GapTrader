@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="GapAnalyserWPF.UserControls.AccountSizer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GapAnalyserWPF.UserControls"
+             xmlns:core="clr-namespace:GapAnalyser;assembly=GapAnalyser"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance {x:Type core:AccountSizer}}"
+             d:DesignHeight="67" d:DesignWidth="172">
+    <Border BorderBrush="Black" BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="20" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="105"/>
+                <ColumnDefinition Width="65"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Account Start Size"
+                   Grid.Column="0" HorizontalAlignment="Right"
+                   Grid.Row="0" Margin="0,0,3,0"/>
+            <TextBlock Text="Risk %" HorizontalAlignment="Right"
+                   Grid.Column="0" FontSize="11"
+                   Grid.Row="1" Margin="0,0,3,0"/>
+            <TextBox Grid.Column="1" Width="60" HorizontalAlignment="Left"
+                 Grid.Row="0" Text="{Binding AccountStartSize}"/>
+            <TextBox Grid.Column="1" HorizontalAlignment="Left" Width="25"
+                 Grid.Row="1" Text="{Binding RiskPercentage}"/>
+            <RadioButton Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0"
+                     VerticalAlignment="Center" IsChecked="{Binding Compound}"
+                     ToolTip="Applies the date and time filters from the above tester"
+                     FlowDirection="RightToLeft" Margin="0,0,46,0">
+                <RadioButton.Content>
+                    <TextBlock Text="Compound" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                </RadioButton.Content>
+            </RadioButton>
+        </Grid>
+    </Border>
+</UserControl>

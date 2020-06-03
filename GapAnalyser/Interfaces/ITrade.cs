@@ -1,11 +1,12 @@
 ﻿using System;
-using Microsoft.VisualBasic;
 
 namespace GapAnalyser.Interfaces
 {
     public interface ITrade
     {
-        double Stop { get; }
+        double StopLevel { get; }
+
+        double StopSize { get; }
 
         double Target { get; }
 
@@ -17,6 +18,16 @@ namespace GapAnalyser.Interfaces
 
         DateTime CloseTime { get; }
 
-        double Profit { get; }
+        double PointsProfit { get; }
+
+        double CashProfit { get; }
+
+        void AddProfit(double size);
+
+        FibonacciLevel TargetFibLevel { get; set; }
+
+        FibonacciLevel OpenFibLevel { get; set; }
+
+        double WinProbability { get; set; }
     }
 }

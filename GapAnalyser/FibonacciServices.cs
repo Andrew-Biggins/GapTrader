@@ -29,13 +29,18 @@ namespace GapAnalyser
 
     public static class FibonacciServices
     {
+        public static int FirstFibRetraceIndex = 0;
+        public static int LastFibRetraceIndex = 9;
+        public static int FirstFibExtensionIndex = 10;
+        public static int LastFibExtensionIndex = 18;
+
         public static Dictionary<FibonacciLevel, FibLevel> NewFibRetraceDictionary()
         {
             var dictionary = new Dictionary<FibonacciLevel, FibLevel>();
 
             var retraces  = (FibonacciLevel[])Enum.GetValues(typeof(FibonacciLevel));
 
-            for (var i = 0; i < 10; i++)
+            for (var i = FirstFibRetraceIndex; i <= LastFibRetraceIndex; i++)
             {
                 dictionary.Add(retraces[i], new FibLevel((double)retraces[i]));
             }

@@ -26,10 +26,10 @@ namespace GapAnalyser
                     {
                         // When not starting at the first candle of the day,
                         // if the first candle opens past the initial intended entry (positive slippage),
-                        // enter the trade on the close of that candle and update stop level accordingly
+                        // enter the trade on the open of that candle and update stop level accordingly
                         if (candle.Open <= entry && !executed)
                         {
-                            entry = candle.Close;
+                            entry = candle.Open;
                             stop = entry - stopSize;
                             executed = true;
                             openTime = candle.Date;
@@ -60,7 +60,7 @@ namespace GapAnalyser
                         // See above comment on opposite direction trade
                         if (candle.Open >= entry && !executed)
                         {
-                            entry = candle.Close;
+                            entry = candle.Open;
                             stop = entry + stopSize;
                             executed = true;
                             openTime = candle.Date;

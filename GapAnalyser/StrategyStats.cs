@@ -12,13 +12,21 @@
 
         public int LongestLosingStreak { get; }
 
-        public double Profit { get; }
+        public double PointsTotal { get; }
 
-        public double BiggestWin { get; }
+        public double CashProfit { get; }
 
-        public double AverageWin { get; }
+        public double BiggestPointsWin { get; }
 
-        public double AverageLoss { get; }
+        public double BiggestCashWin { get; }
+
+        public double AveragePointsWin { get; }
+
+        public double AveragePointsLoss { get; }
+
+        public double AverageCashWin { get; }
+
+        public double AverageCashLoss { get; }
 
         public double WinProbability { get; }
 
@@ -27,22 +35,30 @@
         public double Expectancy { get; }
 
         public StrategyStats(int wins, int loses, int longestWinningStreak, int longestLosingStreak,
-            double profit, double biggestWin, double averageWin, double averageLoss, double profitFactor)
+            double pointsTotal, double cashProfit, double biggestPointsWin, double biggestCashWin,
+            double averagePointsWin, double averagePointsLoss, double averageCashWin, double averageCashLoss,
+            double profitFactor)
         {
             TradeCount = wins + loses;
             Wins = wins;
             Loses = loses;
             LongestWinningStreak = longestWinningStreak;
             LongestLosingStreak = longestLosingStreak;
-            Profit = profit;
-            BiggestWin = biggestWin;
-            AverageWin = averageWin;
-            AverageLoss = averageLoss;
+            PointsTotal = pointsTotal;
+            CashProfit = cashProfit;
+            BiggestPointsWin = biggestPointsWin;
+            BiggestCashWin = biggestCashWin;
+            AveragePointsWin = averagePointsWin;
+            AveragePointsLoss = averagePointsLoss;
+            AverageCashWin = averageCashWin;
+            AverageCashLoss = averageCashLoss;
+
+
             ProfitFactor = profitFactor;
 
             WinProbability = (double) wins / (wins + loses);
 
-            Expectancy = WinProbability * AverageWin - (1-WinProbability) * AverageLoss;
+            Expectancy = WinProbability * AveragePointsWin - (1-WinProbability) * AveragePointsLoss; //todo wrong!?
         }
     }
 }

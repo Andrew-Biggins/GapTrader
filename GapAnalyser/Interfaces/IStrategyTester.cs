@@ -14,9 +14,9 @@ namespace GapAnalyser.Interfaces
 
         //string SelectedTarget { get; set; }
 
-        //double Profit { get; }
+        //double PointsProfit { get; }
 
-        //double BiggestWin { get; }
+        //double BiggestPointsWin { get; }
 
         //double AverageWin { get; }
 

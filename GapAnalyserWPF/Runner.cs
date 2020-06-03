@@ -14,6 +14,36 @@ namespace GapAnalyserWPF
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
+        public void ShowTrades(object sender, IStrategy strategy)
+        {
+            _context.Send(_ =>
+            {
+                var owner = GetOwner(sender);
+                var window = new TradeListWindow { DataContext = strategy, Owner = owner };
+                window.ShowDialog();
+            });
+        }
+
+        public void GetSaveName(object sender)
+        {
+            _context.Send(_ =>
+            {
+                var owner = GetOwner(sender);
+                var window = new DataSaveNameWindow { DataContext = sender, Owner = owner };
+                window.ShowDialog();
+            });
+        }
+
+        public void ShowLoadDataWindow(object sender)
+        {
+            _context.Send(_ =>
+            {
+                var owner = GetOwner(sender);
+                var window = new LoadSavedDataWindow { DataContext = sender, Owner = owner };
+                window.ShowDialog();
+            });
+        }
+
         public void Run(object sender, IRunnable runnable)
         {
             _context.Send(_ =>

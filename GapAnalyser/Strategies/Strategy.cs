@@ -1,4 +1,5 @@
-﻿using GapAnalyser.Interfaces;
+﻿using System.Collections.Generic;
+using GapAnalyser.Interfaces;
 
 namespace GapAnalyser.Strategies
 {
@@ -16,12 +17,18 @@ namespace GapAnalyser.Strategies
 
         object IStrategy.Target => Target;
 
-        public Strategy(object entry, double stop, object target, StrategyStats stats)
+        public List<ITrade> Trades { get; }
+
+        public string Title { get; }
+
+        public Strategy(object entry, double stop, object target, StrategyStats stats, List<ITrade> trades, string title)
         {
             Entry = (TEntry) entry;
             Stop = stop;
             Target = (TTarget) target;
             Stats = stats;
+            Trades = trades;
+            Title = title;
         }
     }
 }

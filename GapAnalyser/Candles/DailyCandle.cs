@@ -17,8 +17,6 @@ namespace GapAnalyser.Candles
         {
             var sb = new StringBuilder($"{Date.ToShortDateString()} {Math.Round(Open)} {Math.Round(High)}" +
                                                  $" {Math.Round(Low)} {Math.Round(Close)}");
-            
-
             return sb.ToString();
         }
     }

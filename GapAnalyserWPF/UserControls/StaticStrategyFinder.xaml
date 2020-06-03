@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="GapAnalyserWPF.UserControls.StrategyFinder"
+﻿<UserControl x:Class="GapAnalyserWPF.UserControls.StaticStrategyFinder"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,8 +6,10 @@
              xmlns:local="clr-namespace:GapAnalyserWPF.UserControls"
              xmlns:converters="clr-namespace:GapAnalyserWPF.Converters"
              xmlns:viewModels="clr-namespace:GapAnalyser.ViewModels;assembly=GapAnalyser"
+             xmlns:core="clr-namespace:GapAnalyser;assembly=GapAnalyser"
+             xmlns:variableSelectors="clr-namespace:GapAnalyser.VariableSelectors;assembly=GapAnalyser"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance {x:Type viewModels:StrategyFinderViewModel}}"
+             d:DataContext="{d:DesignInstance {x:Type viewModels:StaticStrategyFinderViewModel}}"
              d:DesignHeight="350" d:DesignWidth="660">
     <UserControl.Resources>
         <Style TargetType="TextBlock">
@@ -19,114 +21,38 @@
             <Setter Property="Width" Value="40" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
         </Style>
-        <Style TargetType="DataGrid">
-
-        </Style>
     </UserControl.Resources>
     <Border BorderBrush="Black" BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="70" />
+                <RowDefinition Height="100" />
                 <RowDefinition Height="250" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="205"/>
-                <ColumnDefinition Width="205"/>
-                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="595"/>
+                <ColumnDefinition Width="65"/>
             </Grid.ColumnDefinitions>
-            <Border BorderBrush="Black" BorderThickness="1" Margin="5">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="16" />
-                        <RowDefinition Height="14" />
-                        <RowDefinition Height="40" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="60"/>
-                        <ColumnDefinition Width="65"/>
-                        <ColumnDefinition Width="60"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="Stop Size" VerticalAlignment="Top"
-                               Grid.Column="0" Grid.ColumnSpan="3"
-                               Grid.Row="0" />
-                    <TextBlock Text="Min" VerticalAlignment="Top"
-                       Grid.Column="0" FontSize="11"
-                       Grid.Row="1" />
-                    <TextBlock Text="Increments" VerticalAlignment="Top"
-                       Grid.Column="1" FontSize="11"
-                       Grid.Row="1" />
-                    <TextBlock Text="Stop" VerticalAlignment="Top"
-                       Grid.Column="2" FontSize="11"
-                       Grid.Row="1" />
-                    <TextBox Grid.Column="0" VerticalAlignment="Top"
-                     Grid.Row="2" Text="{Binding MinStop}"/>
-                    <ComboBox Grid.Row="2" Grid.Column="1" Width="50" Height="22" 
-                      SelectedIndex="{Binding StopIncrement, Converter={converters:IncrementToIntegerConverter}, Mode=TwoWay}"
-                      SelectedItem="0" VerticalAlignment="Top">
-                        <ComboBoxItem Content="5" />
-                        <ComboBoxItem Content="10" />
-                        <ComboBoxItem Content="20" />
-                        <ComboBoxItem Content="50" />
-                        <ComboBoxItem Content="100" />
-                        <ComboBoxItem Content="200" />
-                    </ComboBox>
-                    <TextBox Grid.Column="2" VerticalAlignment="Top"
-                     Grid.Row="2" Text="{Binding MaxStop}"/>
-                </Grid>
-            </Border>
 
-            <Border BorderBrush="Black" BorderThickness="1" Margin="5" Grid.Column="1" Grid.Row="0">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="16" />
-                        <RowDefinition Height="14" />
-                        <RowDefinition Height="40" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="60"/>
-                        <ColumnDefinition Width="65"/>
-                        <ColumnDefinition Width="60"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="Minimum Gap Size" VerticalAlignment="Top"
-                               Grid.Column="0" Grid.ColumnSpan="3"
-                               Grid.Row="0" />
-                    <TextBlock Text="Min" VerticalAlignment="Top"
-                               Grid.Column="0" FontSize="11"
-                               Grid.Row="1" />
-                    <TextBlock Text="Increments" VerticalAlignment="Top"
-                               Grid.Column="1" FontSize="11"
-                               Grid.Row="1" />
-                    <TextBlock Text="Max" VerticalAlignment="Top"
-                               Grid.Column="2" FontSize="11"
-                               Grid.Row="1" />
-                    <TextBox Grid.Column="0" VerticalAlignment="Top"
-                             Grid.Row="2" Text="{Binding MinMinGapSize}"/>
-                    <ComboBox Grid.Row="2" Grid.Column="1" Width="50" Height="22" 
-                              SelectedIndex="{Binding GapSizeIncrement, Converter={converters:IncrementToIntegerConverter}, Mode=TwoWay}"
-                              SelectedItem="0" VerticalAlignment="Top">
-                        <ComboBoxItem Content="5" />
-                        <ComboBoxItem Content="10" />
-                        <ComboBoxItem Content="20" />
-                        <ComboBoxItem Content="50" />
-                        <ComboBoxItem Content="100" />
-                        <ComboBoxItem Content="200" />
-                    </ComboBox>
-                    <TextBox Grid.Column="2" VerticalAlignment="Top"
-                             Grid.Row="2" Text="{Binding MaxMinGapSize}"/>
-                </Grid>
-            </Border>
-
-            <RadioButton Grid.Column="2" Grid.Row="0" Content="Apply Date and Time Filters" 
-                         VerticalAlignment="Center" IsChecked="{Binding ApplyDateTimeFilters}"
-                         ToolTip="Applies the date and time filters from the above tester"/>
-
+            <ContentControl Grid.Row="0" Grid.Column="0" Content="{Binding VariableSelector}">
+                <ContentControl.Resources>
+                    <DataTemplate DataType="{x:Type variableSelectors:StaticStrategyVariableSelector}">
+                        <local:FinderVariableSelector />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type core:LoadingBar}">
+                        <local:LoadingBar />
+                    </DataTemplate>
+                </ContentControl.Resources>
+            </ContentControl>
 
             <Button Content="Search" HorizontalAlignment="Right" VerticalAlignment="Bottom" Command="{Binding FindStrategiesCommand}"
-                    Grid.Row="0" Grid.Column="2" Height="25" Width="60" Margin="0,0,5,0" />
+                    Grid.Row="0" Grid.Column="1" Height="25" Width="60" Margin="0,0,5,0" IsEnabled="{Binding SearchEnabled}" />
 
-            <DataGrid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" CanUserResizeRows="False"
+            <DataGrid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" CanUserResizeRows="False"
                       AutoGenerateColumns="False" Margin="5" HorizontalContentAlignment="Center" 
-                      ItemsSource="{Binding Strategies, Mode=OneWay}">
+                      ItemsSource="{Binding Strategies, Mode=OneWay}"
+                      SelectedItem="{Binding SelectedStrategy}"
+                      IsReadOnly="True"
+                      MouseDoubleClick="Control_OnMouseDoubleClick">
                 <DataGrid.CellStyle>
                     <Style TargetType="DataGridCell">
                         <Setter Property="TextBlock.TextAlignment" Value="Center" />
@@ -178,7 +104,7 @@
                     <DataGridTextColumn Header="Trades" 
                                         Binding="{Binding Stats.TradeCount}" Width="45" />
                     <DataGridTextColumn Header="Profit"
-                                        Binding="{Binding Stats.Profit, StringFormat=N1}" Width="50" />
+                                        Binding="{Binding Stats.PointsTotal, StringFormat=N1}" Width="50" />
                     <DataGridTextColumn Header="Wins"
                                         Binding="{Binding Stats.Wins}" Width="*" />
                     <DataGridTextColumn Header="Loses"
@@ -203,20 +129,22 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="Win Prob" 
                                         Binding="{Binding Stats.WinProbability, Converter={converters:InvalidDoubleToStringConverter}, StringFormat=P}" Width="60">
-                    <DataGridTextColumn.HeaderStyle>
-                        <Style TargetType="DataGridColumnHeader">
-                            <Setter Property="ToolTip" Value="Win Probability"/>
-                        </Style>
-                    </DataGridTextColumn.HeaderStyle>
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="ToolTip" Value="Win Probability"/>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Profit Factor" 
+                    <!--<DataGridTextColumn Header="Profit Factor" 
                                         Binding="{Binding Stats.ProfitFactor, Converter={converters:InvalidDoubleToStringConverter}, StringFormat=N1}" Width="75">
                         <DataGridTextColumn.HeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
                                 <Setter Property="ToolTip" Value="Profit Factor"/>
                             </Style>
                         </DataGridTextColumn.HeaderStyle>
-                    </DataGridTextColumn>
+                    </DataGridTextColumn>-->
+                    <DataGridTextColumn Header="Profit"
+                                        Binding="{Binding Stats.CashProfit, StringFormat=N1}" Width="50" />
                     <DataGridTextColumn Header="Expectancy" 
                                         Binding="{Binding Stats.Expectancy, Converter={converters:InvalidDoubleToStringConverter}, StringFormat=N1}" Width="70" >
                         <DataGridTextColumn.HeaderStyle>
