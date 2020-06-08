@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="GapTraderWPF.UserControls.DynamicTestVariableSelector"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GapTraderWPF.UserControls"
+             xmlns:variableSelectors="clr-namespace:GapTraderCore.VariableSelectors;assembly=GapTraderCore"
+             xmlns:converters="clr-namespace:GapTraderWPF.Converters"
+             xmlns:userControls="clr-namespace:GapTraderWPF.UserControls"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance {x:Type variableSelectors:DynamicTestVariableSelector}}"
+             d:DesignHeight="100" d:DesignWidth="600">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type DatePickerTextBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <TextBox x:Name="PART_TextBox"
+                                 Text="{Binding Path=SelectedDate, StringFormat='dd/MM/yy', 
+                                    RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" 
+                                 Width="55"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="205"/>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="90"/>
+            <ColumnDefinition Width="185"/>
+        </Grid.ColumnDefinitions>
+        <Border BorderBrush="Black" BorderThickness="1" Margin="5"
+                Grid.Row="0" Grid.RowSpan="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="16" />
+                    <RowDefinition Height="14" />
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="65"/>
+                    <ColumnDefinition Width="60"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Stop Size" VerticalAlignment="Top"
+                               Grid.Column="0" Grid.ColumnSpan="3"
+                               Grid.Row="0" />
+                <TextBlock Text="Min" VerticalAlignment="Top"
+                       Grid.Column="0" FontSize="11"
+                       Grid.Row="1" />
+                <TextBlock Text="Increments" VerticalAlignment="Top"
+                       Grid.Column="1" FontSize="11"
+                       Grid.Row="1" />
+                <TextBlock Text="Stop" VerticalAlignment="Top"
+                       Grid.Column="2" FontSize="11"
+                       Grid.Row="1" />
+                <TextBox Grid.Column="0" VerticalAlignment="Top"
+                     Grid.Row="2" Text="{Binding MinStop}"/>
+                <ComboBox Grid.Row="2" Grid.Column="1" Width="50" Height="22" 
+                      SelectedIndex="{Binding StopIncrement, Converter={converters:IncrementToIntegerConverter}, Mode=TwoWay}"
+                      SelectedItem="0" VerticalAlignment="Top">
+                    <ComboBoxItem Content="5" />
+                    <ComboBoxItem Content="10" />
+                    <ComboBoxItem Content="20" />
+                    <ComboBoxItem Content="50" />
+                    <ComboBoxItem Content="100" />
+                    <ComboBoxItem Content="200" />
+                </ComboBox>
+                <TextBox Grid.Column="2" VerticalAlignment="Top"
+                     Grid.Row="2" Text="{Binding MaxStop}"/>
+            </Grid>
+        </Border>
+        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Margin="10,0,0,0">
+            <TextBlock Text="Gap Size Tolerance" Margin="0,0,5,0"/>
+            <TextBox Width="30" Height="20" Text="{Binding GapSizeTolerance}"/>
+        </StackPanel>
+
+        <TextBlock Grid.Row="0" Text="Trade Type" VerticalAlignment="Bottom"
+                   Grid.Column="1" FontSize="11"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" Width="100" Height="22" 
+                  SelectedIndex="{Binding TradeType, Converter={converters:TradeTypeToIntegerConverter}, Mode=TwoWay}"
+                  SelectedItem="0" VerticalAlignment="Top">
+            <ComboBoxItem Content="Into Gap" />
+            <ComboBoxItem Content="Out of Gap" />
+            <ComboBoxItem Content="Both" />
+        </ComboBox>
+
+        <TextBlock Grid.Row="0" Text="Start Date" VerticalAlignment="Bottom"
+                   Grid.Column="2" FontSize="11"/>
+        <DatePicker Grid.Row="1" Grid.Column="2" Height="30"
+                    VerticalAlignment="Top"
+                    DisplayDateStart="{Binding DataStartDate, Mode=OneWay}"
+                    DisplayDateEnd="{Binding DataEndDate, Mode=OneWay}"
+                    SelectedDate="{Binding TestStartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+        <StackPanel  Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <TextBlock Text="Minimum Win Probability (%)" ToolTip="Minimum Win Probability" Margin="0,0,5,0"/>
+            <TextBox Width="28" Text="{Binding MinWinProbability}"/>
+        </StackPanel>
+
+    </Grid>
+</UserControl>

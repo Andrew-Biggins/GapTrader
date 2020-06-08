@@ -1,0 +1,42 @@
+﻿<Window x:Class="GapTraderWPF.LoadSavedDataWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GapTraderWPF"
+        xmlns:viewModels="clr-namespace:GapTraderCore.ViewModels;assembly=GapTraderCore"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance {x:Type viewModels:MarketDetailsViewModel}}"
+        Title="Load Data" Height="150" Width="600">
+    <Grid>
+        <DataGrid CanUserResizeRows="False" IsReadOnly="True" Width="auto"
+                  AutoGenerateColumns="False" Margin="5" HorizontalContentAlignment="Center" 
+                  ItemsSource="{Binding SavedMarkets, Mode=OneWay}"
+                  SelectedItem="{Binding SelectedSavedMarket}"
+                  MouseDoubleClick="Control_OnMouseDoubleClick">
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                </Style>
+            </DataGrid.CellStyle>
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name"
+                                    Binding="{Binding Name, StringFormat=dd-MM-yy}" Width="*" />
+
+                <DataGridTextColumn Header="Data Start Date"
+                                    Binding="{Binding StartDate, StringFormat=dd-MM-yy}" Width="*" />
+
+                <DataGridTextColumn Header="Data End Date"
+                                    Binding="{Binding EndDate, StringFormat=dd-MM-yy}" Width="*" />
+
+                <DataGridTextColumn Header="Saved Date/Time"
+                                    Binding="{Binding SavedDate, StringFormat=dd-MM-yy HH:mm}" Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
