@@ -11,12 +11,13 @@ namespace GapTraderCore
         public string DataLow { get;  } = string.Empty;
         public string LowDate { get; } = string.Empty;
         public string AverageGapSize { get; } = string.Empty;
+        public string Name { get; } = string.Empty;
 
         public MarketStats()
         {
         }
 
-        public MarketStats(DataDetails stats)
+        public MarketStats(DataDetails stats, string name = "Unnamed Data")
         {
             DataStartDate = $"{stats.StartDate:d/M/yy}";
             DataEndDate = $"{stats.EndDate:d/M/yy}";
@@ -25,6 +26,7 @@ namespace GapTraderCore
             DataLow = $"{stats.Low:N1}";
             LowDate = $"{stats.LowDate:d/M/yy}";
             AverageGapSize = $"{stats.AverageGapSize:N1}";
+            Name = name;
         }
     }
 }

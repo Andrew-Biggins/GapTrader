@@ -21,34 +21,31 @@
             <Setter Property="VerticalContentAlignment" Value="Center" />
         </Style>
     </UserControl.Resources>
-    <Border BorderBrush="Black" BorderThickness="1">
+    <Border>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="100" />
                 <RowDefinition Height="238" />
                 <RowDefinition Height="20" />
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="595"/>
-                <ColumnDefinition Width="65"/>
-            </Grid.ColumnDefinitions>
+            <Grid HorizontalAlignment="Stretch">
+                <ContentControl Grid.Row="0" Grid.Column="0" Content="{Binding VariableSelector}">
+                    <ContentControl.Resources>
+                        <DataTemplate DataType="{x:Type variableSelectors:DynamicTestVariableSelector}">
+                            <local:DynamicTestVariableSelector HorizontalAlignment="Center"/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:LoadingBarViewModel}">
+                            <local:LoadingBar HorizontalAlignment="Stretch"/>
+                        </DataTemplate>
+                    </ContentControl.Resources>
+                </ContentControl>
 
-            <ContentControl Grid.Row="0" Grid.Column="0" Content="{Binding VariableSelector}">
-                <ContentControl.Resources>
-                    <DataTemplate DataType="{x:Type variableSelectors:DynamicTestVariableSelector}">
-                        <local:DynamicTestVariableSelector />
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewModels:LoadingBarViewModel}">
-                        <local:LoadingBar />
-                    </DataTemplate>
-                </ContentControl.Resources>
-            </ContentControl>
-
-            <Button Content="Search" HorizontalAlignment="Right" VerticalAlignment="Bottom" Command="{Binding FindStrategiesCommand}"
-                    Grid.Row="0" Grid.Column="1" Height="25" Width="60" Margin="0,0,5,0" IsEnabled="{Binding SearchEnabled}" />
-
-            <DataGrid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" CanUserResizeRows="False"
-                      AutoGenerateColumns="False" Margin="5" HorizontalContentAlignment="Center" 
+                <Button Content="Search" HorizontalAlignment="Right" VerticalAlignment="Bottom" Command="{Binding FindStrategiesCommand}"
+                    Grid.Row="0" Height="25" Width="60" Margin="0,0,5,0" IsEnabled="{Binding SearchEnabled}" />
+            </Grid>
+            <DataGrid Grid.Column="0" Grid.Row="1" CanUserResizeRows="False"
+                      AutoGenerateColumns="False" Margin="5" HorizontalContentAlignment="Center"
+                      HorizontalAlignment="Stretch"
                       ItemsSource="{Binding Trades, Mode=OneWay}"
                       IsReadOnly="True">
                 <DataGrid.CellStyle>
@@ -107,12 +104,12 @@
                 </DataGrid.Columns>
             </DataGrid>
             <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="5,0,5,0">
-            <StackPanel  Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" 
+                <StackPanel  Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" 
                          HorizontalAlignment="Right">
-                <TextBlock Text="End Balance:"  Margin="0,0,5,0"/>
+                    <TextBlock Text="End Balance:"  Margin="0,0,5,0"/>
                     <TextBlock Width="auto" Text="{Binding EndBalance}" Margin="0,0,10,0"/>
-            </StackPanel>
-                </Border>
+                </StackPanel>
+            </Border>
         </Grid>
     </Border>
 </UserControl>

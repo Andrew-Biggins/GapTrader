@@ -53,7 +53,7 @@ namespace GapTraderCore.StrategyTesters
         protected void CompareMinuteData(DailyCandle candle, Dictionary<DateTime, List<BidAskCandle>> minuteData,
             TimeSpan startTime, TimeSpan endTime)
         {
-            if (minuteData.TryGetValue(candle.Date, out var minuteCandles))
+            if (minuteData.TryGetValue(candle.Date.Date, out var minuteCandles))
             {
                 var (entry, stop, target, stopSize) = CalculateTradeLevels(candle);
 
@@ -61,16 +61,19 @@ namespace GapTraderCore.StrategyTesters
 
                 if (SelectedDirection == direction || SelectedDirection == TradeDirection.Both)
                 {
-                    var trade = AttemptTrade(minuteCandles, entry, stop, target, startTime, endTime);
-
                     var risk = _compound
                         ? _balance * _riskPercentage / 100
                         : _startBalance * _riskPercentage / 100;
 
+                    var trade = AttemptTrade(minuteCandles, entry, stop, target, startTime, endTime, risk);
+
                     trade.IfExistsThen(t =>
                     {
-                        t.AddProfit(risk / Math.Abs(entry - stop));
-                        UpdateStatistics(t.PointsProfit, t.CashProfit);
+                        t.PointsProfit.IfExistsThen(x =>
+                        {
+                            UpdateStatistics(x, t.CashProfit);
+                        });
+
                         Trades.Add(t);
                     });
                 }

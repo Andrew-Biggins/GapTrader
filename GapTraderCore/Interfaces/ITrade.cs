@@ -1,9 +1,12 @@
 ﻿using System;
+using Foundations.Optional;
 
 namespace GapTraderCore.Interfaces
 {
     public interface ITrade
     {
+        double StrategyEntryLevel { get; }
+
         double StopLevel { get; }
 
         double StopSize { get; }
@@ -12,26 +15,24 @@ namespace GapTraderCore.Interfaces
 
         double OpenLevel { get; }
 
-        double CloseLevel { get; }
+        Optional<double> CloseLevel { get; }
 
         DateTime OpenTime { get; }
 
-        DateTime CloseTime { get; }
+        Optional<DateTime> CloseTime { get; }
 
-        double PointsProfit { get; }
+        Optional<double> PointsProfit { get; }
 
         double CashProfit { get; }
-
-        void AddProfit(double size);
 
         FibonacciLevel TargetFibLevel { get; set; }
 
         FibonacciLevel OpenFibLevel { get; set; }
 
-        double WinProbability { get; set; }
-
         TradeDirection Direction { get; }
 
         double EntrySlippage { get; }
+
+        double Size { get; }
     }
 }

@@ -2,9 +2,9 @@
 
 namespace GapTraderWPF
 {
-    public partial class DataSaveNameWindow : Window
+    public partial class GetNameWindow : Window
     {
-        public DataSaveNameWindow()
+        public GetNameWindow()
         {
             InitializeComponent();
         }

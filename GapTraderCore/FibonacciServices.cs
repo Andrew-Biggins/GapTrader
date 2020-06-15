@@ -46,5 +46,47 @@ namespace GapTraderCore
 
             return dictionary;
         }
+
+        public static Dictionary<FibonacciLevel, FibLevel> NewFibExtensionDictionary()
+        {
+            var dictionary = new Dictionary<FibonacciLevel, FibLevel>();
+
+            var extensions = (FibonacciLevel[])Enum.GetValues(typeof(FibonacciLevel));
+
+            for (var i = FirstFibExtensionIndex; i <= LastFibExtensionIndex; i++)
+            {
+                dictionary.Add(extensions[i], new FibLevel((double)extensions[i]));
+            }
+
+            return dictionary;
+        }
+
+        public static List<FibonacciLevel> GetFibRetraceLevels()
+        {
+            var retraces = new List<FibonacciLevel>();
+
+            var fibs = (FibonacciLevel[])Enum.GetValues(typeof(FibonacciLevel));
+
+            for (var i = FirstFibRetraceIndex; i <= LastFibRetraceIndex; i++)
+            {
+                retraces.Add(fibs[i]);
+            }
+
+            return retraces;
+        }
+
+        public static List<FibonacciLevel> GetFibExtensionLevels()
+        {
+            var extensions = new List<FibonacciLevel>();
+
+            var fibs = (FibonacciLevel[])Enum.GetValues(typeof(FibonacciLevel));
+
+            for (var i = FirstFibExtensionIndex; i <= LastFibExtensionIndex; i++)
+            {
+                extensions.Add(fibs[i]);
+            }
+
+            return extensions;
+        }
     }
 }

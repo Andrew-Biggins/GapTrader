@@ -20,29 +20,49 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Center">
-        <Grid ShowGridLines="True" Background="Transparent" MouseLeftButtonUp="OnMouseLeftButtonUpOnStrategyResults">
+    <Border BorderBrush="White" BorderThickness="1" HorizontalAlignment="Stretch">
+        <Grid Background="Transparent" MouseLeftButtonUp="OnMouseLeftButtonUpOnStrategyResults">
             <Grid.RowDefinitions>
                 <RowDefinition Height="35" />
-                <RowDefinition Height="30" />
+                <RowDefinition Height="20" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="35"/>
-                <ColumnDefinition Width="35"/>
-                <ColumnDefinition Width="35"/>
-                <ColumnDefinition Width="60"/>
-                <ColumnDefinition Width="65"/>
-                <ColumnDefinition Width="65"/>
-                <ColumnDefinition Width="65"/>
-                <ColumnDefinition Width="60"/>
-                <ColumnDefinition Width="60"/>
-                <ColumnDefinition Width="33"/>
-                <ColumnDefinition Width="33"/>
-                <ColumnDefinition Width="50"/>
-                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="Trades" ToolTip="Number of Trades"/>
+            <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="13" Background="BurlyWood"
+                    BorderThickness="1" BorderBrush="White" Margin="0,-1,0,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Trades" ToolTip="Number of Trades"/>
             <TextBlock Grid.Column="1" Grid.Row="0" Text="Wins" ToolTip="Wins"/>
             <TextBlock Grid.Column="2" Grid.Row="0" Text="Loses" ToolTip="Loses"/>
             <TextBlock Grid.Column="3" Grid.Row="0" Text="Win Probability" TextAlignment="Center"
@@ -61,20 +81,21 @@
             <TextBlock Grid.Column="10" Grid.Row="0" Text="LLS" ToolTip="Longest Losing Streak" />
             <TextBlock Grid.Column="11" Grid.Row="0" Text="Profit Factor" ToolTip="Profit Factor" TextWrapping="Wrap"/>
             <TextBlock Grid.Column="12" Grid.Row="0" Text="Expectancy" ToolTip="Expectancy" />
-
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding TradeCount, Mode=OneWay}" />
-            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Wins, Mode=OneWay}" />
-            <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Loses, Mode=OneWay}" />
-            <TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding WinProbability, Mode=OneWay}" />
-            <TextBlock Grid.Row="1" Grid.Column="4" Text="{Binding PointsProfit, Mode=OneWay}" />
-            <TextBlock Grid.Row="1" Grid.Column="5" Text="{Binding CashProfit, Mode=OneWay}" />
-            <TextBlock Grid.Row="1" Grid.Column="6" Text="{Binding BiggestWin, Mode=OneWay}" />
-            <TextBlock Grid.Row="1" Grid.Column="7" Text="{Binding AverageWin, Mode=OneWay}" />
-            <TextBlock Grid.Row="1" Grid.Column="8" Text="{Binding AverageLoss, Mode=OneWay}" />
-            <TextBlock Grid.Row="1" Grid.Column="9" Text="{Binding LongestWinningStreak, Mode=OneWay}" />
-            <TextBlock Grid.Row="1" Grid.Column="10" Text="{Binding LongestLosingStreak, Mode=OneWay}" />
-            <TextBlock Grid.Row="1" Grid.Column="11" Text="{Binding ProfitFactor, Mode=OneWay}" />
-            <TextBlock Grid.Row="1" Grid.Column="12" Text="{Binding Expectancy, Mode=OneWay}" />
+                    </Grid>
+            </Border>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding TradeCount, Mode=OneWay}" Foreground="White" />
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Wins, Mode=OneWay}" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Loses, Mode=OneWay}" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding WinProbability, Mode=OneWay}" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="4" Text="{Binding PointsProfit, Mode=OneWay}" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="5" Text="{Binding CashProfit, Mode=OneWay}" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="6" Text="{Binding BiggestWin, Mode=OneWay}" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="7" Text="{Binding AverageWin, Mode=OneWay}" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="8" Text="{Binding AverageLoss, Mode=OneWay}" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="9" Text="{Binding LongestWinningStreak, Mode=OneWay}" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="10" Text="{Binding LongestLosingStreak, Mode=OneWay}" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="11" Text="{Binding ProfitFactor, Mode=OneWay}" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="12" Text="{Binding Expectancy, Mode=OneWay}" Foreground="White"/>
 
 
         </Grid>

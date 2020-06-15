@@ -15,6 +15,8 @@ namespace GapTraderCore
 
         public double GapFillPercentage { get; set; }
 
+        public double GapExtensionPercentage { get; set; }
+
         public bool HasGapBeenFilled { get; set; }
 
         public double FiftyPercentGapFillLevel { get; set; }
@@ -22,10 +24,6 @@ namespace GapTraderCore
         public Optional<DateTime> GapFillDate { get; set; } = Option.None<DateTime>();
 
         public DateTime Date { get; }
-
-        private Gap()
-        {
-        }
 
         public Gap(double previousClose, double open, DateTime date)
         {

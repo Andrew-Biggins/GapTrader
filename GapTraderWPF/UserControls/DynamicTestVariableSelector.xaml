@@ -9,7 +9,7 @@
              xmlns:userControls="clr-namespace:GapTraderWPF.UserControls"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance {x:Type variableSelectors:DynamicTestVariableSelector}}"
-             d:DesignHeight="100" d:DesignWidth="600">
+             d:DesignHeight="100" d:DesignWidth="415">
     <UserControl.Resources>
         <Style TargetType="{x:Type DatePickerTextBox}">
             <Setter Property="Template">
@@ -23,6 +23,11 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -34,9 +39,8 @@
             <ColumnDefinition Width="205"/>
             <ColumnDefinition Width="120"/>
             <ColumnDefinition Width="90"/>
-            <ColumnDefinition Width="185"/>
         </Grid.ColumnDefinitions>
-        <Border BorderBrush="Black" BorderThickness="1" Margin="5"
+        <Border Margin="5"
                 Grid.Row="0" Grid.RowSpan="2">
             <Grid>
                 <Grid.RowDefinitions>

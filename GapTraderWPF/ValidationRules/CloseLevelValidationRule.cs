@@ -1,10 +1,13 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
 using System.Windows.Controls;
 using GapTraderWPF.Helpers;
 
 namespace GapTraderWPF.ValidationRules
 {
-    public sealed class PointsNumberValidationRule : ValidationRule
+    public sealed class CloseLevelValidationRule : ValidationRule
     {
         public ValidationWrapper CanBeNegative { private get; set; } = new ValidationWrapper();
 
@@ -12,7 +15,7 @@ namespace GapTraderWPF.ValidationRules
         {
             if (value == null || string.IsNullOrWhiteSpace(value.ToString()))
             {
-                return new ValidationResult(false, "Value cannot be empty");
+                return ValidationResult.ValidResult;
             }
 
             // Set default value 
@@ -20,8 +23,8 @@ namespace GapTraderWPF.ValidationRules
             {
                 CanBeNegative.Data = false;
             }
-            
-            if(double.TryParse((string)value, out var number))
+
+            if (double.TryParse((string)value, out var number))
             {
                 if (!(bool)CanBeNegative.Data && number < 0)
                 {

@@ -40,7 +40,7 @@ namespace GapTraderCore
             path += "\\Saved Data";
 
             CreateDirectory(path);
-            // todo handle if already exists
+
             MinuteDataFilePath = $"{path}\\{Name}_minute_bid_data.csv";
             DailyDataFilePath = $"{path}\\{Name}_daily_data.csv";
 

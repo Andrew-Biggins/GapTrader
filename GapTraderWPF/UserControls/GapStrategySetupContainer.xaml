@@ -46,11 +46,11 @@
             <ColumnDefinition Width="150"/>
         </Grid.ColumnDefinitions>
         <RadioButton Content="Trade into gap" Grid.Column="0" 
-                     Grid.Row="0"
+                     Grid.Row="0" Foreground="White"
                      HorizontalAlignment="Left" Margin="0,10,0,0" 
                      IsChecked="{Binding TradeIntoGap}"/>
         <RadioButton Content="Trade out of gap" Grid.Column="1" 
-                     Grid.Row="0"
+                     Grid.Row="0" Foreground="White"
                      HorizontalAlignment="Center" Margin="-110,10,0,0" 
                      IsChecked="{Binding TradeIntoGap, Converter={converters:BoolToInverseNullableBoolConverter}}"/>
 
@@ -64,10 +64,10 @@
             <TextBox.Text>
                 <Binding Path="MinimumGapSize"
                          Mode="TwoWay"
-                         UpdateSourceTrigger="PropertyChanged"
+                         UpdateSourceTrigger="LostFocus"
                          Converter="{converters:EmptyDoubleToStringConverter}">
                     <Binding.ValidationRules>
-                        <validationRules:PointsNumberValidationRule/>
+                        <validationRules:MinimumGapSizeValidationRule/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>

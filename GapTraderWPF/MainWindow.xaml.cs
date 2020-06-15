@@ -8,5 +8,10 @@ namespace GapTraderWPF
         {
             InitializeComponent();
         }
+
+        private void MarketDetails_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

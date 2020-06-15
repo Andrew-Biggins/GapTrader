@@ -8,25 +8,17 @@
         xmlns:userControls="clr-namespace:GapTraderWPF.UserControls"
         d:DataContext="{d:DesignInstance {x:Type viewModels:MainViewModel}}"
         mc:Ignorable="d"
-        Title="Gap Trader" Height="750" Width="1450"
-        MinWidth="1335" MinHeight="750" >
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="370" />
-            <RowDefinition Height="284" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="580"/>
-            <ColumnDefinition Width="850"/>
-        </Grid.ColumnDefinitions>
-       
-        <userControls:MarketDetails DataContext="{Binding MarketDetailsViewModel}"
-                                    Grid.Row="0" Grid.Column="0" Margin="5,0,5,0"/> 
-
-        <userControls:GapFillStats DataContext="{Binding GapFillStatsViewModel}" 
-                                   Grid.Row="1" Grid.Column="0" Margin="5,10,0,0" />
-
-        <views:StrategyTesterView DataContext="{Binding StrategyTesterViewModel}"
-                                  Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Margin="0,0,5,0" />
-    </Grid>
+        Title="Gap Trader" Height="750" Width="1200"
+        MinWidth="1200" MinHeight="750" >
+    <TabControl>
+        <TabItem Header="Market Details">
+            <views:MarketDetailsView DataContext="{Binding MarketDetailsViewModel}"/>
+        </TabItem>
+        <TabItem Header="Strategy Tester">
+            <views:StrategyTesterView DataContext="{Binding StrategyTesterViewModel}"/>
+        </TabItem>
+        <TabItem Header="Trade Journal">
+            <views:TradeJournalView DataContext="{Binding TradeJournalViewModel}"/>
+        </TabItem>
+    </TabControl>
 </Window>

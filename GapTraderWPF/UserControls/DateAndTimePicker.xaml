@@ -23,7 +23,7 @@
 
         </Style>
     </UserControl.Resources>
-    <Border BorderBrush="Black" BorderThickness="1">
+    <Border BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="15" />

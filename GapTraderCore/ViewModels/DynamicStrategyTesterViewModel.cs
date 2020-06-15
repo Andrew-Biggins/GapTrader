@@ -198,7 +198,7 @@ namespace GapTraderCore.ViewModels
             {
                 dynamicTester.Strategy.Trades[0].OpenFibLevel = (FibonacciLevel)strategy.Entry;
                 dynamicTester.Strategy.Trades[0].TargetFibLevel = (FibonacciLevel)strategy.Target;
-                dynamicTester.Strategy.Trades[0].WinProbability = strategy.Stats.WinProbability;
+            //    dynamicTester.Strategy.Trades[0].WinProbability = strategy.Stats.WinProbability;
                 _tempTrades.Add(dynamicTester.Strategy.Trades[0]);
                 Balance += dynamicTester.Strategy.Trades[0].CashProfit;
             }

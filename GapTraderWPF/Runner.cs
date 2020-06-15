@@ -24,12 +24,22 @@ namespace GapTraderWPF
             });
         }
 
-        public void GetSaveName(object sender)
+        public void GetName(object sender, string title)
         {
             _context.Send(_ =>
             {
                 var owner = GetOwner(sender);
-                var window = new DataSaveNameWindow { DataContext = sender, Owner = owner };
+                var window = new GetNameWindow { DataContext = sender, Owner = owner, Title = title};
+                window.ShowDialog();
+            });
+        }
+
+        public void GetStrategyDetails(object sender)
+        {
+            _context.Send(_ =>
+            {
+                var owner = GetOwner(sender);
+                var window = new AddStrategyWindow { DataContext = sender, Owner = owner };
                 window.ShowDialog();
             });
         }
@@ -50,6 +60,16 @@ namespace GapTraderWPF
             {
                 var owner = GetOwner(sender);
                 var window = new UploadDataWindow { DataContext = sender, Owner = owner };
+                window.ShowDialog();
+            });
+        }
+
+        public void GetTradeDetails(object sender)
+        {
+            _context.Send(_ =>
+            {
+                var owner = GetOwner(sender);
+                var window = new AddTradeWindow { DataContext = sender, Owner = owner };
                 window.ShowDialog();
             });
         }

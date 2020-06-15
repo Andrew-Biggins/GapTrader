@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using GapTraderCore.Interfaces;
 using GapTraderCore.StrategyTesters;
 using GapTraderCore.TradeCalculators;
@@ -33,13 +34,10 @@ namespace GapTraderCore.ViewModels
             }
         }
 
-        public GapFillStrategyTesterViewModel()
-        {
-        }
-
         public GapFillStrategyTesterViewModel(IMarket market, IRunner runner) : base(market, runner)
         {
             StrategyTester.PropertyChanged += OnStrategyTesterDataChanged;
+            Market.PropertyChanged += OnMarketDataChanged;
             VerifyInputs();
         }
 
@@ -51,6 +49,12 @@ namespace GapTraderCore.ViewModels
             StrategyTester.SetSizing(AccountSizer.AccountStartSize, AccountSizer.RiskPercentage, AccountSizer.Compound);
             StrategyTester.TestStrategy(Market, filters, MinimumGapSize);
             StrategyResultsStatsViewModel = new StrategyResultsStatsViewModel(StrategyTester.Strategy, Runner);
+        }
+
+        private void OnMarketDataChanged(object sender, PropertyChangedEventArgs e)
+        {
+            VerifyInputs();
+            UpdateFilters();
         }
 
         private void OnStrategyTesterDataChanged(object sender, PropertyChangedEventArgs e)

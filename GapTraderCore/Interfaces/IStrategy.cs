@@ -15,5 +15,9 @@ namespace GapTraderCore.Interfaces
         List<ITrade> Trades { get; }
 
         string Title { get; }
+
+        void UpdateStats();
+
+        bool IsSelected { get; set; }
     }
 }

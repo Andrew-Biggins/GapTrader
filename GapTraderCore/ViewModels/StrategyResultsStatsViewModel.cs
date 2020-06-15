@@ -41,6 +41,39 @@ namespace GapTraderCore.ViewModels
             
         }
 
+        public StrategyResultsStatsViewModel(StrategyStats stats)
+        {
+            TradeCount = $"{stats.TradeCount}";
+            Wins = $"{stats.Wins}";
+            Loses = $"{stats.Loses}";
+            LongestWinningStreak = $"{stats.LongestWinningStreak}";
+            LongestLosingStreak = $"{stats.LongestLosingStreak}";
+            PointsProfit = $"{stats.PointsTotal:N1}";
+            CashProfit = $"{stats.CashProfit:N1}";
+            BiggestWin = $"{stats.BiggestCashWin:N1}";
+
+            AverageLoss = double.IsNaN(stats.AveragePointsLoss)
+                ? "---"
+                : $"{stats.AveragePointsLoss:N1}";
+
+            AverageWin = double.IsNaN(stats.AverageCashWin)
+                ? "---"
+                : $"{stats.AverageCashWin:N1}";
+
+            WinProbability = double.IsNaN(stats.WinProbability)
+                ? "---"
+                : $"{stats.WinProbability:P}";
+
+            ProfitFactor = double.IsNaN(stats.ProfitFactor) ||
+                           double.IsInfinity(stats.ProfitFactor)
+                ? "---"
+                : $"{stats.ProfitFactor:N1}";
+
+            Expectancy = double.IsNaN(stats.Expectancy)
+                ? "---"
+                : $"{stats.Expectancy:N1}";
+        }
+
         public StrategyResultsStatsViewModel(IStrategy strategy, IRunner runner)
         {
             _runner = runner;

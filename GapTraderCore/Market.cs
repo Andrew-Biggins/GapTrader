@@ -23,11 +23,36 @@ namespace GapTraderCore
 
         public List<Gap> UnfilledGaps { get; } = new List<Gap>();
 
-        public Dictionary<FibonacciLevel, FibLevel> GapFibLevels { get; private set; }
+        public Dictionary<FibonacciLevel, FibLevel> GapFibRetraceLevels { get; private set; }
+
+        public Dictionary<FibonacciLevel, FibLevel> GapFibExtensionLevels { get; private set; }
 
         public DataDetails DataDetails { get; private set; }
 
         public bool IsUkData { get; set; }
+
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set
+            {
+                value =! _isSelected;
+                _isSelected = value;
+            }
+        }
+
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (value != _name)
+                {
+                    _name = value;
+                    PropertyChanged.Raise(this, nameof(Name));
+                }
+            }
+        }
 
         public void DeriveDailyFromMinute(Del counter)
         {
@@ -81,7 +106,8 @@ namespace GapTraderCore
             DailyCandles.Clear();
             MinuteData.Clear();
             UnfilledGaps.Clear();
-            GapFibLevels = NewFibRetraceDictionary();
+            GapFibRetraceLevels = NewFibRetraceDictionary();
+            GapFibExtensionLevels = NewFibExtensionDictionary();
         }
 
         public void CalculateStats(bool ukData, Optional<double> previousClose)
@@ -89,7 +115,7 @@ namespace GapTraderCore
             IsUkData = ukData;
 
             CalculateGaps(previousClose);
-            CalculateGapFillPercentages();
+            CalculateGapFillAndExtensionPercentages();
             UpdateGapFilledFlags();
             CalculateFiftyPercentGapFillLevels();
             CalculateGapLevelNextDayHitPercentages();
@@ -128,6 +154,15 @@ namespace GapTraderCore
 
         private void CalculateGapLevelNextDayHitPercentages()
         {
+            var threeHundredAndSixtyOnePointEightCount = 0;
+            var threeHundredCount = 0;
+            var twoHundredAndSixtyOnePointEightCount = 0;
+            var twoHundredAndFortyOnePointFourCount = 0;
+            var twoHundredAndTwentySevenPointOneCount = 0;
+            var twoHundredCount = 0;
+            var oneHundredAndSixtyOnePointEightCount = 0;
+            var oneHundredAndFortyOnePointFourCount = 0;
+            var oneHundredAndTwentySevenPointOneCount = 0;
             var fivePointNineCount = 0;
             var elevenPointFourCount = 0;
             var twentyThreePointSixCount = 0;
@@ -141,6 +176,42 @@ namespace GapTraderCore
 
             foreach (var candle in DailyCandles)
             {
+                if (candle.Gap.GapExtensionPercentage > 127.1)
+                {
+                    oneHundredAndTwentySevenPointOneCount++;
+                }
+                if (candle.Gap.GapExtensionPercentage > 141.4)
+                {
+                    oneHundredAndFortyOnePointFourCount++;
+                }
+                if (candle.Gap.GapExtensionPercentage > 161.8)
+                {
+                    oneHundredAndSixtyOnePointEightCount++;
+                }
+                if (candle.Gap.GapExtensionPercentage > 200)
+                {
+                    twoHundredCount++;
+                }
+                if (candle.Gap.GapExtensionPercentage > 227.1)
+                {
+                    twoHundredAndTwentySevenPointOneCount++;
+                }
+                if (candle.Gap.GapExtensionPercentage > 241.4)
+                {
+                    twoHundredAndFortyOnePointFourCount++;
+                }
+                if (candle.Gap.GapExtensionPercentage > 261.8)
+                {
+                    twoHundredAndSixtyOnePointEightCount++;
+                }
+                if (candle.Gap.GapExtensionPercentage > 300)
+                {
+                    threeHundredCount++;
+                }
+                if (candle.Gap.GapExtensionPercentage > 361.8)
+                {
+                    threeHundredAndSixtyOnePointEightCount++;
+                }
                 if (candle.Gap.GapFillPercentage > 5.9)
                 {
                     fivePointNineCount++;
@@ -185,23 +256,33 @@ namespace GapTraderCore
 
             var multiplier = 100 / (double)DailyCandles.Count;
 
-            GapFibLevels[FibonacciLevel.FivePointNine].NextDayHitPercentage = fivePointNineCount * multiplier;
-            GapFibLevels[FibonacciLevel.ElevenPointFour].NextDayHitPercentage = elevenPointFourCount * multiplier;
-            GapFibLevels[FibonacciLevel.TwentyThreePointSix].NextDayHitPercentage = twentyThreePointSixCount * multiplier;
-            GapFibLevels[FibonacciLevel.ThirtyEightPointTwo].NextDayHitPercentage = thirtyEightPointTwoCount * multiplier;
-            GapFibLevels[FibonacciLevel.Fifty].NextDayHitPercentage = fiftyCount * multiplier;
-            GapFibLevels[FibonacciLevel.SixtyOnePointEight].NextDayHitPercentage = sixtyOnePointEightCount * multiplier;
-            GapFibLevels[FibonacciLevel.SeventyEightPointSix].NextDayHitPercentage = seventyEightPointSixCount * multiplier;
-            GapFibLevels[FibonacciLevel.EightyEightPointSix].NextDayHitPercentage = eightyEightPointSixCount * multiplier;
-            GapFibLevels[FibonacciLevel.NinetyFourPointOne].NextDayHitPercentage = ninetyFourPointOneCount * multiplier;
-            GapFibLevels[FibonacciLevel.OneHundred].NextDayHitPercentage = oneHundredCount * multiplier;
+            GapFibExtensionLevels[FibonacciLevel.OneHundredAndTwentySevenPointOne].NextDayHitPercentage = oneHundredAndTwentySevenPointOneCount * multiplier;
+            GapFibExtensionLevels[FibonacciLevel.OneHundredAndFortyOnePointFour].NextDayHitPercentage = oneHundredAndFortyOnePointFourCount * multiplier;
+            GapFibExtensionLevels[FibonacciLevel.OneHundredAndSixtyOnePointEight].NextDayHitPercentage = oneHundredAndSixtyOnePointEightCount * multiplier;
+            GapFibExtensionLevels[FibonacciLevel.TwoHundred].NextDayHitPercentage = twoHundredCount * multiplier;
+            GapFibExtensionLevels[FibonacciLevel.TwoHundredAndTwentySevenPointOne].NextDayHitPercentage = twoHundredAndTwentySevenPointOneCount * multiplier;
+            GapFibExtensionLevels[FibonacciLevel.TwoHundredAndFortyOnePointFour].NextDayHitPercentage = twoHundredAndFortyOnePointFourCount * multiplier;
+            GapFibExtensionLevels[FibonacciLevel.TwoHundredAndSixtyOnePointEight].NextDayHitPercentage = twoHundredAndSixtyOnePointEightCount * multiplier;
+            GapFibExtensionLevels[FibonacciLevel.ThreeHundred].NextDayHitPercentage = threeHundredCount * multiplier;
+            GapFibExtensionLevels[FibonacciLevel.ThreeHundredAndSixtyOnePointEight].NextDayHitPercentage = threeHundredAndSixtyOnePointEightCount * multiplier;
+
+            GapFibRetraceLevels[FibonacciLevel.FivePointNine].NextDayHitPercentage = fivePointNineCount * multiplier;
+            GapFibRetraceLevels[FibonacciLevel.ElevenPointFour].NextDayHitPercentage = elevenPointFourCount * multiplier;
+            GapFibRetraceLevels[FibonacciLevel.TwentyThreePointSix].NextDayHitPercentage = twentyThreePointSixCount * multiplier;
+            GapFibRetraceLevels[FibonacciLevel.ThirtyEightPointTwo].NextDayHitPercentage = thirtyEightPointTwoCount * multiplier;
+            GapFibRetraceLevels[FibonacciLevel.Fifty].NextDayHitPercentage = fiftyCount * multiplier;
+            GapFibRetraceLevels[FibonacciLevel.SixtyOnePointEight].NextDayHitPercentage = sixtyOnePointEightCount * multiplier;
+            GapFibRetraceLevels[FibonacciLevel.SeventyEightPointSix].NextDayHitPercentage = seventyEightPointSixCount * multiplier;
+            GapFibRetraceLevels[FibonacciLevel.EightyEightPointSix].NextDayHitPercentage = eightyEightPointSixCount * multiplier;
+            GapFibRetraceLevels[FibonacciLevel.NinetyFourPointOne].NextDayHitPercentage = ninetyFourPointOneCount * multiplier;
+            GapFibRetraceLevels[FibonacciLevel.OneHundred].NextDayHitPercentage = oneHundredCount * multiplier;
         }
 
-        private void CalculateGapFibLevelPreHitAdverseExcursions()
+        private void CalculateGapFibLevelPreHitAdverseExcursions() // todo rename this
         {
             var retraces = (FibonacciLevel[])Enum.GetValues(typeof(FibonacciLevel));
 
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < 19; i++)
             {
                 var hitCount = 0;
                 double preHitMaxTotal = 0;
@@ -216,9 +297,12 @@ namespace GapTraderCore
 
                 foreach (var dailyCandle in DailyCandles)
                 {
-                    var level = dailyCandle.Open - dailyCandle.Gap.GapPoints * ((double)retraces[i] / 1000);
+                    var level = i < 10
+                        ? dailyCandle.Open - dailyCandle.Gap.GapPoints * ((double) retraces[i] / 1000)
+                        : dailyCandle.Open + dailyCandle.Gap.GapPoints * ((double) retraces[i] / 1000 - 1);
 
-                    if (MinuteData.TryGetValue(dailyCandle.Date, out var minuteCandles))
+
+                    if (MinuteData.TryGetValue(dailyCandle.Date.Date, out var minuteCandles))
                     {
                         // todo this isn't working. Post MFA on Dax
                         var excursions = CompareMinuteData(minuteCandles, dailyCandle, level, false);
@@ -253,24 +337,39 @@ namespace GapTraderCore
                     }
                 }
 
-                if (GapFibLevels.TryGetValue(retraces[i], out var fibLevel))
+                if (GapFibRetraceLevels.TryGetValue(retraces[i], out var retraceLevel)) // todo refactor this
                 {
-                    fibLevel.AveragePreHitAdverseExcursion = preHitMaxTotal / hitCount;
-                    fibLevel.HighestPreHitAdverseExcursion = highestPreHitMax;
-                    fibLevel.DateOfHighestPreHitAdverseExcursion = highestPreHitMaxDate;
+                    retraceLevel.AveragePreHitAdverseExcursion = preHitMaxTotal / hitCount;
+                    retraceLevel.HighestPreHitAdverseExcursion = highestPreHitMax;
+                    retraceLevel.DateOfHighestPreHitAdverseExcursion = highestPreHitMaxDate;
 
-                    fibLevel.AveragePostHitFavourableExcursion = postHitMaxFavourableTotal / hitCount;
-                    fibLevel.HighestPostHitFavourableExcursion = highestPostHitMaxFavourable;
-                    fibLevel.DateOfHighestPostHitFavourableExcursion = highestPostHitMaxFavourableDate;
+                    retraceLevel.AveragePostHitFavourableExcursion = postHitMaxFavourableTotal / hitCount;
+                    retraceLevel.HighestPostHitFavourableExcursion = highestPostHitMaxFavourable;
+                    retraceLevel.DateOfHighestPostHitFavourableExcursion = highestPostHitMaxFavourableDate;
 
-                    fibLevel.AveragePostHitAdverseExcursion = postHitMaxAdverseTotal / hitCount;
-                    fibLevel.HighestPostHitAdverseExcursion = highestPostHitMaxAdverse;
-                    fibLevel.DateOfHighestPostHitAdverseExcursion = highestPostHitMaxAdverseDate;
+                    retraceLevel.AveragePostHitAdverseExcursion = postHitMaxAdverseTotal / hitCount;
+                    retraceLevel.HighestPostHitAdverseExcursion = highestPostHitMaxAdverse;
+                    retraceLevel.DateOfHighestPostHitAdverseExcursion = highestPostHitMaxAdverseDate;
+                }
+
+                if (GapFibExtensionLevels.TryGetValue(retraces[i], out var extensionLevel))
+                {
+                    extensionLevel.AveragePreHitAdverseExcursion = preHitMaxTotal / hitCount;
+                    extensionLevel.HighestPreHitAdverseExcursion = highestPreHitMax;
+                    extensionLevel.DateOfHighestPreHitAdverseExcursion = highestPreHitMaxDate;
+
+                    extensionLevel.AveragePostHitFavourableExcursion = postHitMaxFavourableTotal / hitCount;
+                    extensionLevel.HighestPostHitFavourableExcursion = highestPostHitMaxFavourable;
+                    extensionLevel.DateOfHighestPostHitFavourableExcursion = highestPostHitMaxFavourableDate;
+
+                    extensionLevel.AveragePostHitAdverseExcursion = postHitMaxAdverseTotal / hitCount;
+                    extensionLevel.HighestPostHitAdverseExcursion = highestPostHitMaxAdverse;
+                    extensionLevel.DateOfHighestPostHitAdverseExcursion = highestPostHitMaxAdverseDate;
                 }
             }
         }
 
-        private void CalculateGapFillPercentages()
+        private void CalculateGapFillAndExtensionPercentages()
         {
             foreach (var candle in DailyCandles)
             {
@@ -279,6 +378,12 @@ namespace GapTraderCore
                     : (candle.Open - candle.Low) / candle.Gap.GapPoints * 100;
 
                 candle.Gap.GapFillPercentage = gfp > 100 ? 100 : gfp;
+
+                var gep = candle.Gap.GapPoints < 0
+                    ? (candle.Low - candle.Open) / (candle.Gap.GapPoints * -1) * 100 + 100
+                    : (candle.High - candle.Open) / candle.Gap.GapPoints * 100 + 100;
+
+                candle.Gap.GapExtensionPercentage = gep < 0 ? 0 : gep;
             }
         }
 
@@ -340,7 +445,7 @@ namespace GapTraderCore
             var startDate = DateTime.MinValue;
             var endDate = DateTime.MaxValue;
 
-            foreach (var dailyCandle in DailyCandles.Where(dailyCandle => MinuteData.ContainsKey(dailyCandle.Date)))
+            foreach (var dailyCandle in DailyCandles.Where(dailyCandle => MinuteData.ContainsKey(dailyCandle.Date.Date)))
             {
                 startDate = dailyCandle.Date;
                 break;
@@ -348,7 +453,7 @@ namespace GapTraderCore
 
             for (var i = DailyCandles.Count - 1; i > 0; i--)
             {
-                if (MinuteData.ContainsKey(DailyCandles[i].Date))
+                if (MinuteData.ContainsKey(DailyCandles[i].Date.Date))
                 {
                     endDate = DailyCandles[i].Date;
                     break;
@@ -363,7 +468,7 @@ namespace GapTraderCore
 
             while (date <= endDate)
             {
-                if (MinuteData.TryGetValue(date, out var minuteCandles))
+                if (MinuteData.TryGetValue(date.Date, out var minuteCandles))
                 {
                     foreach (var candle in minuteCandles.Where(candle => candle.IsCash))
                     {
@@ -398,5 +503,7 @@ namespace GapTraderCore
         }
 
         private double _averageGapSize;
+        private string _name = "No Data";
+        private bool _isSelected;
     }
 }

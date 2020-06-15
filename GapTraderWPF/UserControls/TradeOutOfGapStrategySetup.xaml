@@ -35,6 +35,7 @@
             <Setter Property="Width" Value="40" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
         </Style>
+        
     </UserControl.Resources>
 
     <Grid>
@@ -44,7 +45,7 @@
             <ColumnDefinition Width="185"/>
         </Grid.ColumnDefinitions>
 
-        <Border BorderBrush="Black" BorderThickness="1" Margin="0,0,5,0">
+        <Border BorderBrush="White" BorderThickness="1" Margin="0,0,5,0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20" />
@@ -94,6 +95,7 @@
                     <ComboBoxItem Content="78.6%" />
                     <ComboBoxItem Content="88.6%" />
                     <ComboBoxItem Content="94.1%" />
+                    <ComboBoxItem Content="100%" />
                 </ComboBox>
 
                 <TextBox 
@@ -108,7 +110,7 @@
                     <TextBox.Text >
                         <Binding Path="PointsEntry"
                              Mode="TwoWay"
-                            UpdateSourceTrigger="PropertyChanged"
+                            UpdateSourceTrigger="LostFocus"
                              Converter="{converters:EmptyDoubleToStringConverter}">
                             <Binding.ValidationRules>
                                 <validationRules:PointsNumberValidationRule>
@@ -127,7 +129,7 @@
 
         <local:StopSizeSetter Grid.Column="1"/>
 
-        <Border BorderBrush="Black" BorderThickness="1" 
+        <Border BorderBrush="White" BorderThickness="1" 
                 Grid.Column="2" Grid.Row="0" Margin="5,0,0,0">
             <Grid>
                 <Grid.RowDefinitions>
@@ -190,7 +192,7 @@
                     <TextBox.Text>
                         <Binding Path="PointsTarget"
                              Mode="TwoWay"
-                             UpdateSourceTrigger="PropertyChanged"
+                             UpdateSourceTrigger="LostFocus"
                              Converter="{converters:EmptyDoubleToStringConverter}">
                             <Binding.ValidationRules>
                                 <validationRules:PointsNumberValidationRule>

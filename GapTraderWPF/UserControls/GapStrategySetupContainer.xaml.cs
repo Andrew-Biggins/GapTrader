@@ -8,5 +8,10 @@ namespace GapTraderWPF.UserControls
         {
             InitializeComponent();
         }
+
+        private void AccountSizer_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+
+        }
     }
 }

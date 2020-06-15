@@ -122,6 +122,20 @@ namespace GapTraderCore
             File.WriteAllText(filePath, csv.ToString());
         }
 
+        public static string[] WriteSafeReadAllLines(string path)
+        {
+            using var csv = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            using var sr = new StreamReader(csv);
+            var file = new List<string>();
+
+            while (!sr.EndOfStream)
+            {
+                file.Add(sr.ReadLine());
+            }
+
+            return file.ToArray();
+        }
+
         private static TextFieldParser SetUpParser(string filePath)
         {
             var csvParser = new TextFieldParser(filePath) { CommentTokens = new[] { "#" } };

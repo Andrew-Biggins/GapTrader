@@ -37,11 +37,8 @@ namespace GapTraderCore.ViewModels
             StrategyTester = strategyTester;
             Market = market;
             AccountSizer = accountSizer;
-
-            if (Market.DailyCandles.Count != 0)
-            {
-                SearchEnabled = true;
-            }
+            Market.PropertyChanged += (s, e) => CheckDataExists();
+            CheckDataExists();
         }
 
         public void UpdateTester(GapFillStrategyTester tester)
@@ -87,6 +84,14 @@ namespace GapTraderCore.ViewModels
             }
 
             return (entryStartIndex, entryEndIndex, targetStartIndex, targetEndIndex);
+        }
+
+        private void CheckDataExists()
+        {
+            if (Market.DailyCandles.Count != 0)
+            {
+                SearchEnabled = true;
+            }
         }
 
         protected readonly IRunner Runner;

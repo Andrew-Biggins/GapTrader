@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Drawing;
+using Foundations.Optional;
 using GapTraderCore.Interfaces;
 
 namespace GapTraderCore.Trades
 {
-    public struct Trade : ITrade
+    public class Trade : ITrade
     {
+        public double StrategyEntryLevel { get; }
+
         public double StopLevel { get; }
 
         public double StopSize { get; }
@@ -17,25 +21,32 @@ namespace GapTraderCore.Trades
 
         public FibonacciLevel OpenFibLevel { get; set; }
 
-        public double CloseLevel { get; }
+        public Optional<double> CloseLevel { get; }
 
         public DateTime OpenTime { get; }
 
-        public DateTime CloseTime { get; }
+        public Optional<DateTime> CloseTime { get; }
 
-        public double PointsProfit { get; }
+        public Optional<double> PointsProfit { get; private set; } = Option.None<double>();
 
         public double CashProfit { get; private set; }
-
-        public double WinProbability { get; set; }
 
         public TradeDirection Direction { get; }
 
         public double EntrySlippage { get; }
 
-        public Trade(double stop, double target, double openLevel, double closeLevel, DateTime openTime,
-            DateTime closeTime, double pointsProfit, double entrySlippage, TradeDirection direction)
+        public double Size { get; }
+
+        public double RiskRewardRatio { get; }
+
+        public Optional<double> ResultInR { get; private set; } = Option.None<double>();
+
+        public Trade(double strategyEntry, double stop, double target, double openLevel, Optional<double> closeLevel, DateTime openTime,
+            Optional<DateTime> closeTime, double size)
         {
+            Direction = target > stop ? TradeDirection.Long : TradeDirection.Short;
+
+            StrategyEntryLevel = strategyEntry;
             StopLevel = stop;
             StopSize = Math.Abs(openLevel - stop);
             Target = target;
@@ -43,19 +54,29 @@ namespace GapTraderCore.Trades
             CloseLevel = closeLevel;
             OpenTime = openTime;
             CloseTime = closeTime;
-            PointsProfit = pointsProfit;
-            WinProbability = 0;
-            CashProfit = 0;
-            Direction = direction;
-            EntrySlippage = entrySlippage;
+            Size = size;
+            RiskRewardRatio = Math.Abs(Target - OpenLevel) / StopSize;
+            EntrySlippage = Direction == TradeDirection.Long
+                ? strategyEntry - openLevel
+                : openLevel - strategyEntry;
+
+            CloseLevel.IfExistsThen(x =>
+            {
+                ResultInR = Option.Some(Math.Abs(x - OpenLevel) / StopSize);
+                if (Direction == TradeDirection.Long)
+                {
+                    PointsProfit = Option.Some(x - openLevel);
+                }
+                else
+                {
+                    PointsProfit = Option.Some(openLevel - x);
+                }
+            });
+
+            PointsProfit.IfExistsThen(x => { CashProfit = Size * x; });
 
             OpenFibLevel = FibonacciLevel.FivePointNine;
             TargetFibLevel = FibonacciLevel.OneHundredAndTwentySevenPointOne;
-        }
-
-        public void AddProfit(double size)
-        {
-            CashProfit = size * PointsProfit;
         }
     }
 }

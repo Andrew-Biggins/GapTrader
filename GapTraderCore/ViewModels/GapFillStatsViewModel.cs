@@ -15,6 +15,16 @@ namespace GapTraderCore.ViewModels
         public string NinetyFourPointOneNextDayHitPercentage { get; } = string.Empty;
         public string OneHundredNextDayHitPercentage { get; } = string.Empty;
 
+        public string OneHundredAndTwentySevenPointOneNextDayHitPercentage { get; } = string.Empty;
+        public string OneHundredAndFortyOnePointFourNextDayHitPercentage { get; } = string.Empty;
+        public string OneHundredAndSixtyOnePointEightNextDayHitPercentage { get; } = string.Empty;
+        public string TwoHundredNextDayHitPercentage { get; } = string.Empty;
+        public string TwoHundredAndTwentySevenPointOneNextDayHitPercentage { get; } = string.Empty;
+        public string TwoHundredAndFortyOnePointFourNextDayHitPercentage { get; } = string.Empty;
+        public string TwoHundredAndSixtyOnePointEightNextDayHitPercentage { get; } = string.Empty;
+        public string ThreeHundredNextDayHitPercentage { get; } = string.Empty;
+        public string ThreeHundredAndSixtyOnePointEightNextDayHitPercentage { get; } = string.Empty;
+
         public string FivePointNineAveragePreHitAdverseExcursion { get; } = string.Empty;
         public string ElevenPointFourAveragePreHitAdverseExcursion { get; } = string.Empty;
         public string TwentyThreePointSixAveragePreHitAdverseExcursion { get; } = string.Empty;
@@ -26,6 +36,16 @@ namespace GapTraderCore.ViewModels
         public string NinetyFourPointOneAveragePreHitAdverseExcursion { get; } = string.Empty;
         public string OneHundredAveragePreHitAdverseExcursion { get; } = string.Empty;
 
+        public string OneHundredAndTwentySevenPointOneAveragePreHitAdverseExcursion { get; } = string.Empty;
+        public string OneHundredAndFortyOnePointFourAveragePreHitAdverseExcursion { get; } = string.Empty;
+        public string OneHundredAndSixtyOnePointEightAveragePreHitAdverseExcursion { get; } = string.Empty;
+        public string TwoHundredAveragePreHitAdverseExcursion { get; } = string.Empty;
+        public string TwoHundredAndTwentySevenPointOneAveragePreHitAdverseExcursion { get; } = string.Empty;
+        public string TwoHundredAndFortyOneAveragePreHitAdverseExcursion { get; } = string.Empty;
+        public string TwoHundredAndSixtyOnePointEightAveragePreHitAdverseExcursion { get; } = string.Empty;
+        public string ThreeHundredAveragePreHitAdverseExcursion { get; } = string.Empty;
+        public string ThreeHundredAndSixtyOnePointEightAveragePreHitAdverseExcursion { get; } = string.Empty;
+
         public string FivePointNineHighestPreHitAdverseExcursion { get; } = string.Empty;
         public string ElevenPointFourHighestPreHitAdverseExcursion { get; } = string.Empty;
         public string TwentyThreePointSixHighestPreHitAdverseExcursion { get; } = string.Empty;
@@ -36,6 +56,16 @@ namespace GapTraderCore.ViewModels
         public string EightyEightPointSixHighestPreHitAdverseExcursion { get; } = string.Empty;
         public string NinetyFourPointOneHighestPreHitAdverseExcursion { get; } = string.Empty;
         public string OneHundredHighestPreHitAdverseExcursion { get; } = string.Empty;
+
+        public string OneHundredAndTwentySevenPointOneHighestPreHitAdverseExcursion { get; } = string.Empty;
+        public string OneHundredAndFortyOnePointFourHighestPreHitAdverseExcursion { get; } = string.Empty;
+        public string OneHundredAndSixtyOnePointEightHighestPreHitAdverseExcursion { get; } = string.Empty;
+        public string TwoHundredHighestPreHitAdverseExcursion { get; } = string.Empty;
+        public string TwoHundredAndTwentySevenPointOneHighestPreHitAdverseExcursion { get; } = string.Empty;
+        public string TwoHundredAndFortyOnePointFourHighestPreHitAdverseExcursion { get; } = string.Empty;
+        public string TwoHundredAndSixtyOnePointEightHighestPreHitAdverseExcursion { get; } = string.Empty;
+        public string ThreeHundredHighestPreHitAdverseExcursion { get; } = string.Empty;
+        public string ThreeHundredAndSixtyOnePointEightHighestPreHitAdverseExcursion { get; } = string.Empty;
 
         public string FivePointNineDateOfHighestPreHitAdverseExcursion { get; } = string.Empty;
         public string ElevenPointFourDateOfHighestPreHitAdverseExcursion { get; } = string.Empty;
@@ -59,6 +89,16 @@ namespace GapTraderCore.ViewModels
         public string NinetyFourPointOneAveragePostHitMaximumAdverseExcursion { get; } = string.Empty;
         public string OneHundredAveragePostHitMaximumAdverseExcursion { get; } = string.Empty;
 
+        public string OneHundredAndTwentySevenPointOneAveragePostHitMaximumAdverseExcursion { get; } = string.Empty;
+        public string OneHundredAndFortyOnePointFourAveragePostHitMaximumAdverseExcursion { get; } = string.Empty;
+        public string OneHundredAndSixtyOnePointEightAveragePostHitMaximumAdverseExcursion { get; } = string.Empty;
+        public string TwoHundredAveragePostHitMaximumAdverseExcursion { get; } = string.Empty;
+        public string TwoHundredAndTwentySevenPointOneAveragePostHitMaximumAdverseExcursion { get; } = string.Empty;
+        public string TwoHundredAndFortyOnePointFourAveragePostHitMaximumAdverseExcursion { get; } = string.Empty;
+        public string TwoHundredAndSixtyOnePointEightAveragePostHitMaximumAdverseExcursion { get; } = string.Empty;
+        public string ThreeHundredAveragePostHitMaximumAdverseExcursion { get; } = string.Empty;
+        public string ThreeHundredAndSixtyOnePointEightAveragePostHitMaximumAdverseExcursion { get; } = string.Empty;
+
         public string FivePointNineHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
         public string ElevenPointFourHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
         public string TwentyThreePointSixHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
@@ -69,6 +109,16 @@ namespace GapTraderCore.ViewModels
         public string EightyEightPointSixHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
         public string NinetyFourPointOneHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
         public string OneHundredHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
+
+        public string OneHundredAndTwentySevenPointOneHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
+        public string OneHundredAndFortyOnePointFourHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
+        public string OneHundredAndSixtyOnePointEightHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
+        public string TwoHundredHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
+        public string TwoHundredAndTwentySevenPointOneHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
+        public string TwoHundredAndFortyOnePointFourHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
+        public string TwoHundredAndSixtyOnePointEightHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
+        public string ThreeHundredHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
+        public string ThreeHundredAndSixtyOnePointEightHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
 
         public string FivePointNineDateOfHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
         public string ElevenPointFourDateOfHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
@@ -92,6 +142,16 @@ namespace GapTraderCore.ViewModels
         public string NinetyFourPointOneAveragePostHitMaximumFavourableExcursion { get; } = string.Empty;
         public string OneHundredAveragePostHitMaximumFavourableExcursion { get; } = string.Empty;
 
+        public string OneHundredAndTwentySevenPointOneAveragePostHitMaximumFavourableExcursion { get; } = string.Empty;
+        public string OneHundredAndFortyOnePointFourAveragePostHitMaximumFavourableExcursion { get; } = string.Empty;
+        public string OneHundredAndSixtyOnePointEightAveragePostHitMaximumFavourableExcursion { get; } = string.Empty;
+        public string TwoHundredAveragePostHitMaximumFavourableExcursion { get; } = string.Empty;
+        public string TwoHundredAndTwentySevenPointOneAveragePostHitMaximumFavourableExcursion { get; } = string.Empty;
+        public string TwoHundredAndFortyOnePointFourAveragePostHitMaximumFavourableExcursion { get; } = string.Empty;
+        public string TwoHundredAndSixtyOnePointEightAveragePostHitMaximumFavourableExcursion { get; } = string.Empty;
+        public string ThreeHundredAveragePostHitMaximumFavourableExcursion { get; } = string.Empty;
+        public string ThreeHundredAndSixtyOnePointEightAveragePostHitMaximumFavourableExcursion { get; } = string.Empty;
+
         public string FivePointNineHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
         public string ElevenPointFourHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
         public string TwentyThreePointSixHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
@@ -102,6 +162,16 @@ namespace GapTraderCore.ViewModels
         public string EightyEightPointSixHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
         public string NinetyFourPointOneHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
         public string OneHundredHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
+
+        public string OneHundredAndTwentySevenPointOneHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
+        public string OneHundredAndFortyOnePointFourHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
+        public string OneHundredAndSixtyOnePointEightHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
+        public string TwoHundredHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
+        public string TwoHundredAndTwentySevenPointOneHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
+        public string TwoHundredAndFortyOnePointFourHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
+        public string TwoHundredAndSixtyOnePointEightHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
+        public string ThreeHundredHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
+        public string ThreeHundredAndSixtyOnePointEightHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
 
         public string FivePointNineDateOfHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
         public string ElevenPointFourDateOfHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
@@ -119,172 +189,305 @@ namespace GapTraderCore.ViewModels
         public GapFillStatsViewModel(IMarket market)
         {
             FivePointNineNextDayHitPercentage =
-                $"{market.GapFibLevels[FibonacciLevel.FivePointNine].NextDayHitPercentage:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.FivePointNine].NextDayHitPercentage:N1}";
             ElevenPointFourNextDayHitPercentage =
-                $"{market.GapFibLevels[FibonacciLevel.ElevenPointFour].NextDayHitPercentage:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.ElevenPointFour].NextDayHitPercentage:N1}";
             TwentyThreePointSixNextDayHitPercentage =
-                $"{market.GapFibLevels[FibonacciLevel.TwentyThreePointSix].NextDayHitPercentage:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.TwentyThreePointSix].NextDayHitPercentage:N1}";
             ThirtyEightPointTwoNextDayHitPercentage =
-                $"{market.GapFibLevels[FibonacciLevel.ThirtyEightPointTwo].NextDayHitPercentage:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.ThirtyEightPointTwo].NextDayHitPercentage:N1}";
             FiftyNextDayHitPercentage =
-                $"{market.GapFibLevels[FibonacciLevel.Fifty].NextDayHitPercentage:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.Fifty].NextDayHitPercentage:N1}";
             SixtyOnePointEightNextDayHitPercentage =
-                $"{market.GapFibLevels[FibonacciLevel.SixtyOnePointEight].NextDayHitPercentage:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.SixtyOnePointEight].NextDayHitPercentage:N1}";
             SeventyEightPointSixNextDayHitPercentage =
-                $"{market.GapFibLevels[FibonacciLevel.SeventyEightPointSix].NextDayHitPercentage:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.SeventyEightPointSix].NextDayHitPercentage:N1}";
             EightyEightPointSixNextDayHitPercentage =
-                $"{market.GapFibLevels[FibonacciLevel.EightyEightPointSix].NextDayHitPercentage:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.EightyEightPointSix].NextDayHitPercentage:N1}";
             NinetyFourPointOneNextDayHitPercentage =
-                $"{market.GapFibLevels[FibonacciLevel.NinetyFourPointOne].NextDayHitPercentage:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.NinetyFourPointOne].NextDayHitPercentage:N1}";
             OneHundredNextDayHitPercentage =
-                $"{market.GapFibLevels[FibonacciLevel.OneHundred].NextDayHitPercentage:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.OneHundred].NextDayHitPercentage:N1}";
+
+            OneHundredAndTwentySevenPointOneNextDayHitPercentage =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndTwentySevenPointOne].NextDayHitPercentage:N1}";
+            OneHundredAndFortyOnePointFourNextDayHitPercentage =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndFortyOnePointFour].NextDayHitPercentage:N1}";
+            OneHundredAndSixtyOnePointEightNextDayHitPercentage =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndSixtyOnePointEight].NextDayHitPercentage:N1}";
+            TwoHundredNextDayHitPercentage =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundred].NextDayHitPercentage:N1}";
+            TwoHundredAndTwentySevenPointOneNextDayHitPercentage =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndTwentySevenPointOne].NextDayHitPercentage:N1}";
+            TwoHundredAndFortyOnePointFourNextDayHitPercentage =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndFortyOnePointFour].NextDayHitPercentage:N1}";
+            TwoHundredAndSixtyOnePointEightNextDayHitPercentage =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndSixtyOnePointEight].NextDayHitPercentage:N1}";
+            ThreeHundredNextDayHitPercentage =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.ThreeHundred].NextDayHitPercentage:N1}";
+            ThreeHundredAndSixtyOnePointEightNextDayHitPercentage =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.ThreeHundredAndSixtyOnePointEight].NextDayHitPercentage:N1}";
 
             FivePointNineAveragePreHitAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.FivePointNine].AveragePreHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.FivePointNine].AveragePreHitAdverseExcursion:N1}";
             ElevenPointFourAveragePreHitAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.ElevenPointFour].AveragePreHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.ElevenPointFour].AveragePreHitAdverseExcursion:N1}";
             TwentyThreePointSixAveragePreHitAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.TwentyThreePointSix].AveragePreHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.TwentyThreePointSix].AveragePreHitAdverseExcursion:N1}";
             ThirtyEightPointTwoAveragePreHitAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.ThirtyEightPointTwo].AveragePreHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.ThirtyEightPointTwo].AveragePreHitAdverseExcursion:N1}";
             FiftyAveragePreHitAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.Fifty].AveragePreHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.Fifty].AveragePreHitAdverseExcursion:N1}";
             SixtyOnePointEightAveragePreHitAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.SixtyOnePointEight].AveragePreHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.SixtyOnePointEight].AveragePreHitAdverseExcursion:N1}";
             SeventyEightPointSixAveragePreHitAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.SeventyEightPointSix].AveragePreHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.SeventyEightPointSix].AveragePreHitAdverseExcursion:N1}";
             EightyEightPointSixAveragePreHitAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.EightyEightPointSix].AveragePreHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.EightyEightPointSix].AveragePreHitAdverseExcursion:N1}";
             NinetyFourPointOneAveragePreHitAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.NinetyFourPointOne].AveragePreHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.NinetyFourPointOne].AveragePreHitAdverseExcursion:N1}";
             OneHundredAveragePreHitAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.OneHundred].AveragePreHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.OneHundred].AveragePreHitAdverseExcursion:N1}";
+
+            OneHundredAndTwentySevenPointOneAveragePreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndTwentySevenPointOne].AveragePreHitAdverseExcursion:N1}";
+            OneHundredAndFortyOnePointFourAveragePreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndFortyOnePointFour].AveragePreHitAdverseExcursion:N1}";
+            OneHundredAndSixtyOnePointEightAveragePreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndSixtyOnePointEight].AveragePreHitAdverseExcursion:N1}";
+            TwoHundredAveragePreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundred].AveragePreHitAdverseExcursion:N1}";
+            TwoHundredAndTwentySevenPointOneAveragePreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndTwentySevenPointOne].AveragePreHitAdverseExcursion:N1}";
+            TwoHundredAndFortyOneAveragePreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndFortyOnePointFour].AveragePreHitAdverseExcursion:N1}";
+            TwoHundredAndSixtyOnePointEightAveragePreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndSixtyOnePointEight].AveragePreHitAdverseExcursion:N1}";
+            ThreeHundredAveragePreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.ThreeHundred].AveragePreHitAdverseExcursion:N1}";
+            ThreeHundredAndSixtyOnePointEightAveragePreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.ThreeHundredAndSixtyOnePointEight].AveragePreHitAdverseExcursion:N1}";
 
             FivePointNineHighestPreHitAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.FivePointNine].HighestPreHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.FivePointNine].HighestPreHitAdverseExcursion:N1}";
             ElevenPointFourHighestPreHitAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.ElevenPointFour].HighestPreHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.ElevenPointFour].HighestPreHitAdverseExcursion:N1}";
             TwentyThreePointSixHighestPreHitAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.TwentyThreePointSix].HighestPreHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.TwentyThreePointSix].HighestPreHitAdverseExcursion:N1}";
             ThirtyEightPointTwoHighestPreHitAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.ThirtyEightPointTwo].HighestPreHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.ThirtyEightPointTwo].HighestPreHitAdverseExcursion:N1}";
             FiftyHighestPreHitAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.Fifty].HighestPreHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.Fifty].HighestPreHitAdverseExcursion:N1}";
             SixtyOnePointEightHighestPreHitAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.SixtyOnePointEight].HighestPreHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.SixtyOnePointEight].HighestPreHitAdverseExcursion:N1}";
             SeventyEightPointSixHighestPreHitAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.SeventyEightPointSix].HighestPreHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.SeventyEightPointSix].HighestPreHitAdverseExcursion:N1}";
             EightyEightPointSixHighestPreHitAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.EightyEightPointSix].HighestPreHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.EightyEightPointSix].HighestPreHitAdverseExcursion:N1}";
             NinetyFourPointOneHighestPreHitAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.NinetyFourPointOne].HighestPreHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.NinetyFourPointOne].HighestPreHitAdverseExcursion:N1}";
             OneHundredHighestPreHitAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.OneHundred].HighestPreHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.OneHundred].HighestPreHitAdverseExcursion:N1}";
+
+            OneHundredAndTwentySevenPointOneHighestPreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndTwentySevenPointOne].HighestPreHitAdverseExcursion:N1}";
+            OneHundredAndFortyOnePointFourHighestPreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndFortyOnePointFour].HighestPreHitAdverseExcursion:N1}";
+            OneHundredAndSixtyOnePointEightHighestPreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndSixtyOnePointEight].HighestPreHitAdverseExcursion:N1}";
+            TwoHundredHighestPreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundred].HighestPreHitAdverseExcursion:N1}";
+            TwoHundredAndTwentySevenPointOneHighestPreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndTwentySevenPointOne].HighestPreHitAdverseExcursion:N1}";
+            TwoHundredAndFortyOnePointFourHighestPreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndFortyOnePointFour].HighestPreHitAdverseExcursion:N1}";
+            TwoHundredAndSixtyOnePointEightHighestPreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndSixtyOnePointEight].HighestPreHitAdverseExcursion:N1}";
+            ThreeHundredHighestPreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.ThreeHundred].HighestPreHitAdverseExcursion:N1}";
+            ThreeHundredAndSixtyOnePointEightHighestPreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.ThreeHundredAndSixtyOnePointEight].HighestPreHitAdverseExcursion:N1}";
 
             //FivePointNineDateOfHighestPreHitAdverseExcursion =
-            //    $"{market.GapFibLevels[FibonacciLevel.FivePointNine].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
+            //    $"{market.GapFibRetraceLevels[FibonacciLevel.FivePointNine].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
             //ElevenPointFourDateOfHighestPreHitAdverseExcursion =
-            //    $"{market.GapFibLevels[FibonacciLevel.ElevenPointFour].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
+            //    $"{market.GapFibRetraceLevels[FibonacciLevel.ElevenPointFour].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
             //TwentyThreePointSixDateOfHighestPreHitAdverseExcursion =
-            //    $"{market.GapFibLevels[FibonacciLevel.TwentyThreePointSix].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
+            //    $"{market.GapFibRetraceLevels[FibonacciLevel.TwentyThreePointSix].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
             //ThirtyEightPointTwoDateOfHighestPreHitAdverseExcursion =
-            //    $"{market.GapFibLevels[FibonacciLevel.ThirtyEightPointTwo].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
+            //    $"{market.GapFibRetraceLevels[FibonacciLevel.ThirtyEightPointTwo].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
             //FiftyDateOfHighestPreHitAdverseExcursion =
-            //    $"{market.GapFibLevels[FibonacciLevel.Fifty].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
+            //    $"{market.GapFibRetraceLevels[FibonacciLevel.Fifty].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
             //SixtyOnePointEightDateOfHighestPreHitAdverseExcursion =
-            //    $"{market.GapFibLevels[FibonacciLevel.SixtyOnePointEight].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
+            //    $"{market.GapFibRetraceLevels[FibonacciLevel.SixtyOnePointEight].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
             //SeventyEightPointSixDateOfHighestPreHitAdverseExcursion =
-            //    $"{market.GapFibLevels[FibonacciLevel.SeventyEightPointSix].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
+            //    $"{market.GapFibRetraceLevels[FibonacciLevel.SeventyEightPointSix].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
             //EightyEightPointSixDateOfHighestPreHitAdverseExcursion =
-            //    $"{market.GapFibLevels[FibonacciLevel.EightyEightPointSix].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
+            //    $"{market.GapFibRetraceLevels[FibonacciLevel.EightyEightPointSix].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
             //NinetyFourPointOneDateOfHighestPreHitAdverseExcursion =
-            //    $"{market.GapFibLevels[FibonacciLevel.NinetyFourPointOne].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
+            //    $"{market.GapFibRetraceLevels[FibonacciLevel.NinetyFourPointOne].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
             //OneHundredDateOfHighestPreHitAdverseExcursion =
-            //    $"{market.GapFibLevels[FibonacciLevel.OneHundred].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
+            //    $"{market.GapFibRetraceLevels[FibonacciLevel.OneHundred].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
 
             FivePointNineAveragePostHitMaximumAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.FivePointNine].AveragePostHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.FivePointNine].AveragePostHitAdverseExcursion:N1}";
             ElevenPointFourAveragePostHitMaximumAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.ElevenPointFour].AveragePostHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.ElevenPointFour].AveragePostHitAdverseExcursion:N1}";
             TwentyThreePointSixAveragePostHitMaximumAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.TwentyThreePointSix].AveragePostHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.TwentyThreePointSix].AveragePostHitAdverseExcursion:N1}";
             ThirtyEightPointTwoAveragePostHitMaximumAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.ThirtyEightPointTwo].AveragePostHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.ThirtyEightPointTwo].AveragePostHitAdverseExcursion:N1}";
             FiftyAveragePostHitMaximumAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.Fifty].AveragePostHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.Fifty].AveragePostHitAdverseExcursion:N1}";
             SixtyOnePointEightAveragePostHitMaximumAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.SixtyOnePointEight].AveragePostHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.SixtyOnePointEight].AveragePostHitAdverseExcursion:N1}";
             SeventyEightPointSixAveragePostHitMaximumAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.SeventyEightPointSix].AveragePostHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.SeventyEightPointSix].AveragePostHitAdverseExcursion:N1}";
             EightyEightPointSixAveragePostHitMaximumAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.EightyEightPointSix].AveragePostHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.EightyEightPointSix].AveragePostHitAdverseExcursion:N1}";
             NinetyFourPointOneAveragePostHitMaximumAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.NinetyFourPointOne].AveragePostHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.NinetyFourPointOne].AveragePostHitAdverseExcursion:N1}";
             OneHundredAveragePostHitMaximumAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.OneHundred].AveragePostHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.OneHundred].AveragePostHitAdverseExcursion:N1}";
+
+            OneHundredAndTwentySevenPointOneAveragePostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndTwentySevenPointOne].AveragePostHitAdverseExcursion:N1}";
+            OneHundredAndFortyOnePointFourAveragePostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndFortyOnePointFour].AveragePostHitAdverseExcursion:N1}";
+            OneHundredAndSixtyOnePointEightAveragePostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndSixtyOnePointEight].AveragePostHitAdverseExcursion:N1}";
+            TwoHundredAveragePostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundred].AveragePostHitAdverseExcursion:N1}";
+            TwoHundredAndTwentySevenPointOneAveragePostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndTwentySevenPointOne].AveragePostHitAdverseExcursion:N1}";
+            TwoHundredAndFortyOnePointFourAveragePostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndFortyOnePointFour].AveragePostHitAdverseExcursion:N1}";
+            TwoHundredAndSixtyOnePointEightAveragePostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndSixtyOnePointEight].AveragePostHitAdverseExcursion:N1}";
+            ThreeHundredAveragePostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.ThreeHundred].AveragePostHitAdverseExcursion:N1}";
+            ThreeHundredAndSixtyOnePointEightAveragePostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.ThreeHundredAndSixtyOnePointEight].AveragePostHitAdverseExcursion:N1}";
 
             FivePointNineHighestPostHitMaximumAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.FivePointNine].HighestPostHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.FivePointNine].HighestPostHitAdverseExcursion:N1}";
             ElevenPointFourHighestPostHitMaximumAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.ElevenPointFour].HighestPostHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.ElevenPointFour].HighestPostHitAdverseExcursion:N1}";
             TwentyThreePointSixHighestPostHitMaximumAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.TwentyThreePointSix].HighestPostHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.TwentyThreePointSix].HighestPostHitAdverseExcursion:N1}";
             ThirtyEightPointTwoHighestPostHitMaximumAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.ThirtyEightPointTwo].HighestPostHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.ThirtyEightPointTwo].HighestPostHitAdverseExcursion:N1}";
             FiftyHighestPostHitMaximumAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.Fifty].HighestPostHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.Fifty].HighestPostHitAdverseExcursion:N1}";
             SixtyOnePointEightHighestPostHitMaximumAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.SixtyOnePointEight].HighestPostHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.SixtyOnePointEight].HighestPostHitAdverseExcursion:N1}";
             SeventyEightPointSixHighestPostHitMaximumAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.SeventyEightPointSix].HighestPostHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.SeventyEightPointSix].HighestPostHitAdverseExcursion:N1}";
             EightyEightPointSixHighestPostHitMaximumAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.EightyEightPointSix].HighestPostHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.EightyEightPointSix].HighestPostHitAdverseExcursion:N1}";
             NinetyFourPointOneHighestPostHitMaximumAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.NinetyFourPointOne].HighestPostHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.NinetyFourPointOne].HighestPostHitAdverseExcursion:N1}";
             OneHundredHighestPostHitMaximumAdverseExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.OneHundred].HighestPostHitAdverseExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.OneHundred].HighestPostHitAdverseExcursion:N1}";
+
+            OneHundredAndTwentySevenPointOneHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndTwentySevenPointOne].HighestPostHitAdverseExcursion:N1}";
+            OneHundredAndFortyOnePointFourHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndFortyOnePointFour].HighestPostHitAdverseExcursion:N1}";
+            OneHundredAndSixtyOnePointEightHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndSixtyOnePointEight].HighestPostHitAdverseExcursion:N1}";
+            TwoHundredHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundred].HighestPostHitAdverseExcursion:N1}";
+            TwoHundredAndTwentySevenPointOneHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndTwentySevenPointOne].HighestPostHitAdverseExcursion:N1}";
+            TwoHundredAndFortyOnePointFourHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndFortyOnePointFour].HighestPostHitAdverseExcursion:N1}";
+            TwoHundredAndSixtyOnePointEightHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndSixtyOnePointEight].HighestPostHitAdverseExcursion:N1}";
+            ThreeHundredHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.ThreeHundred].HighestPostHitAdverseExcursion:N1}";
+            ThreeHundredAndSixtyOnePointEightHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.ThreeHundredAndSixtyOnePointEight].HighestPostHitAdverseExcursion:N1}";
 
             FivePointNineAveragePostHitMaximumFavourableExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.FivePointNine].AveragePostHitFavourableExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.FivePointNine].AveragePostHitFavourableExcursion:N1}";
             ElevenPointFourAveragePostHitMaximumFavourableExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.ElevenPointFour].AveragePostHitFavourableExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.ElevenPointFour].AveragePostHitFavourableExcursion:N1}";
             TwentyThreePointSixAveragePostHitMaximumFavourableExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.TwentyThreePointSix].AveragePostHitFavourableExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.TwentyThreePointSix].AveragePostHitFavourableExcursion:N1}";
             ThirtyEightPointTwoAveragePostHitMaximumFavourableExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.ThirtyEightPointTwo].AveragePostHitFavourableExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.ThirtyEightPointTwo].AveragePostHitFavourableExcursion:N1}";
             FiftyAveragePostHitMaximumFavourableExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.Fifty].AveragePostHitFavourableExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.Fifty].AveragePostHitFavourableExcursion:N1}";
             SixtyOnePointEightAveragePostHitMaximumFavourableExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.SixtyOnePointEight].AveragePostHitFavourableExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.SixtyOnePointEight].AveragePostHitFavourableExcursion:N1}";
             SeventyEightPointSixAveragePostHitMaximumFavourableExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.SeventyEightPointSix].AveragePostHitFavourableExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.SeventyEightPointSix].AveragePostHitFavourableExcursion:N1}";
             EightyEightPointSixAveragePostHitMaximumFavourableExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.EightyEightPointSix].AveragePostHitFavourableExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.EightyEightPointSix].AveragePostHitFavourableExcursion:N1}";
             NinetyFourPointOneAveragePostHitMaximumFavourableExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.NinetyFourPointOne].AveragePostHitFavourableExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.NinetyFourPointOne].AveragePostHitFavourableExcursion:N1}";
             OneHundredAveragePostHitMaximumFavourableExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.OneHundred].AveragePostHitFavourableExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.OneHundred].AveragePostHitFavourableExcursion:N1}";
+
+            OneHundredAndTwentySevenPointOneAveragePostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndTwentySevenPointOne].AveragePostHitFavourableExcursion:N1}";
+            OneHundredAndFortyOnePointFourAveragePostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndFortyOnePointFour].AveragePostHitFavourableExcursion:N1}";
+            OneHundredAndSixtyOnePointEightAveragePostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndSixtyOnePointEight].AveragePostHitFavourableExcursion:N1}";
+            TwoHundredAveragePostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundred].AveragePostHitFavourableExcursion:N1}";
+            TwoHundredAndTwentySevenPointOneAveragePostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndTwentySevenPointOne].AveragePostHitFavourableExcursion:N1}";
+            TwoHundredAndFortyOnePointFourAveragePostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndFortyOnePointFour].AveragePostHitFavourableExcursion:N1}";
+            TwoHundredAndSixtyOnePointEightAveragePostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndSixtyOnePointEight].AveragePostHitFavourableExcursion:N1}";
+            ThreeHundredAveragePostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.ThreeHundred].AveragePostHitFavourableExcursion:N1}";
+            ThreeHundredAndSixtyOnePointEightAveragePostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.ThreeHundredAndSixtyOnePointEight].AveragePostHitFavourableExcursion:N1}";
 
             FivePointNineHighestPostHitMaximumFavourableExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.FivePointNine].HighestPostHitFavourableExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.FivePointNine].HighestPostHitFavourableExcursion:N1}";
             ElevenPointFourHighestPostHitMaximumFavourableExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.ElevenPointFour].HighestPostHitFavourableExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.ElevenPointFour].HighestPostHitFavourableExcursion:N1}";
             TwentyThreePointSixHighestPostHitMaximumFavourableExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.TwentyThreePointSix].HighestPostHitFavourableExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.TwentyThreePointSix].HighestPostHitFavourableExcursion:N1}";
             ThirtyEightPointTwoHighestPostHitMaximumFavourableExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.ThirtyEightPointTwo].HighestPostHitFavourableExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.ThirtyEightPointTwo].HighestPostHitFavourableExcursion:N1}";
             FiftyHighestPostHitMaximumFavourableExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.Fifty].HighestPostHitFavourableExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.Fifty].HighestPostHitFavourableExcursion:N1}";
             SixtyOnePointEightHighestPostHitMaximumFavourableExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.SixtyOnePointEight].HighestPostHitFavourableExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.SixtyOnePointEight].HighestPostHitFavourableExcursion:N1}";
             SeventyEightPointSixHighestPostHitMaximumFavourableExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.SeventyEightPointSix].HighestPostHitFavourableExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.SeventyEightPointSix].HighestPostHitFavourableExcursion:N1}";
             EightyEightPointSixHighestPostHitMaximumFavourableExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.EightyEightPointSix].HighestPostHitFavourableExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.EightyEightPointSix].HighestPostHitFavourableExcursion:N1}";
             NinetyFourPointOneHighestPostHitMaximumFavourableExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.NinetyFourPointOne].HighestPostHitFavourableExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.NinetyFourPointOne].HighestPostHitFavourableExcursion:N1}";
             OneHundredHighestPostHitMaximumFavourableExcursion =
-                $"{market.GapFibLevels[FibonacciLevel.OneHundred].HighestPostHitFavourableExcursion:N1}";
+                $"{market.GapFibRetraceLevels[FibonacciLevel.OneHundred].HighestPostHitFavourableExcursion:N1}";
+
+            OneHundredAndTwentySevenPointOneHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndTwentySevenPointOne].HighestPostHitFavourableExcursion:N1}";
+            OneHundredAndFortyOnePointFourHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndFortyOnePointFour].HighestPostHitFavourableExcursion:N1}";
+            OneHundredAndSixtyOnePointEightHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndSixtyOnePointEight].HighestPostHitFavourableExcursion:N1}";
+            TwoHundredHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundred].HighestPostHitFavourableExcursion:N1}";
+            TwoHundredAndTwentySevenPointOneHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndTwentySevenPointOne].HighestPostHitFavourableExcursion:N1}";
+            TwoHundredAndFortyOnePointFourHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndFortyOnePointFour].HighestPostHitFavourableExcursion:N1}";
+            TwoHundredAndSixtyOnePointEightHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndSixtyOnePointEight].HighestPostHitFavourableExcursion:N1}";
+            ThreeHundredHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.ThreeHundred].HighestPostHitFavourableExcursion:N1}";
+            ThreeHundredAndSixtyOnePointEightHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.ThreeHundredAndSixtyOnePointEight].HighestPostHitFavourableExcursion:N1}";
         }
     }
 }

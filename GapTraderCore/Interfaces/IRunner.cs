@@ -12,12 +12,14 @@
 
         bool RunForResult(object sender, Message message);
 
-        void GetSaveName(object sender);
+        void GetName(object sender, string title);
 
         void ShowLoadSavedDataWindow(object sender);
 
         void ShowUploadNewDataWindow(object sender);
 
-        // Optional<string> OpenSaveDialog(object sender, string fileName, string filter);
+        void GetTradeDetails(object sender);
+
+        void GetStrategyDetails(object sender);
     }
 }

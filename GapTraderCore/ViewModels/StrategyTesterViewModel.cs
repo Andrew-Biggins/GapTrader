@@ -57,6 +57,8 @@ namespace GapTraderCore.ViewModels
             set => SetProperty(ref _canCalculate, value, nameof(CanCalculate));
         }
 
+        public string DataName { get; } = string.Empty;
+
         public TradeDirection TradeDirection { get; set; } = TradeDirection.Both;
 
         public bool IsDynamicTest
@@ -78,8 +80,6 @@ namespace GapTraderCore.ViewModels
 
         public ICommand TestStrategyCommand => new BasicCommand(TestStrategy);
 
-        protected StrategyTesterViewModel() { }
-
         protected StrategyTesterViewModel(IMarket market, IRunner runner)
         {
             Market = market;
@@ -97,7 +97,7 @@ namespace GapTraderCore.ViewModels
             StrategyFinderViewModel.FindStrategies(filters, TradeDirection);
         }
 
-        private void UpdateFilters()
+        protected void UpdateFilters()
         {
             TestStartTime = new DateTime(1, 1, 1, Market.DataDetails.OpenTime.Hours,
                 Market.DataDetails.OpenTime.Minutes, Market.DataDetails.OpenTime.Seconds);

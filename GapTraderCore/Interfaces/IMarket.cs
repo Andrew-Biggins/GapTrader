@@ -7,9 +7,11 @@ using GapTraderCore.ViewModels;
 
 namespace GapTraderCore.Interfaces
 {
-    public interface IMarket : INotifyPropertyChanged
+    public interface IMarket : IObservableMarket
     {
-        Dictionary<FibonacciLevel, FibLevel> GapFibLevels { get; }
+        Dictionary<FibonacciLevel, FibLevel> GapFibRetraceLevels { get; }
+
+        Dictionary<FibonacciLevel, FibLevel> GapFibExtensionLevels { get; }
 
         List<DailyCandle> DailyCandles { get; set; }
 

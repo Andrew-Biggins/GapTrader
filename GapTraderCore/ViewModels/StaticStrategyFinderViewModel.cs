@@ -60,7 +60,7 @@ namespace GapTraderCore.ViewModels
                             StrategyTester.Stop = k;
                             StrategyTester.TestStrategy(Market, dateTimeFilters, m);
 
-                            if (StrategyTester.Strategy.Stats.PointsTotal > 0)
+                            if (StrategyTester.Strategy.Stats.CashProfit > 0)
                             {
                                 tempStrategies.Add(StrategyTester.Strategy);
                             }
