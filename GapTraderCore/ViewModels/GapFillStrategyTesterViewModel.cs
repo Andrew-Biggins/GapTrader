@@ -48,7 +48,7 @@ namespace GapTraderCore.ViewModels
             StrategyTester.SelectedDirection = TradeDirection;
             StrategyTester.SetSizing(AccountSizer.AccountStartSize, AccountSizer.RiskPercentage, AccountSizer.Compound);
             StrategyTester.TestStrategy(Market, filters, MinimumGapSize);
-            StrategyResultsStatsViewModel = new StrategyResultsStatsViewModel(StrategyTester.Strategy, Runner);
+            StrategyResultsStatsViewModel = new StrategyResultsStatsViewModel(StrategyTester.Strategy, Runner, AccountSizer.AccountStartSize);
         }
 
         private void OnMarketDataChanged(object sender, PropertyChangedEventArgs e)

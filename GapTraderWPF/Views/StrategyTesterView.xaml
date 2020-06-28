@@ -22,9 +22,7 @@
     <Border BorderBrush="White" BorderThickness="2">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="155" />
-                <RowDefinition Height="18"/>
-                <RowDefinition Height="65" />
+                <RowDefinition Height="260" />
                 <RowDefinition Height="18"/>
                 <RowDefinition Height="424" />
             </Grid.RowDefinitions>
@@ -33,68 +31,58 @@
             </Border>
             <Grid Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center">
                 <Grid.RowDefinitions>
-                <RowDefinition Height="20" />
-                <RowDefinition Height="30" />
-                <RowDefinition Height="80" />
-                <RowDefinition Height="25" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="235" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Text="Strategy Tester" FontWeight="Bold" Grid.Row="0" Grid.Column="0" FontSize="15" Grid.ColumnSpan="2" HorizontalAlignment="Center" Foreground="White"/>
-
-                <Button Content="Calculate" HorizontalAlignment="Center" 
-                    Grid.Row="3" Grid.Column="1" Width="70" 
-                    Margin="5,5,5,-5" VerticalAlignment="Top" 
+                <Border Grid.Row="1" Grid.Column="0" >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="150" />
+                            <RowDefinition Height="70" />
+                        </Grid.RowDefinitions>
+                        <Button Content="Test" HorizontalAlignment="Right" Width="50" Grid.Row="0"
+                    Margin="5,5,8,5" VerticalAlignment="Bottom" 
                     Command="{Binding TestStrategyCommand}"
                     IsEnabled="{Binding CanCalculate, Mode=OneWay}"/>
 
-                <userControls:GapStrategySetupContainer Grid.Row="1" Grid.Column="0" Grid.RowSpan="3" Margin="5,0,5,0"/>
+                        <userControls:GapStrategySetupContainer Grid.Row="0" Grid.Column="0" Margin="5,0,5,0"/>
 
-                <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" Margin="-85,5,0,0">
-                    <TextBlock Text="Trade Direction" Margin="0,5,0,0"/>
-                    <ComboBox Width="90" Height="22" Margin="5,0,0,0"
-                      SelectedIndex="{Binding TradeDirection, Converter={converters:TradeDirectionToIntegerConverter}, Mode=TwoWay}"
-                      VerticalAlignment="Top">
-                        <ComboBoxItem Content="Long Only" />
-                        <ComboBoxItem Content="Short Only" />
-                        <ComboBoxItem Content="Both" />
-                    </ComboBox>
-                </StackPanel>
+                        <userControls:StrategyResultsStats Grid.Row="1" Grid.Column="0"
+                                                           HorizontalAlignment="Stretch" Margin="10,3"
+                                                           DataContext="{Binding StrategyResultsStatsViewModel}"/>
+                    </Grid>
+                </Border>
+                <userControls:StrategyTesterCommunalOptions Grid.Row="1" Grid.Column="1" Margin="5,0,0,0"/>
+            </Grid>
 
-                <userControls:DateAndTimePicker Grid.Column="1" Grid.Row="2" Margin="0,0,5,0"/>
-
-                </Grid>
-                    <TextBlock Text="Strategy Statistics" FontWeight="Bold" Grid.Row="1" Grid.Column="0" FontSize="12" HorizontalAlignment="Center" />
-
-                <userControls:StrategyResultsStats Grid.Row="2" Grid.Column="0"
-                                               HorizontalAlignment="Stretch" Margin="10,3"
-                                               DataContext="{Binding StrategyResultsStatsViewModel}"/>
-
-                <StackPanel Grid.Row="3" Grid.Column="0"
+            <StackPanel Grid.Row="1" Grid.Column="0"
                         Orientation="Horizontal" 
                         HorizontalAlignment="Center">
-                    <RadioButton Content="Find Static Strategies" Foreground="White"
+                <RadioButton Content="Find Static Strategies" Foreground="White"
                          HorizontalAlignment="Center" Margin="0,0,10,0" 
                          VerticalAlignment="Top" IsChecked="{Binding IsDynamicTest , Converter={converters:BoolToInverseNullableBoolConverter}}"/>
-                    <RadioButton Content="Test Dynamic Strategy" Foreground="White"
+                <RadioButton Content="Test Dynamic Strategy" Foreground="White"
                          HorizontalAlignment="Center" 
                          VerticalAlignment="Top" IsChecked="{Binding IsDynamicTest}"/>
-                </StackPanel>
+            </StackPanel>
 
-                <ContentControl Grid.Row="4" Grid.Column="0" HorizontalAlignment="Stretch" Margin="10"
+            <ContentControl Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" Margin="10"
                         Content="{Binding StrategyFinderViewModel}">
-                    <ContentControl.Resources>
-                        <DataTemplate DataType="{x:Type viewModels:StaticStrategyFinderViewModel}">
-                            <userControls:StaticStrategyFinder />
-                        </DataTemplate>
-                        <DataTemplate DataType="{x:Type viewModels:DynamicStrategyFinderViewModel}">
-                            <userControls:DynamicStrategyTester />
-                        </DataTemplate>
-                    </ContentControl.Resources>
-                </ContentControl>
-            </Grid>
+                <ContentControl.Resources>
+                    <DataTemplate DataType="{x:Type viewModels:StaticStrategyFinderViewModel}">
+                        <userControls:StaticStrategyFinder />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewModels:DynamicStrategyFinderViewModel}">
+                        <userControls:DynamicStrategyTester />
+                    </DataTemplate>
+                </ContentControl.Resources>
+            </ContentControl>
+        </Grid>
     </Border>
 </UserControl>

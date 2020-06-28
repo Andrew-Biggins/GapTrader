@@ -310,7 +310,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
-            <userControls:StrategyResultsStats Grid.Row="1" DataContext="{Binding StrategyResultsStatsViewModel}"/>
+            <userControls:JournalTradeStats Grid.Row="1" DataContext="{Binding StrategyResultsStatsViewModel}"/>
             <oxy:PlotView Grid.Row="2" Model="{Binding Plot, Mode=OneTime}" MouseDoubleClick="OnGraphDoubleClick"
                           ToolTip="Double Click to Pop-out"/>
         </Grid>

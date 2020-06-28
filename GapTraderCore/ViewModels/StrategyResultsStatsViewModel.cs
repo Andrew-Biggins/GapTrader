@@ -34,6 +34,8 @@ namespace GapTraderCore.ViewModels
 
         public ICommand ViewTradesCommand => new BasicCommand(ViewTrades);
 
+        public ICommand ViewGraphCommand => new BasicCommand(ViewGraph);
+
         public bool HasResults { get; }
 
         public StrategyResultsStatsViewModel()
@@ -74,10 +76,11 @@ namespace GapTraderCore.ViewModels
                 : $"{stats.Expectancy:N1}";
         }
 
-        public StrategyResultsStatsViewModel(IStrategy strategy, IRunner runner)
+        public StrategyResultsStatsViewModel(IStrategy strategy, IRunner runner, double accountStartSize)
         {
             _runner = runner;
             _strategy = strategy;
+            _accountStartSize = accountStartSize;
             HasResults = true;
 
             TradeCount = $"{strategy.Stats.TradeCount}";
@@ -116,8 +119,13 @@ namespace GapTraderCore.ViewModels
             _runner?.ShowTrades(this, _strategy);
         }
 
+        private void ViewGraph()
+        {
+            _runner?.ShowGraphWindow(new GraphWindowViewModel(_accountStartSize, _strategy.Trades));
+        }
+
         private readonly IStrategy _strategy;
         private readonly IRunner _runner;
+        private readonly double _accountStartSize;
     }
-
 }

@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="GapTraderWPF.UserControls.StrategyTesterCommunalOptions"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GapTraderWPF.UserControls"
+             xmlns:converters="clr-namespace:GapTraderWPF.Converters"
+             xmlns:viewModels="clr-namespace:GapTraderCore.ViewModels;assembly=GapTraderCore"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance {x:Type viewModels:GapFillStrategyTesterViewModel}}"
+             d:DesignHeight="160" d:DesignWidth="363">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+        <Style TargetType="Border">
+            <Setter Property="BorderBrush" Value="White" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
+    </UserControl.Resources>
+    <Border>
+        <Grid HorizontalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Text="Communal Controls" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <RadioButton Content="Trade into gap" Grid.Column="0" 
+                     Grid.Row="1" Foreground="White"
+                     HorizontalAlignment="Center" 
+                     IsChecked="{Binding TradeIntoGap}"/>
+            <RadioButton Content="Trade out of gap" Grid.Column="1" 
+                     Grid.Row="1" Foreground="White"
+                     HorizontalAlignment="Center"
+                     IsChecked="{Binding TradeIntoGap, Converter={converters:BoolToInverseNullableBoolConverter}}"/>
+
+            <local:DateAndTimePicker Grid.Column="1" Grid.Row="2" Margin="5,0"/>
+            <local:AccountSizer Grid.Column="0" Grid.Row="2" Margin="5,0,0,0"
+                                   DataContext="{Binding AccountSizer}"/>
+
+            <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal" Margin="-85,5,0,0">
+                <TextBlock Text="Trade Direction" Margin="0,5,0,0"/>
+                <ComboBox Width="90" Height="22" Margin="5,0,0,0"
+                      SelectedIndex="{Binding TradeDirection, Converter={converters:TradeDirectionToIntegerConverter}, Mode=TwoWay}"
+                      VerticalAlignment="Top">
+                    <ComboBoxItem Content="Long Only" />
+                    <ComboBoxItem Content="Short Only" />
+                    <ComboBoxItem Content="Both" />
+                </ComboBox>
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>
