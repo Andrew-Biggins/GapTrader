@@ -15,12 +15,12 @@ namespace GapTraderCore.StrategyTesters
             FibLevelTarget = DefaultFibTarget;
         }
 
-        protected override void NewStrategy<TEntry, TTarget>(object entry, object target, string title = "")
+        protected override void NewStrategy<TEntry, TTarget>(object entry, object target)
         {
-            Strategy = new IntoGapStrategy<TEntry, TTarget>(entry, Stop, target, Stats, MinimumGapSize, Trades, title);
+            Strategy = new IntoGapStrategy<TEntry, TTarget>(entry, Stop, target, Stats, MinimumGapSize, Trades, IsFixedStop);
         }
 
-        protected override (double, double, double, double) CalculateTradeLevels(DailyCandle candle)
+        protected override (double, double, double) CalculateTradeLevels(DailyCandle candle)
         {
             var gap = candle.Gap.GapPoints;
             var open = candle.Open;

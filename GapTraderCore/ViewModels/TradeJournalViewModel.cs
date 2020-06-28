@@ -1,29 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Text;
-using System.Windows.Input;
-using Foundations;
+﻿using Foundations;
 using Foundations.Optional;
 using GapTraderCore.Interfaces;
 using GapTraderCore.Strategies;
 using GapTraderCore.Trades;
+using OxyPlot;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Input;
+using GapTraderCore.ViewModelAdapters;
+using OxyPlot.Axes;
 using static GapTraderCore.DataProcessor;
+using static System.IO.Directory;
 
 namespace GapTraderCore.ViewModels
 {
     public sealed class TradeJournalViewModel : BindableBase
     {
-        public ObservableCollection<IJournalTrade> Trades { get; set; } = new ObservableCollection<IJournalTrade>();
+        public ITradePlot Plot { get; } = new TradePlot();
 
-        public ObservableCollection<IMarket> Markets { get; set; }
+        public ObservableCollection<IJournalTrade> Trades { get; private set; } = new ObservableCollection<IJournalTrade>();
 
-        public ObservableCollection<IStrategy> Strategies { get; set; }
+        public ObservableCollection<ISelectable> Markets { get; } = new ObservableCollection<ISelectable>();
+
+        public ObservableCollection<ISelectableStrategy> Strategies { get; } = new ObservableCollection<ISelectableStrategy>();
 
         public ICommand AddNewTradeCommand => new BasicCommand(() => _runner.GetTradeDetails(_addTradeViewModel));
 
+        public ICommand EditTradeCommand => new BasicCommand(EditTrade);
+
+        public ICommand RemoveTradeCommand => new BasicCommand(RemoveTrade);
+
+        public ICommand PopOutGraphCommand => new BasicCommand(PopOutGraph);
+
         public TradeFilterSelectorViewModel FilterSelector { get; }
+
+        public IJournalTrade SelectedTrade { get; set; }
+
+        public double AccountStartSize
+        {
+            get => _accountStartSize;
+            set
+            {
+                _accountStartSize = value;
+                UpdateGraph();
+            }
+        }
 
         public StrategyResultsStatsViewModel StrategyResultsStatsViewModel
         {
@@ -33,27 +60,9 @@ namespace GapTraderCore.ViewModels
 
         public TradeJournalViewModel(IRunner runner)
         {
-            Markets = new ObservableCollection<IMarket>();
-            Markets.Add(new Market { Name = "DJI" });
-            Markets.Add(new Market { Name = "FTSE" });
-            Markets.Add(new Market { Name = "DAX" });
-            Markets.Add(new Market { Name = "EURUSD" });
-            Markets.Add(new Market { Name = "USDJPY" });
-            Markets.Add(new Market { Name = "GBPUSD" });
-            Markets.Add(new Market { Name = "NZDUSD" });
-            Markets.Add(new Market { Name = "AUDUSD" });
-            Markets.Add(new Market { Name = "GBPJPY" });
-            Markets.Add(new Market { Name = "GBPNZD" });
+            ReadInSavedTrades();
+            PopulateSelectables();
 
-
-            Strategies = new ObservableCollection<IStrategy>();
-            var stats = new StrategyStats(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-            var trades = new List<ITrade>();
-            var title = "Entry:5.9% | Target: 200% | Stop: 60pts";
-            var strategy = new Strategy<FibonacciLevel, FibonacciLevel>(FibonacciLevel.FivePointNine, 60, FibonacciLevel.TwoHundred, stats, trades, title);
-            Strategies.Add(strategy);
-
-            Trades.Add(new JournalTrade(6000, 5900, 6200, 6000, Option.None<double>(), new DateTime(2020, 6, 12, 8, 30, 0), Option.None<DateTime>(), Markets[0], Strategies[0], 5));
             _unfilteredTrades = Trades;
             _runner = runner;
             _addTradeViewModel = new AddTradeViewModel(_runner, Markets, Strategies);
@@ -63,6 +72,8 @@ namespace GapTraderCore.ViewModels
             FilterSelector.FiltersChanged += OnTradeFiltersChanged;
 
             UpdateDateFilters();
+            StrategyResultsStatsViewModel = new StrategyResultsStatsViewModel(GetStrategyStats(Trades));
+            UpdateGraph();
         }
 
         private void OnTradeFiltersChanged(object sender, EventArgs e)
@@ -78,11 +89,13 @@ namespace GapTraderCore.ViewModels
             var q = RemoveTradesOutsideTimeRange(z);
             var p = RemoveTradesOutsideRiskRewardRatioRange(q);
             var r = RemoveStatusSelectedTrades(p);
+            var d = RemoveFilteredDays(r);
 
-            Trades = r;
+            Trades = d;
             RaisePropertyChanged(nameof(Trades));
             UpdateDateFilters();
             StrategyResultsStatsViewModel = new StrategyResultsStatsViewModel(GetStrategyStats(Trades));
+            UpdateGraph();
         }
 
         private ObservableCollection<IJournalTrade> RemoveUnselectedMarkets(ObservableCollection<IJournalTrade> trades)
@@ -109,11 +122,14 @@ namespace GapTraderCore.ViewModels
 
             foreach (var trade in trades)
             {
-                foreach (var strategy in Strategies)
+                if (trade.Strategy != null)
                 {
-                    if (strategy.IsSelected && strategy.Title == trade.Strategy.Title)
+                    foreach (var strategy in Strategies)
                     {
-                        newList.Add(trade);
+                        if (strategy.IsSelected && strategy.Name == trade.Strategy.Name)
+                        {
+                            newList.Add(trade);
+                        }
                     }
                 }
             }
@@ -188,6 +204,24 @@ namespace GapTraderCore.ViewModels
             return newList;
         }
 
+        private ObservableCollection<IJournalTrade> RemoveFilteredDays(ObservableCollection<IJournalTrade> trades)
+        {
+            var newList = new ObservableCollection<IJournalTrade>();
+
+            foreach (var trade in trades)
+            {
+                foreach (var day in FilterSelector.DaysOfWeek)
+                {
+                    if (day.IsSelected && day.Name == trade.OpenTime.DayOfWeek.ToString())
+                    {
+                        newList.Add(trade);
+                    }
+                }
+            }
+
+            return newList;
+        }
+
         private void UpdateDateFilters()
         {
             if (_unfilteredTrades.Count < 1)
@@ -225,7 +259,7 @@ namespace GapTraderCore.ViewModels
 
             var closeTime = Option.None<DateTime>();
 
-            _addTradeViewModel.CloseLevel.IfExistsThen(x => 
+            _addTradeViewModel.CloseLevel.IfExistsThen(x =>
             {
                 closeTime = Option.Some(new DateTime(_addTradeViewModel.CloseDate.Year, _addTradeViewModel.CloseDate.Month,
                     _addTradeViewModel.CloseDate.Day, _addTradeViewModel.CloseTime.Hour,
@@ -239,11 +273,126 @@ namespace GapTraderCore.ViewModels
             _unfilteredTrades.Add(trade);
             UpdateDateFilters();
             FilterTrades();
+            SaveTradeData();
         }
 
+        private void EditTrade()
+        {
+            if (SelectedTrade != null)
+            {
+                var trade = SelectedTrade;
+                _unfilteredTrades.Remove(SelectedTrade);
+                _addTradeViewModel = new AddTradeViewModel(_runner, Markets, Strategies, trade);
+                _addTradeViewModel.TradeAdded += AddTrade;
+                _runner.GetTradeDetails(_addTradeViewModel);
+            }
+        }
+
+        private void RemoveTrade()
+        {
+            if (_runner.RunForResult(this,
+                new Message("Confirm", "Are you sure you want to remove this trade?", Message.MessageType.Question)))
+            {
+                _unfilteredTrades.Remove(SelectedTrade);
+                UpdateDateFilters();
+                FilterTrades();
+                SaveTradeData();
+            }
+        }
+
+        private void SaveTradeData()
+        {
+            CreateDirectory($"{_savedDataPath}Trades");
+
+            var dir = new DirectoryInfo($"{_savedDataPath}Trades");
+
+            foreach (var file in dir.GetFiles())
+            {
+                file.Delete();
+            }
+
+            foreach (var trade in _unfilteredTrades)
+            {
+                var t = new SavedTrade(trade);
+                var uniqueFileName = $@"{Guid.NewGuid()}.txt";
+
+                IFormatter formatter = new BinaryFormatter();
+                Stream stream = new FileStream($"{_savedDataPath}Trades\\{uniqueFileName}.txt", FileMode.Create, FileAccess.Write);
+
+                formatter.Serialize(stream, t);
+                stream.Close();
+            }
+        }
+
+        private void ReadInSavedTrades()
+        {
+            CreateDirectory($"{_savedDataPath}Trades");
+
+            var dir = new DirectoryInfo($"{_savedDataPath}Trades");
+            IFormatter formatter = new BinaryFormatter();
+
+            foreach (var file in dir.GetFiles("*.txt"))
+            {
+                var stream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read);
+                var savedTrade = (SavedTrade)formatter.Deserialize(stream);
+                var journalTrade = new JournalTrade(savedTrade);
+                Trades.Add(journalTrade);
+            }
+        }
+
+        private void PopulateSelectables()
+        {
+            foreach (var trade in Trades)
+            {
+                var marketExists = false;
+                var strategyExists = false;
+
+                foreach (var market in Markets)
+                {
+                    if (trade.Market.Name == market.Name)
+                    {
+                        marketExists = true;
+                    }
+                }
+
+                foreach (var strategy in Strategies)
+                {
+                    if (trade.Strategy.Name == strategy.Name)
+                    {
+                        strategyExists = true;
+                    }
+                }
+
+                if (!marketExists)
+                {
+                    Markets.Add(new Market(trade.Market.Name));
+                }
+
+                if (!strategyExists)
+                {
+                    Strategies.Add(new Strategy<FibonacciLevel, FibonacciLevel>(trade.Strategy.Name, trade.Strategy.ShortName));
+                }
+            }
+        }
+
+        private void UpdateGraph()
+        {
+            Plot.UpdateData(AccountStartSize, Trades);
+        }
+
+        private void PopOutGraph()
+        {
+            var vm = new GraphWindowViewModel(AccountStartSize, Trades);
+
+            _runner.ShowGraphWindow(vm);
+        }
+
+        private readonly string _savedDataPath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Saved Data\\";
+
         private readonly IRunner _runner;
-        private readonly AddTradeViewModel _addTradeViewModel;
-        private readonly ObservableCollection<IJournalTrade> _unfilteredTrades = new ObservableCollection<IJournalTrade>();
-        private StrategyResultsStatsViewModel _strategyResultsStatsViewModel = new StrategyResultsStatsViewModel();
+        private AddTradeViewModel _addTradeViewModel;
+        private readonly ObservableCollection<IJournalTrade> _unfilteredTrades;
+        private StrategyResultsStatsViewModel _strategyResultsStatsViewModel;
+        private double _accountStartSize = 10000;
     }
 }

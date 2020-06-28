@@ -19,13 +19,13 @@ namespace GapTraderCore
             return AddAskData(data, askFilePath, progressCounter);
         }
 
-        public static Dictionary<DateTime, List<BidAskCandle>> ReadInSavedMinuteData(SavedData data, Del progressCounter)
+        public static Dictionary<DateTime, List<BidAskCandle>> ReadInSavedMinuteData(SerializableMarketData marketData, Del progressCounter)
         {
             var minuteData = new Dictionary<DateTime, List<BidAskCandle>>();
-            var timezone = data.IsUkData ? Timezone.Uk : Timezone.Us;
+            var timezone = marketData.IsUkData ? Timezone.Uk : Timezone.Us;
 
             var date = DateTime.MinValue;
-            using var csvParser = SetUpParser(data.MinuteDataFilePath);
+            using var csvParser = SetUpParser(marketData.MinuteDataFilePath);
             var minuteCandles = new List<BidAskCandle>();
 
             while (!csvParser.EndOfData)
@@ -68,7 +68,7 @@ namespace GapTraderCore
             while (!csvParser.EndOfData)
             {
                 // Check data is valid (bank holidays have null entries on some markets)
-                var x = (csvParser.PeekChars(12));
+                var x = csvParser.PeekChars(12);
                 if (x[^1].ToString().Equals("n"))
                 {
                     csvParser.ReadLine();

@@ -16,6 +16,10 @@
 
         void ShowLoadSavedDataWindow(object sender);
 
+        void ShowSaveDataWindow(object sender);
+
+        void ShowGraphWindow(object sender);
+
         void ShowUploadNewDataWindow(object sender);
 
         void GetTradeDetails(object sender);

@@ -3,11 +3,12 @@ using System.IO;
 using System.Reflection;
 using GapTraderCore.Interfaces;
 using static System.IO.Directory;
+using static GapTraderCore.Strings;
 
 namespace GapTraderCore
 {
     [Serializable]
-    public sealed class SavedData
+    public sealed class SerializableMarketData : SerializableBase
     {
         public string MinuteDataFilePath { get; set; }
 
@@ -19,15 +20,15 @@ namespace GapTraderCore
 
         public DateTime SavedDate { get; set; }
 
-        public string Name { get; set; }
+        public string SaveName { get; set; }
 
         public bool IsUkData { get; set; }
 
         public double PreviousDailyClose { get; set; }
 
-        public SavedData(string name, IMarket market)
+        public SerializableMarketData(string saveName, IMarket market) : base(market.Name)
         {
-            Name = name;
+            SaveName = saveName;
             StartDate = market.DataDetails.StartDate;
             EndDate = market.DataDetails.EndDate;
             SavedDate = DateTime.Now;
@@ -41,8 +42,8 @@ namespace GapTraderCore
 
             CreateDirectory(path);
 
-            MinuteDataFilePath = $"{path}\\{Name}_minute_bid_data.csv";
-            DailyDataFilePath = $"{path}\\{Name}_daily_data.csv";
+            MinuteDataFilePath = $"{path}\\{SaveName}{MinuteDataFileName}";
+            DailyDataFilePath = $"{path}\\{SaveName}{DailyDataFileName}";
 
             CsvServices.WriteMinuteCsv(market.MinuteData, MinuteDataFilePath);
             CsvServices.WriteDailyDataCsv(market.DailyCandles, DailyDataFilePath);

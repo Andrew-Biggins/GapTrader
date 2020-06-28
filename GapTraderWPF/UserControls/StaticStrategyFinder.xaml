@@ -21,6 +21,16 @@
             <Setter Property="Width" Value="40" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
         </Style>
+        <Style TargetType="{x:Type DataGridCell}" x:Key="DataGridCellStyle">
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{x:Null}" />
+                    <Setter Property="BorderBrush" Value="{x:Null}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <Border >
         <Grid>
@@ -51,18 +61,16 @@
                       AutoGenerateColumns="False" Margin="5" HorizontalContentAlignment="Center" 
                       ItemsSource="{Binding Strategies, Mode=OneWay}"
                       SelectedItem="{Binding SelectedStrategy}"
-                      IsReadOnly="True" HorizontalAlignment="Stretch"
-                      MouseDoubleClick="Control_OnMouseDoubleClick">
-                <DataGrid.CellStyle>
-                    <Style TargetType="DataGridCell">
-                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                    </Style>
-                </DataGrid.CellStyle>
-                <DataGrid.ColumnHeaderStyle>
-                    <Style TargetType="DataGridColumnHeader">
+                      IsReadOnly="True" HorizontalAlignment="Stretch">
+                <DataGrid.Resources>
+                    <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="Background" Value="BurlyWood" />
                         <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        <Setter Property="BorderBrush" Value="Black"/>
+                        <Setter Property="BorderThickness" Value="0,0,1,0"/>
                     </Style>
-                </DataGrid.ColumnHeaderStyle>
+                    <Style BasedOn="{StaticResource DataGridCellStyle}" TargetType="DataGridCell" />
+                </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Entry"
                                         Binding="{Binding Entry, Converter={converters:FibLevelToNumericStringConverter}}" Width="50" >
@@ -96,9 +104,8 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                         <DataGridTextColumn.HeaderStyle>
-                            <Style TargetType="DataGridColumnHeader">
+                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
                                 <Setter Property="ToolTip" Value="Minimum Gap Size"/>
-                                <Setter Property="HorizontalContentAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.HeaderStyle>
                     </DataGridTextColumn>
@@ -113,35 +120,31 @@
                     <DataGridTextColumn Header="LWS" 
                                         Binding="{Binding Stats.LongestWinningStreak}" Width="*">
                         <DataGridTextColumn.HeaderStyle>
-                            <Style TargetType="DataGridColumnHeader">
+                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
                                 <Setter Property="ToolTip" Value="Longest Winning Streak"/>
-                                <Setter Property="HorizontalContentAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.HeaderStyle>
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="LLS" 
                                         Binding="{Binding Stats.LongestLosingStreak}" Width="*" >
                         <DataGridTextColumn.HeaderStyle>
-                            <Style TargetType="DataGridColumnHeader">
+                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
                                 <Setter Property="ToolTip" Value="Longest Losing Streak"/>
-                                <Setter Property="HorizontalContentAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.HeaderStyle>
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="Win Prob" 
                                         Binding="{Binding Stats.WinProbability, Converter={converters:InvalidDoubleToStringConverter}, StringFormat=P}" Width="60">
                         <DataGridTextColumn.HeaderStyle>
-                            <Style TargetType="DataGridColumnHeader">
+                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
                                 <Setter Property="ToolTip" Value="Win Probability"/>
-                                <Setter Property="HorizontalContentAlignment" Value="Center" />
-
                             </Style>
                         </DataGridTextColumn.HeaderStyle>
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="Profit Factor" 
                                         Binding="{Binding Stats.ProfitFactor, Converter={converters:InvalidDoubleToStringConverter}, StringFormat=N1}" Width="75">
                         <DataGridTextColumn.HeaderStyle>
-                            <Style TargetType="DataGridColumnHeader">
+                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
                                 <Setter Property="ToolTip" Value="Profit Factor"/>
                             </Style>
                         </DataGridTextColumn.HeaderStyle>
@@ -150,7 +153,7 @@
                     <DataGridTextColumn Header="Expectancy" 
                                         Binding="{Binding Stats.Expectancy, Converter={converters:InvalidDoubleToStringConverter}, StringFormat=N1}" Width="70" >
                         <DataGridTextColumn.HeaderStyle>
-                            <Style TargetType="DataGridColumnHeader">
+                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
                                 <Setter Property="ToolTip" Value="Expectancy"/>
                             </Style>
                         </DataGridTextColumn.HeaderStyle>
@@ -158,6 +161,59 @@
 
                     <DataGridTextColumn Header="Profit / Loss"
                                         Binding="{Binding Stats.CashProfit, StringFormat=N1}" Width="80" />
+
+                    <DataGridTemplateColumn Header="Trades" MinWidth="40" MaxWidth="40">
+                        <DataGridTemplateColumn.HeaderStyle>
+                            <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                <Setter  Property="BorderThickness" Value="2,0,1,0"/>
+                            </Style>
+                        </DataGridTemplateColumn.HeaderStyle>
+                        <DataGridTemplateColumn.CellStyle>
+                            <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellStyle}">
+                                <Setter Property="BorderThickness" Value="2,0,0,0"/>
+                                <Setter Property="BorderBrush" Value="Black"/>
+                                <EventSetter Event="MouseDoubleClick"
+                                                 Handler="OnViewTradesClicked"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="BorderThickness" Value="2,0,0,0"/>
+                                        <Setter Property="BorderBrush" Value="Black"/>
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="Brown" />
+                                        <Setter Property="BorderBrush" Value="CornflowerBlue" />
+                                        <Setter Property="BorderThickness" Value="1"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGridTemplateColumn.CellStyle>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="/Icons/List.png" Height="20" Width="20" ToolTip="Double Click to View Trade List"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Chart" MinWidth="35" MaxWidth="35">
+                        <DataGridTemplateColumn.CellStyle>
+                            <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellStyle}">
+                                <EventSetter Event="MouseDoubleClick"
+                                                 Handler="OnViewGraphClicked"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="Brown" />
+                                        <Setter Property="BorderBrush" Value="CornflowerBlue" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGridTemplateColumn.CellStyle>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="/Icons/Graph.png" Height="20" Width="20" ToolTip="Double Click to View Chart"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

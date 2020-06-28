@@ -26,10 +26,15 @@
                 <RowDefinition Height="140" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Button Grid.Row="0" Grid.Column="0" Margin="5"
+            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
+            <Button Margin="5"
                     HorizontalAlignment="Left" Width="40" Content="New" 
                     Height="20" Command="{Binding UploadNewDataCommand}"/>
-            <TextBlock Text="Market Data Details" FontWeight="Bold" Grid.Row="0" FontSize="15" />
+            <Button Margin="5" 
+                    HorizontalAlignment="Left" Width="60" Content="Add Data" 
+                    Height="20" Command="{Binding AddDataCommand}" IsEnabled="{Binding DataExists}"/>
+            </StackPanel>
+                    <TextBlock Text="Market Data Details" FontWeight="Bold" Grid.Row="0" FontSize="15" />
             <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Margin="5" Width="40" Content="Load" 
                         Height="20" Command="{Binding LoadDataCommand}"/>

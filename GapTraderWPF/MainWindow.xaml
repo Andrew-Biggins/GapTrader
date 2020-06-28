@@ -8,8 +8,8 @@
         xmlns:userControls="clr-namespace:GapTraderWPF.UserControls"
         d:DataContext="{d:DesignInstance {x:Type viewModels:MainViewModel}}"
         mc:Ignorable="d"
-        Title="Gap Trader" Height="750" Width="1200"
-        MinWidth="1200" MinHeight="750" >
+        Title="Gap Trader" Height="850" Width="1200"
+        MinWidth="1200" MinHeight="850" >
     <TabControl>
         <TabItem Header="Market Details">
             <views:MarketDetailsView DataContext="{Binding MarketDetailsViewModel}"/>

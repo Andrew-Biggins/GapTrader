@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using System.Windows.Input;
+using GapTraderCore.ViewModels;
 
 namespace GapTraderWPF
 {
@@ -12,6 +14,25 @@ namespace GapTraderWPF
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void UIElement_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return && TextBox.Text != string.Empty)
+            {
+                if (DataContext is MarketDetailsViewModel marketDetailsViewModel)
+                {
+                    marketDetailsViewModel.ConfirmNewNameCommand.Execute(null);
+                    Close();
+                }
+
+                if (DataContext is AddTradeViewModel addTradeViewModel)
+                {
+                    addTradeViewModel.ConfirmNewNameCommand.Execute(null);
+                    Close();
+                }
+
+            }
         }
     }
 }

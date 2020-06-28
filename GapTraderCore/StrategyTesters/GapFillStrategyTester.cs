@@ -107,12 +107,11 @@ namespace GapTraderCore.StrategyTesters
                 }
             }
 
-            FinalizeStats();
             CreateNewStrategy();
             Trades = new List<ITrade>();
         }
 
-        protected abstract void NewStrategy<TEntry, TTarget>(object entry, object target, string title = "");
+        protected abstract void NewStrategy<TEntry, TTarget>(object entry, object target);
 
         protected void CreateNewStrategy()
         {
@@ -120,13 +119,7 @@ namespace GapTraderCore.StrategyTesters
             {
                 if (IsFibEntry)
                 {
-                    var entry = (double)FibLevelEntry / 10;
-                    var target = (double)FibLevelTarget / 10;
-                    var title = IsFixedStop
-                        ? $"Entry: {entry}% | Target: {target}% | Stop: {Stop}pts | Min Gap Size: {MinimumGapSize}pts"
-                        : $"Entry: {entry}% | Target: {target}% | Stop: {Stop}% | Min Gap Size: {MinimumGapSize}pts";
-
-                    NewStrategy<FibonacciLevel, FibonacciLevel>(FibLevelEntry, FibLevelTarget, title);
+                    NewStrategy<FibonacciLevel, FibonacciLevel>(FibLevelEntry, FibLevelTarget);
                 }
                 else
                 {
@@ -146,7 +139,7 @@ namespace GapTraderCore.StrategyTesters
             }
         }
 
-        protected (double, double, double, double) GetTradeLevels(double gap, double open)
+        protected (double, double, double) GetTradeLevels(double gap, double open)
         {
             var entry = TradeLevelCalculator.GetEntryLevel(gap, open, PointsEntry, IsFibEntry, FibLevelEntry);
 
@@ -156,7 +149,7 @@ namespace GapTraderCore.StrategyTesters
 
             var target = TradeLevelCalculator.GetTargetLevel(gap, entry, open, PointsTarget, IsFibTarget, FibLevelTarget);
 
-            return (entry, stopLevel, target, Stop);
+            return (entry, stopLevel, target);
         }
 
         protected double MinimumGapSize;

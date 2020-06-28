@@ -11,10 +11,16 @@ namespace GapTraderWPF.UserControls
             InitializeComponent();
         }
 
-        private void Control_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void OnViewTradesClicked(object sender, MouseButtonEventArgs e)
         {
             var vm = (StaticStrategyFinderViewModel)DataContext;
             vm.ViewTradesCommand.Execute(null);
+        }
+
+        private void OnViewGraphClicked(object sender, MouseButtonEventArgs e)
+        {
+            var vm = (StaticStrategyFinderViewModel)DataContext;
+            vm.ViewGraphCommand.Execute(null);
         }
     }
 }

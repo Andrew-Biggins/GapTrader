@@ -12,10 +12,10 @@ namespace GapTraderCore.ViewModels
         
         public TradeJournalViewModel TradeJournalViewModel { get; }
 
-        public MainViewModel(IRunner runner, List<SavedData> savedData)
+        public MainViewModel(IRunner runner)
         {
             StrategyTesterViewModel = new GapFillStrategyTesterViewModel(_market, runner);
-            MarketDetailsViewModel = new MarketDetailsViewModel(savedData, runner, _market);
+            MarketDetailsViewModel = new MarketDetailsViewModel(runner, _market);
             TradeJournalViewModel = new TradeJournalViewModel(runner);
         }
 

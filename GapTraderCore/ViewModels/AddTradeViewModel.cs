@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Windows.Input;
-using Foundations;
+﻿using Foundations;
 using Foundations.Optional;
 using GapTraderCore.Interfaces;
-using GapTraderCore.Strategies;
+using System;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace GapTraderCore.ViewModels
 {
@@ -76,13 +71,13 @@ namespace GapTraderCore.ViewModels
 
         public double Target { get; set; } = 6200;
 
-        public IMarket SelectedMarket { get; set; }
+        public ISelectable SelectedMarket { get; set; }
 
-        public IStrategy SelectedStrategy { get; set; }
+        public ISelectableStrategy SelectedStrategy { get; set; }
 
-        public ObservableCollection<IStrategy> Strategies { get; }
+        public ObservableCollection<ISelectableStrategy> Strategies { get; private set; }
 
-        public ObservableCollection<IMarket> Markets { get; }
+        public ObservableCollection<ISelectable> Markets { get; private set; }
 
         public bool EntryHasError
         {
@@ -162,8 +157,31 @@ namespace GapTraderCore.ViewModels
 
         public string NewName { get; set; }
 
-        public AddTradeViewModel(IRunner runner, ObservableCollection<IMarket> markets,
-            ObservableCollection<IStrategy> strategies)
+        public AddTradeViewModel(IRunner runner, ObservableCollection<ISelectable> markets,
+            ObservableCollection<ISelectableStrategy> strategies)
+        {
+            Initialise(runner, markets, strategies);
+        }
+
+        public AddTradeViewModel(IRunner runner, ObservableCollection<ISelectable> markets,
+            ObservableCollection<ISelectableStrategy> strategies, ITrade trade)
+        {
+            Initialise(runner, markets, strategies);
+
+            Entry = trade.StrategyEntryLevel;
+            Target = trade.Target;
+            Stop = trade.StopLevel;
+            Size = trade.Size;
+            OpenDate = trade.OpenTime.Date;
+            OpenTime = trade.OpenTime;
+            OpenLevel = trade.OpenLevel;
+            CloseLevel = trade.CloseLevel;
+
+            VerifyInputs();
+        }
+
+        private void Initialise(IRunner runner, ObservableCollection<ISelectable> markets,
+            ObservableCollection<ISelectableStrategy> strategies)
         {
             _runner = runner;
             Markets = markets;
@@ -186,15 +204,23 @@ namespace GapTraderCore.ViewModels
 
         private void AddStrategy(object sender, EventArgs e)
         {
-            var stats = new StrategyStats(0,0,0,0,0,0,0,0,0,0,0,0,0);
-            var trades = new List<ITrade>();
-            var title = _addStrategyViewModel.IsFixedStop
-                ? $"Entry: {(double)_addStrategyViewModel.SelectedEntry / 10}% | Target: {(double)_addStrategyViewModel.SelectedTarget /10}% | Stop: {_addStrategyViewModel.Stop}pts"
-                : $"Entry: {(double)_addStrategyViewModel.SelectedEntry / 10}% | Target: {(double)_addStrategyViewModel.SelectedTarget / 10}% | Stop: {_addStrategyViewModel.Stop}%";
-            var strategy = new Strategy<FibonacciLevel, FibonacciLevel>(_addStrategyViewModel.SelectedEntry, _addStrategyViewModel.Stop, _addStrategyViewModel.SelectedTarget, stats, trades, title);
+            var newStrategy = _addStrategyViewModel.StrategyDetails.GetNewStrategy();
 
-            Strategies.Add(strategy);
-            RaisePropertyChanged(nameof(Strategies));
+            foreach (var strategy in Strategies)
+            {
+                if (newStrategy.Name == strategy.Name)
+                {
+                    _runner.Run(this, new Message("Already Exists", "Strategy Already Added", Message.MessageType.Error));
+                    NewName = string.Empty;
+                    return;
+                }
+            }
+
+            newStrategy.IsSelected = true;
+            Strategies.Add(newStrategy);
+            SelectedStrategy = newStrategy;
+            RaisePropertyChanged(nameof(SelectedStrategy));
+            VerifyInputs();
         }
 
         private void AddMarket()
@@ -209,16 +235,19 @@ namespace GapTraderCore.ViewModels
                 }
             }
 
-            Markets.Add(new Market { Name = NewName });
-            RaisePropertyChanged(nameof(Markets));
+            var newMarket = new Market(NewName) {IsSelected = true};
+            Markets.Add(newMarket);
+            SelectedMarket = newMarket;
+            RaisePropertyChanged(nameof(SelectedMarket));
             NewName = string.Empty;
+            VerifyInputs();
         }
 
         private void VerifyInputs()
         {
             if (EntryHasError || TargetHasError || StopHasError ||
                 OpenLevelHasError || CloseLevelHasError || SizeHasError
-                || DatesHaveError)
+                || DatesHaveError || Markets.Count == 0 || Strategies.Count == 0)
             {
                 IsAddEnabled = false;
             }
@@ -242,8 +271,8 @@ namespace GapTraderCore.ViewModels
             VerifyInputs();
         }
 
-        private readonly IRunner _runner;
-        private readonly AddStrategyViewModel _addStrategyViewModel;
+        private IRunner _runner;
+        private AddStrategyViewModel _addStrategyViewModel;
         private bool _entryHasError;
         private bool _targetHasError;
         private bool _stopHasError;

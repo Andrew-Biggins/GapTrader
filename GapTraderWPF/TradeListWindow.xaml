@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GapTraderWPF"
         xmlns:interfaces="clr-namespace:GapTraderCore.Interfaces;assembly=GapTraderCore"
+        xmlns:converters="clr-namespace:GapTraderWPF.Converters"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance {x:Type interfaces:IStrategy}}"
-        Title="{Binding Title}" Height="350" Width="800"
+        Title="{Binding Name}" Height="350" Width="800"
         MinWidth="800" MaxWidth="800" MinHeight="350">
     <Grid>
         <DataGrid CanUserResizeRows="False" IsReadOnly="True" Width="745"
@@ -46,13 +47,13 @@
                                     Binding="{Binding Target, StringFormat=N1}" Width="60" />
 
                 <DataGridTextColumn Header="Close Level"
-                                    Binding="{Binding CloseLevel, StringFormat=N1}" Width="70" />
+                                    Binding="{Binding CloseLevel, Converter={converters:OptionalDoubleToStringConverter}, StringFormat=N1}" Width="70" />
 
                 <DataGridTextColumn Header="Close Time"
-                                    Binding="{Binding CloseTime, StringFormat=HH:mm}" Width="70" />
+                                    Binding="{Binding CloseTime, Converter={converters:OptionalDateTimeToDateTimeConverter}, StringFormat=HH:mm}" Width="70" />
 
                 <DataGridTextColumn Header="Total Points"
-                                Binding="{Binding PointsProfit, StringFormat=N1}" Width="70" />
+                                Binding="{Binding PointsProfit, Converter={converters:OptionalDoubleToStringConverter}, StringFormat=N1}" Width="70" />
 
                 <DataGridTextColumn Header="Profit/Loss"
                                     Binding="{Binding CashProfit, StringFormat=N1}" Width="70" />

@@ -6,12 +6,12 @@
         xmlns:local="clr-namespace:GapTraderWPF"
         xmlns:viewModels="clr-namespace:GapTraderCore.ViewModels;assembly=GapTraderCore"
         mc:Ignorable="d"
-        Title="Enter Name" Height="100" Width="475"
-        Background="Black">
+        Height="100" Width="420"
+        Background="Black"
+        FocusManager.FocusedElement="{Binding ElementName=TextBox}">
     <Grid>
         <StackPanel Orientation="Horizontal" Height="30" Margin="10">
-            <TextBlock Text="Name:" VerticalAlignment="Center" Margin="0,0,5,0" Foreground="White"/>
-            <TextBox x:Name="TextBox" Height="20" Width="350" Text="{Binding NewName}"/>
+            <TextBox x:Name="TextBox" Height="20" Width="350" Text="{Binding NewName, UpdateSourceTrigger=PropertyChanged}" KeyDown="UIElement_OnKeyDown"/>
             <Button Width="30" Content="OK" Height="20" Margin="5,0" Command="{Binding ConfirmNewNameCommand}" Click="ButtonBase_OnClick">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">

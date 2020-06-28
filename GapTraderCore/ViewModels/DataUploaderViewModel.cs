@@ -34,7 +34,11 @@ namespace GapTraderCore.ViewModels
             set => SetProperty(ref _minuteAskDatafileName, value);
         }
 
+        public string Title { get; set; } = string.Empty;
+
         public bool IsUkData { get; set; }
+
+        public bool IsNewData { get; set; }
 
         public ICommand StartUploadCommand => new BasicCommand(StartUpload);
 

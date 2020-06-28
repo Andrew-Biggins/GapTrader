@@ -3,9 +3,9 @@ using GapTraderCore.Interfaces;
 
 namespace GapTraderCore.Strategies
 {
-    internal class Strategy<TEntry, TTarget> : IStrategy
+    internal class Strategy<TEntry, TTarget> : SerializableStrategy, IStrategy, ISelectableStrategy
     {
-        public StrategyStats Stats { get; private set; }
+        public StrategyStats Stats { get; }
 
         public double Stop { get; set; }
 
@@ -19,8 +19,6 @@ namespace GapTraderCore.Strategies
 
         public List<ITrade> Trades { get; }
 
-        public string Title { get; }
-
         public bool IsSelected
         {
             get => _isSelected;
@@ -31,19 +29,25 @@ namespace GapTraderCore.Strategies
             }
         }
 
-        public Strategy(object entry, double stop, object target, StrategyStats stats, List<ITrade> trades, string title)
+        public Strategy(object entry, double stop, object target, StrategyStats stats, List<ITrade> trades) : base()
         {
             Entry = (TEntry) entry;
             Stop = stop;
             Target = (TTarget) target;
             Stats = stats;
             Trades = trades;
-            Title = title;
         }
 
-        public void UpdateStats()
+        public Strategy(object entry, double stop, object target) : base()
         {
-           // Stats = DataProcessor.GetStrategyStats(Trades);
+            Entry = (TEntry)entry;
+            Stop = stop;
+            Target = (TTarget)target;
+        }
+
+        public Strategy(string name, string shortName) : base(name, shortName)
+        {
+            
         }
 
         private bool _isSelected;

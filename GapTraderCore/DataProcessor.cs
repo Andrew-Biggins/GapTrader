@@ -84,7 +84,7 @@ namespace GapTraderCore
             return Option.None<(double, double, double)>();
         }
 
-        public static StrategyStats GetStrategyStats(ObservableCollection<IJournalTrade> trades)
+        public static StrategyStats GetStrategyStats(IEnumerable<ITrade> trades)
         {
             double pointsTotal = 0;
             double cashProfit = 0;
@@ -108,7 +108,6 @@ namespace GapTraderCore
                 {
                     pointsTotal += x;
                     cashProfit += trade.CashProfit;
-                    // balance += trade.CashProfit;
 
                     if (x > biggestPointsWin)
                     {
@@ -149,49 +148,6 @@ namespace GapTraderCore
                         previousTradeWon = false;
                     }
                 });
-
-                //pointsTotal += trade.PointsProfit;
-                //cashProfit += trade.CashProfit;
-                //// balance += trade.CashProfit;
-
-                //if (trade.PointsProfit > biggestPointsWin)
-                //{
-                //    biggestPointsWin = trade.PointsProfit;
-                //}
-
-                //if (trade.CashProfit > biggestCashWin)
-                //{
-                //    biggestCashWin = trade.CashProfit;
-                //}
-
-                //if (trade.PointsProfit > 0)
-                //{
-                //    if (!previousTradeWon)
-                //    {
-                //        CheckLoseStreak();
-                //        loseStreak = 0;
-                //    }
-
-                //    wins++;
-                //    pointsWinTotal += trade.PointsProfit;
-                //    cashWinTotal += trade.CashProfit;
-                //    winStreak++;
-                //    previousTradeWon = true;
-                //}
-                //else if (trade.PointsProfit < 0)
-                //{
-                //    if (previousTradeWon)
-                //    {
-                //        CheckWinStreak();
-                //        winStreak = 0;
-                //    }
-
-                //    loses++;
-                //    pointsLossTotal += trade.PointsProfit;
-                //    cashLossTotal += trade.CashProfit;
-                //    loseStreak++;
-                //    previousTradeWon = false;
-                //}
             }
 
             CheckLoseStreak();

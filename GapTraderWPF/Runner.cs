@@ -54,6 +54,26 @@ namespace GapTraderWPF
             });
         }
 
+        public void ShowGraphWindow(object sender)
+        {
+            _context.Send(_ =>
+            {
+                var owner = GetOwner(sender);
+                var window = new GraphWindow { DataContext = sender, Owner = owner };
+                window.ShowDialog();
+            });
+        }
+
+        public void ShowSaveDataWindow(object sender)
+        {
+            _context.Send(_ =>
+            {
+                var owner = GetOwner(sender);
+                var window = new SaveDataWindow { DataContext = sender, Owner = owner };
+                window.ShowDialog();
+            });
+        }
+
         public void ShowUploadNewDataWindow(object sender)
         {
             _context.Send(_ =>

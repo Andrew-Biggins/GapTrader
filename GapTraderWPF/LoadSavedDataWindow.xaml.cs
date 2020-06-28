@@ -11,11 +11,17 @@ namespace GapTraderWPF
             InitializeComponent();
         }
 
-        private void Control_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void OnLoadDataClicked(object sender, MouseButtonEventArgs e)
         {
             var vm = (MarketDetailsViewModel)DataContext;
             vm.DeserializeDataCommand.Execute(null);
             Close();
+        }
+
+        private void OnDeleteDataClicked(object sender, MouseButtonEventArgs e)
+        {
+            var vm = (MarketDetailsViewModel)DataContext;
+            vm.DeleteDataCommand.Execute(null);
         }
     }
 }

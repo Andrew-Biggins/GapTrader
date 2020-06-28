@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.IO;
 using System.Linq;
@@ -12,6 +13,7 @@ using Foundations.Optional;
 using GapTraderCore.Interfaces;
 using static System.IO.Directory;
 using static GapTraderCore.CsvServices;
+using static GapTraderCore.Strings;
 
 namespace GapTraderCore.ViewModels
 {
@@ -24,7 +26,7 @@ namespace GapTraderCore.ViewModels
     {
         public GapFillStatsViewModel GapFillStatsViewModel
         {
-            get => _gapFillStatsViewModel; 
+            get => _gapFillStatsViewModel;
             private set => SetProperty(ref _gapFillStatsViewModel, value);
         }
 
@@ -34,16 +36,16 @@ namespace GapTraderCore.ViewModels
             set => SetProperty(ref _market, value);
         }
 
-        public List<SavedData> SavedMarkets
+        public List<SerializableMarketData> SavedMarkets
         {
             get => _savedMarkets;
             set => SetProperty(ref _savedMarkets, value);
         }
 
-        public SavedData SelectedSavedMarket
+        public SerializableMarketData SelectedSerializableMarket
         {
-            get => _selectedSavedMarket;
-            set => SetProperty(ref _selectedSavedMarket, value);
+            get => _selectedSerializableMarket;
+            set => SetProperty(ref _selectedSerializableMarket, value);
         }
 
         public List<Gap> UnfilledGaps
@@ -64,7 +66,9 @@ namespace GapTraderCore.ViewModels
 
         public bool DataExists { get; private set; }
 
-        public ICommand SaveDataCommand => new BasicCommand(() => _runner.GetName(this, "Enter Save Name"));
+        public ICommand NewSaveDataCommand => new BasicCommand(() => _runner.GetName(this, "Enter Save Name"));
+
+        public ICommand SaveDataCommand => new BasicCommand(() => _runner.ShowSaveDataWindow(this));
 
         public ICommand ConfirmNewNameCommand => new BasicCommand(SaveData);
 
@@ -74,11 +78,26 @@ namespace GapTraderCore.ViewModels
 
         public ICommand UploadNewDataCommand => new BasicCommand(UploadNewData);
 
-        public MarketDetailsViewModel(List<SavedData> savedData, IRunner runner, IMarket market)
+        public ICommand DeleteDataCommand => new BasicCommand(DeleteData);
+
+        public ICommand AddDataCommand => new BasicCommand(AddData);
+
+        public ICommand OverwriteSavedDataCommand => new BasicCommand(OverwriteSavedData);
+
+        private void OverwriteSavedData()
+        {
+            var name = SelectedSerializableMarket.SaveName;
+            DeleteData();
+            NewName = name;
+            SaveData();
+        }
+
+        public MarketDetailsViewModel(IRunner runner, IMarket market)
         {
             Market = market;
             _runner = runner;
-            SavedMarkets = savedData;
+
+            SavedMarkets = GetSavedMarkets(_savedDataPath);
             MarketStats = new MarketStats();
             GapFillStatsViewModel = new GapFillStatsViewModel();
             CheckForData();
@@ -99,7 +118,7 @@ namespace GapTraderCore.ViewModels
         {
             foreach (var savedMarket in SavedMarkets)
             {
-                if (savedMarket.Name == NewName)
+                if (savedMarket.SaveName == NewName)
                 {
                     _runner.Run(this,
                         new Message("Already Exists", "Data Name Already Exists", Message.MessageType.Error));
@@ -108,60 +127,140 @@ namespace GapTraderCore.ViewModels
                 }
             }
 
-            var data = new SavedData(NewName, _market);
+            var data = new SerializableMarketData(NewName, _market);
 
-            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
-            path += "\\Saved Data";
-            CreateDirectory(path);
+            CreateDirectory(_savedDataPath);
 
             IFormatter formatter = new BinaryFormatter();
-            Stream stream = new FileStream($"{path}\\{NewName}.txt", FileMode.Create, FileAccess.Write);
+            Stream stream = new FileStream($"{_savedDataPath}\\{NewName}.txt", FileMode.Create, FileAccess.Write);
 
             formatter.Serialize(stream, data);
             stream.Close();
 
             UpdateMarketDetails(NewName);
-            Market.Name = NewName;
+            Market.UpdateName(NewName);
             RaisePropertyChanged(nameof(Market));
             NewName = string.Empty;
+            SavedMarkets = GetSavedMarkets(_savedDataPath);
         }
 
         private void UploadNewData()
         {
             DataProcessDel processNewData = ProcessNewData;
-            DataUploaderViewModel = new DataUploaderViewModel(processNewData);
-            UnfilledGaps = new List<Gap>();
+            DataUploaderViewModel = new DataUploaderViewModel(processNewData)
+            {
+                IsNewData = true,
+                Title = "Upload New Data"
+            };
             _runner.ShowUploadNewDataWindow(DataUploaderViewModel);
         }
 
-        private void ProcessSavedData(SavedData data)
+        private void AddData()
+        {
+            DataProcessDel addData = AddDataToExisting;
+            DataUploaderViewModel = new DataUploaderViewModel(addData)
+            {
+                IsNewData = false,
+                Title = "Add to Existing Data"
+            };
+            _runner.ShowUploadNewDataWindow(DataUploaderViewModel);
+        }
+
+        private void AddDataToExisting(string minuteBidDataFilePath, string minuteAskDataFilePath,
+            string dailyDataFilePath, bool deriveDailyFromMinute, bool isUkData)
+        {
+            UnfilledGaps = new List<Gap>();
+            MarketStats = _loadingBar;
+
+            _loadingBar.Maximum = WriteSafeReadAllLines(minuteBidDataFilePath).Length +
+                                  WriteSafeReadAllLines(minuteAskDataFilePath).Length * 2;
+
+            if (deriveDailyFromMinute)
+            {
+                _loadingBar.Maximum += (double)WriteSafeReadAllLines(minuteBidDataFilePath).Length / 1330;
+            }
+            else
+            {
+                _loadingBar.Maximum += WriteSafeReadAllLines(dailyDataFilePath).Length;
+            }
+
+            var timezone = Market.IsUkData
+                ? Timezone.Uk
+                : Timezone.Us;
+
+            var newMinuteData = ReadInNewMinuteData(minuteBidDataFilePath, minuteAskDataFilePath, timezone,
+                () => { _loadingBar.Progress++; });
+
+            foreach (var (key, value) in newMinuteData)
+            {
+                if (!Market.MinuteData.ContainsKey(key))
+                {
+                    Market.MinuteData.Add(key, value);
+                }
+            }
+
+            if (deriveDailyFromMinute)
+            {
+                Market.DeriveDailyFromMinute(() => { _loadingBar.Progress++; });
+            }
+            else
+            {
+                var firstMinuteDataDate = Market.MinuteData.Keys.First();
+                var newDailyCandles = ReadInDailyData(dailyDataFilePath, () => { _loadingBar.Progress++; },
+                    firstMinuteDataDate);
+
+                // Remove duplicate/overlapping dates before joining the lists
+                foreach (var candle in Market.DailyCandles)
+                {
+                    for (var i = newDailyCandles.Count - 1; i >= 0; i--)
+                    {
+                        if (newDailyCandles[i].Date == candle.Date)
+                        {
+                            newDailyCandles.Remove(newDailyCandles[i]);
+                        }
+                    }
+                }
+
+                Market.DailyCandles.AddRange(newDailyCandles);
+            }
+
+            var pc = Market.DailyCandles[0].Open + Market.DailyCandles[0].Gap.GapPoints;
+
+            _previousClose = Option.Some(pc);
+            Market.CalculateStats(Market.IsUkData, _previousClose);
+            _loadingBar.Progress = 0;
+
+            UpdateMarketDetails(Market.Name);
+        }
+
+        private void ProcessSavedData(SerializableMarketData marketData)
         {
             MarketStats = _loadingBar;
-            _loadingBar.Maximum = WriteSafeReadAllLines(data.MinuteDataFilePath).Length +
-                                  WriteSafeReadAllLines(data.DailyDataFilePath).Length;
+            _loadingBar.Maximum = WriteSafeReadAllLines(marketData.MinuteDataFilePath).Length +
+                                  WriteSafeReadAllLines(marketData.DailyDataFilePath).Length;
 
             Market.ClearData();
             UnfilledGaps = new List<Gap>();
 
-            Market.MinuteData = ReadInSavedMinuteData(data, () => { _loadingBar.Progress++; });
+            Market.MinuteData = ReadInSavedMinuteData(marketData, () => { _loadingBar.Progress++; });
 
             var firstMinuteDataDate = Market.MinuteData.Keys.First();
-            Market.DailyCandles = ReadInDailyData(data.DailyDataFilePath, () => { _loadingBar.Progress++; },
+            Market.DailyCandles = ReadInDailyData(marketData.DailyDataFilePath, () => { _loadingBar.Progress++; },
                 firstMinuteDataDate);
 
-            _previousClose = Option.Some(SelectedSavedMarket.PreviousDailyClose);
-            Market.CalculateStats(SelectedSavedMarket.IsUkData, _previousClose);
+            _previousClose = Option.Some(SelectedSerializableMarket.PreviousDailyClose);
+            Market.CalculateStats(SelectedSerializableMarket.IsUkData, _previousClose);
             MarketStats = new MarketStats(Market.DataDetails);
             _loadingBar.Progress = 0;
 
-            UpdateMarketDetails(data.Name);
+            UpdateMarketDetails(marketData.SaveName);
             CheckForData();
         }
 
         private void ProcessNewData(string minuteBidDataFilePath, string minuteAskDataFilePath,
             string dailyDataFilePath, bool deriveDailyFromMinute, bool isUkData)
         {
+            UnfilledGaps = new List<Gap>();
             MarketStats = _loadingBar;
             Market.ClearData();
             _loadingBar.Maximum = WriteSafeReadAllLines(minuteBidDataFilePath).Length +
@@ -199,7 +298,7 @@ namespace GapTraderCore.ViewModels
             _loadingBar.Progress = 0;
 
             UpdateMarketDetails();
-            Market.Name = "Unsaved Data Set";
+            Market.UpdateName("Unsaved Data Set");
             CheckForData();
         }
 
@@ -209,7 +308,7 @@ namespace GapTraderCore.ViewModels
             new Thread(() =>
             {
                 Thread.CurrentThread.IsBackground = true;
-                ProcessSavedData(SelectedSavedMarket);
+                ProcessSavedData(SelectedSerializableMarket);
             }).Start();
         }
 
@@ -223,16 +322,61 @@ namespace GapTraderCore.ViewModels
         {
             MarketStats = new MarketStats(Market.DataDetails, name);
             UpdateStats();
-            Market.Name = name;
+            Market.UpdateName(name);
         }
+
+        private void DeleteData()
+        {
+            var dataFile = $"{SelectedSerializableMarket.SaveName}.txt";
+            var minData = $"{SelectedSerializableMarket.SaveName}{MinuteDataFileName}";
+            var dailyData = $"{SelectedSerializableMarket.SaveName}{DailyDataFileName}";
+
+            if (File.Exists(Path.Combine(_savedDataPath, dataFile)))
+            {
+                File.Delete(Path.Combine(_savedDataPath, dataFile));
+            }
+
+            if (File.Exists(Path.Combine(_savedDataPath, minData)))
+            {
+                File.Delete(Path.Combine(_savedDataPath, minData));
+            }
+
+            if (File.Exists(Path.Combine(_savedDataPath, dailyData)))
+            {
+                File.Delete(Path.Combine(_savedDataPath, dailyData));
+            }
+
+            SavedMarkets = GetSavedMarkets(_savedDataPath);
+        }
+
+        private static List<SerializableMarketData> GetSavedMarkets(string dataPath)
+        {
+            var markets = new List<SerializableMarketData>();
+
+            CreateDirectory(dataPath);
+
+            var d = new DirectoryInfo(dataPath);
+            IFormatter formatter = new BinaryFormatter();
+
+            foreach (var file in d.GetFiles("*.txt"))
+            {
+                var stream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read);
+                var savedData = (SerializableMarketData)formatter.Deserialize(stream);
+                markets.Add(savedData);
+            }
+
+            return markets;
+        }
+
+        private readonly string _savedDataPath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Saved Data\\";
 
         private readonly IRunner _runner;
         private readonly LoadingBarViewModel _loadingBar = new LoadingBarViewModel();
 
         private ILoadable _marketStats;
-        private SavedData _selectedSavedMarket;
+        private SerializableMarketData _selectedSerializableMarket;
         private IMarket _market = new Market();
-        private List<SavedData> _savedMarkets;
+        private List<SerializableMarketData> _savedMarkets;
         private List<Gap> _unfilledGaps;
         private Optional<double> _previousClose = Option.None<double>();
         private GapFillStatsViewModel _gapFillStatsViewModel;

@@ -16,7 +16,10 @@ namespace GapTraderCore.ViewModels
             private set => SetProperty(ref _strategies, value);
         }
 
-        public ICommand ViewTradesCommand => new BasicCommand(ViewTrades);
+        public ICommand ViewTradesCommand => new BasicCommand(() => Runner.ShowTrades(this, SelectedStrategy));
+
+        public ICommand ViewGraphCommand => new BasicCommand(() =>
+            Runner.ShowGraphWindow(new GraphWindowViewModel(AccountSizer.AccountStartSize, SelectedStrategy.Trades)));
 
         public StaticStrategyFinderViewModel(GapFillStrategyTester strategyTester, IMarket market, IRunner runner,
             AccountSizerViewModel accountSizer) : base(strategyTester, market, runner, accountSizer)
@@ -43,7 +46,6 @@ namespace GapTraderCore.ViewModels
             var fibs = (FibonacciLevel[])Enum.GetValues(typeof(FibonacciLevel));
             var tempStrategies = new List<IGapFillStrategy>();
 
-            StrategyTester.SetSizing(AccountSizer.AccountStartSize, AccountSizer.RiskPercentage, AccountSizer.Compound);
 
             StrategyTester.SelectedDirection = tradeDirection;
 
@@ -58,6 +60,7 @@ namespace GapTraderCore.ViewModels
                             StrategyTester.FibLevelEntry = fibs[i];
                             StrategyTester.FibLevelTarget = fibs[j];
                             StrategyTester.Stop = k;
+                            StrategyTester.SetSizing(AccountSizer.AccountStartSize, AccountSizer.RiskPercentage, AccountSizer.Compound);
                             StrategyTester.TestStrategy(Market, dateTimeFilters, m);
 
                             if (StrategyTester.Strategy.Stats.CashProfit > 0)
@@ -84,11 +87,6 @@ namespace GapTraderCore.ViewModels
         {
             Strategies = new List<IGapFillStrategy>();
             base.StartStrategySearch();
-        }
-
-        private void ViewTrades()
-        {
-            Runner.ShowTrades(this, SelectedStrategy);
         }
 
         private void RefreshStrategies(object sender, EventArgs e)

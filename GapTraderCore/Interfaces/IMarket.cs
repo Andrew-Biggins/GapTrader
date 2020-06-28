@@ -7,7 +7,7 @@ using GapTraderCore.ViewModels;
 
 namespace GapTraderCore.Interfaces
 {
-    public interface IMarket : IObservableMarket
+    public interface IMarket : INotifyPropertyChanged
     {
         Dictionary<FibonacciLevel, FibLevel> GapFibRetraceLevels { get; }
 
@@ -28,5 +28,9 @@ namespace GapTraderCore.Interfaces
         void CalculateStats(bool ukData, Optional<double> previousClose);
 
         bool IsUkData { get; }
+
+        void UpdateName(string name);
+
+        string Name { get; }
     }
 }

@@ -15,14 +15,15 @@ namespace GapTraderCore.ViewModels
         Both
     }
 
-
     public sealed class TradeFilterSelectorViewModel : BindableBase
     {
         public EventHandler FiltersChanged;
 
-        public ObservableCollection<IStrategy> Strategies { get; }
+        public ObservableCollection<ISelectableStrategy> Strategies { get; }
 
-        public ObservableCollection<IMarket> Markets { get; }
+        public ObservableCollection<ISelectable> Markets { get; }
+
+        public ObservableCollection<ISelectable> DaysOfWeek { get; } 
 
         public List<TradeStatus> TradeStatuses { get; } = new List<TradeStatus>();
 
@@ -69,13 +70,15 @@ namespace GapTraderCore.ViewModels
 
         public ICommand ApplyTradeFiltersCommand => new BasicCommand(() => FiltersChanged.Raise(this));
 
-        public TradeFilterSelectorViewModel(ObservableCollection<IStrategy> strategies, ObservableCollection<IMarket> markets)
+        public TradeFilterSelectorViewModel(ObservableCollection<ISelectableStrategy> strategies, ObservableCollection<ISelectable> markets)
         {
             Strategies = strategies;
             Markets = markets;
             GetTradeStatuses();
             SelectAllMarkets();
             SelectAllStrategies();
+
+            DaysOfWeek = GetDaysOfWeek();
         }
 
         private void GetTradeStatuses()
@@ -102,6 +105,19 @@ namespace GapTraderCore.ViewModels
             {
                 strategy.IsSelected = true;
             }
+        }
+
+        private static ObservableCollection<ISelectable> GetDaysOfWeek()
+        {
+            var daysOfWeek = new ObservableCollection<ISelectable>();
+            var days = (DayOfWeek[])Enum.GetValues(typeof(DayOfWeek));
+
+            foreach (var day in days)
+            {
+                daysOfWeek.Add(new Day(day) { IsSelected = true });
+            }
+
+            return daysOfWeek;
         }
 
         private DateTime _tradesStartDate;

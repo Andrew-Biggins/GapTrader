@@ -7,9 +7,11 @@
              xmlns:viewModels="clr-namespace:GapTraderCore.ViewModels;assembly=GapTraderCore"
              xmlns:userControls="clr-namespace:GapTraderWPF.UserControls"
              xmlns:converters="clr-namespace:GapTraderWPF.Converters"
+             xmlns:oxy="http://oxyplot.org/wpf"
+             xmlns:validationRules="clr-namespace:GapTraderWPF.ValidationRules"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance {x:Type viewModels:TradeJournalViewModel}}"
-             d:DesignHeight="580" d:DesignWidth="1200"
+             d:DesignHeight="680" d:DesignWidth="1200"
              Background="Black">
     <UserControl.Resources>
         <Style TargetType="TextBlock">
@@ -19,68 +21,298 @@
             <Setter Property="BorderBrush" Value="White" />
             <Setter Property="BorderThickness" Value="1" />
         </Style>
+        <Style TargetType="{x:Type DataGridCell}" x:Key="JournalGridCellStyle">
+            <Setter Property="Foreground" Value="Black" />
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{x:Null}" />
+                    <Setter Property="BorderBrush" Value="{x:Null}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <ControlTemplate x:Key="ValidationErrorTemplate">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Center" Margin="2,1">
+                    <Grid Width="12" Height="12">
+                        <Ellipse Width="12" Height="12" Fill="Red" HorizontalAlignment="Center" 
+                                 VerticalAlignment="Center" />
+                        <TextBlock Foreground="White" FontWeight="Heavy" 
+                                   FontSize="8" HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center" TextAlignment="Center"
+                                   ToolTip="{Binding ElementName=ErrorAdorner, Path=AdornedElement.(Validation.Errors)/ErrorContent}">X</TextBlock>
+                    </Grid>
+                </StackPanel>
+                <AdornedElementPlaceholder x:Name="ErrorAdorner" />
+            </DockPanel>
+        </ControlTemplate>
     </UserControl.Resources>
     <Border BorderBrush="White" BorderThickness="2">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="350" />
                 <RowDefinition Height="58" />
-                <RowDefinition Height="234" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" MaxHeight="250"/>
+                    <RowDefinition Height="auto" MaxHeight="25"/>
                     <RowDefinition Height="*" MinHeight="100" />
                 </Grid.RowDefinitions>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,5,0">
                     <userControls:TradeFilterSelector DataContext="{Binding FilterSelector}" Margin="5"/>
                     <Border BorderBrush="White" BorderThickness="1" Margin="0,5,0,5" VerticalAlignment="Stretch">
-                    <Button  HorizontalAlignment="Center" Margin="5,5" VerticalAlignment="Top"
+                        <Button  HorizontalAlignment="Center" Margin="5,5" VerticalAlignment="Top"
                         Height="60" Width="67" Command="{Binding AddNewTradeCommand}">
                             <TextBlock Foreground="Black" TextAlignment="Center" TextWrapping="Wrap">Add New Trade</TextBlock>
                         </Button>
                     </Border>
                 </StackPanel>
-                <DataGrid Grid.Row="1" ItemsSource="{Binding Trades, Mode=OneWay}" IsReadOnly="True"
-                      AutoGenerateColumns="False" HorizontalAlignment="Stretch" Background="Black">
+
+                <Grid Grid.Row="1" HorizontalAlignment="Stretch" Margin="7,0" x:Name="Grid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="18" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{Binding ElementName=MarketColumn, Path=ActualWidth}" MaxWidth="1000"/>
+                        <ColumnDefinition Width="{Binding ElementName=StrategyColumn, Path=ActualWidth}" MaxWidth="1000"/>
+                        <ColumnDefinition Width="{Binding ElementName=EntryColumn, Path=ActualWidth}" MaxWidth="1000"/>
+                        <ColumnDefinition Width="{Binding ElementName=StopColumn, Path=ActualWidth}" MaxWidth="1000"/>
+                        <ColumnDefinition Width="{Binding ElementName=TargetColumn, Path=ActualWidth}" MaxWidth="1000"/>
+                        <ColumnDefinition Width="{Binding ElementName=RrrColumn, Path=ActualWidth}" MaxWidth="1000"/>
+                        <ColumnDefinition Width="{Binding ElementName=OpenTimeColumn, Path=ActualWidth}" MaxWidth="1000"/>
+                        <ColumnDefinition Width="{Binding ElementName=OpenLevelColumn, Path=ActualWidth}" MaxWidth="1000"/>
+                        <ColumnDefinition Width="{Binding ElementName=CloseTimeColumn, Path=ActualWidth}" MaxWidth="1000"/>
+                        <ColumnDefinition Width="{Binding ElementName=CloseLevelColumn, Path=ActualWidth}" MaxWidth="1000"/>
+                        <ColumnDefinition Width="{Binding ElementName=TotalPointsColumn, Path=ActualWidth}" MaxWidth="1000"/>
+                        <ColumnDefinition Width="{Binding ElementName=ResultInRColumn, Path=ActualWidth}" MaxWidth="1000"/>
+                        <ColumnDefinition Width="{Binding ElementName=SizeColumn, Path=ActualWidth}" MaxWidth="1000"/>
+                        <ColumnDefinition Width="{Binding ElementName=ProfitColumn, Path=ActualWidth}" MaxWidth="1000"/>
+                        <ColumnDefinition Width="{Binding ElementName=EditColumn, Path=ActualWidth}" MaxWidth="1000"/>
+                        <ColumnDefinition Width="{Binding ElementName=DeleteColumn, Path=ActualWidth}" MaxWidth="1000"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4" BorderBrush="Black" BorderThickness="0,0,3,0" Background="BurlyWood" Margin="0,0,-2,0">
+                        <TextBlock  Text="Strategy Trade Details" FontWeight="Bold" HorizontalAlignment="Center" Background="BurlyWood" Foreground="Black"/>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="0" Background="BurlyWood" Margin="1.5,0,3,0">
+                        <TextBlock  Text="Actual Trade Open Details" FontWeight="Bold" HorizontalAlignment="Center" Background="BurlyWood" Foreground="Black"/>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="8" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="1,0,0,0" Background="BurlyWood" Margin="-1.25,0,0.75,0">
+                        <TextBlock Text="Actual Trade Close Details" FontWeight="Bold" HorizontalAlignment="Center" Background="BurlyWood" Foreground="Black"/>
+                    </Border>
+
+                    <Border Grid.Row="0" Grid.Column="11" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="1,0,0,0" Background="BurlyWood" Margin="-1,0,1,0">
+                        <TextBlock Text="Account Start Size:" FontWeight="Bold" HorizontalAlignment="Right" Background="BurlyWood" Foreground="Black" FontSize="11.5" Margin="0,0,2,0"/>
+                    </Border>
+                    <TextBox Grid.Row="0" Grid.Column="13" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}">
+                    <TextBox.Text>
+                        <Binding Path="AccountStartSize"
+                                 Mode="TwoWay"
+                                 UpdateSourceTrigger="LostFocus"
+                                 Converter="{converters:EmptyDoubleToStringConverter}">
+                            <Binding.ValidationRules>
+                                <validationRules:MinimumGapSizeValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                    </TextBox>
+                </Grid>
+
+                <DataGrid Grid.Row="2"  ItemsSource="{Binding Trades, Mode=OneWay}" IsReadOnly="True"
+                      AutoGenerateColumns="False" CanUserResizeColumns="False" 
+                      SelectedItem="{Binding SelectedTrade}">
+                    <DataGrid.Resources>
+                        <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="Background" Value="BurlyWood" />
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            <Setter Property="BorderBrush" Value="Black"/>
+                            <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                        </Style>
+                        <Style BasedOn="{StaticResource JournalGridCellStyle}" TargetType="DataGridCell" />
+                    </DataGrid.Resources>
                     <DataGrid.Columns>
 
-                        <DataGridTextColumn Header="Market" 
+                        <DataGridTextColumn Header="Market" x:Name="MarketColumn"
                                     Binding="{Binding Market.Name}" Width="0.75*" />
 
-                        <DataGridTextColumn Header="Strategy" 
-                                    Binding="{Binding Strategy.Title}" Width="3*" />
-                        <DataGridTextColumn Header="Entry" 
-                                    Binding="{Binding StrategyEntryLevel}" Width="1*" />
-                        <DataGridTextColumn Header="Stop" 
-                                        Binding="{Binding StopLevel}" Width="1*" />
-                        <DataGridTextColumn Header="Target" 
-                                        Binding="{Binding Target}" Width="1*" />
-                        <DataGridTextColumn Header="RRR" 
+                        <DataGridTextColumn Header="Strategy" x:Name="StrategyColumn"
+                                    Binding="{Binding Strategy.ShortName}" Width="2.5*">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                    <Setter Property="BorderThickness" Value="0, 0, 3, 0"/>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell" BasedOn="{StaticResource JournalGridCellStyle}">
+                                    <Setter Property="BorderThickness" Value="0,0,2,0"/>
+                                    <Setter Property="BorderBrush" Value="Black"/>
+                                    <Setter Property="Margin" Value="2,0,0,0"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="BorderThickness" Value="0,0,2,0"/>
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                            <Setter Property="Margin" Value="2,0,0,0"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Header="Entry" x:Name="EntryColumn"
+                                    Binding="{Binding StrategyEntryLevel}" Width="0.85*" />
+                        <DataGridTextColumn Header="Stop" x:Name="StopColumn"
+                                        Binding="{Binding StopLevel}" Width="0.85*" />
+                        <DataGridTextColumn Header="Target" x:Name="TargetColumn"
+                                        Binding="{Binding Target}" Width="0.85*" />
+                        <DataGridTextColumn Header="RRR" x:Name="RrrColumn"
                                         Binding="{Binding RiskRewardRatio}" Width="0.75*" />
-                        <DataGridTextColumn Header="Open Date/Time" 
-                                        Binding="{Binding OpenTime, StringFormat=dd-MM-yy HH:mm}" Width="1.5*" />
-                        <DataGridTextColumn Header="Open Level" 
-                                        Binding="{Binding OpenLevel}" Width="1*" />
-                        <DataGridTextColumn Header="Close Date/Time" 
+
+                        <DataGridTextColumn Header="Open Date/Time" x:Name="OpenTimeColumn"
+                                        Binding="{Binding OpenTime, StringFormat=dd-MM-yy HH:mm}" Width="1.5*" >
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                    <Setter  Property="BorderThickness" Value="2,0,1,0"/>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell" BasedOn="{StaticResource JournalGridCellStyle}">
+                                    <Setter Property="BorderThickness" Value="2,0,0,0"/>
+                                    <Setter Property="BorderBrush" Value="Black"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="BorderThickness" Value="2,0,0,0"/>
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                        </Trigger>
+
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Header="Open Level" x:Name="OpenLevelColumn"
+                                        Binding="{Binding OpenLevel}" Width="1*" >
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                    <Setter  Property="BorderThickness" Value="0,0,3,0"/>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell" BasedOn="{StaticResource JournalGridCellStyle}">
+                                    <Setter Property="BorderThickness" Value="0,0,2,0"/>
+                                    <Setter Property="BorderBrush" Value="Black"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="BorderThickness" Value="0,0,2,0"/>
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Header="Close Date/Time" x:Name="CloseTimeColumn"
                                         Binding="{Binding CloseTime, Converter={converters:OptionalDateTimeToDateTimeConverter}, StringFormat=dd-MM-yy HH:mm}" Width="1.5*" />
-                        <DataGridTextColumn Header="Close Level" 
+
+                        <DataGridTextColumn Header="Close Level" x:Name="CloseLevelColumn"
                                         Binding="{Binding CloseLevel, Converter={converters:OptionalDoubleToStringConverter}}" Width="1*" />
-                        <DataGridTextColumn Header="+/- Points" 
-                                        Binding="{Binding PointsProfit, Converter={converters:OptionalDoubleToStringConverter}}" Width="1*" />
-                        <DataGridTextColumn Header="Result in R" 
+
+
+                        <DataGridTextColumn Header="+/- Points" x:Name="TotalPointsColumn"
+                                        Binding="{Binding PointsProfit, Converter={converters:OptionalDoubleToStringConverter}}" Width="1*" >
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                    <Setter  Property="BorderThickness" Value="2,0,1,0"/>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell" BasedOn="{StaticResource JournalGridCellStyle}">
+                                    <Setter Property="BorderThickness" Value="2,0,0,0"/>
+                                    <Setter Property="BorderBrush" Value="Black"/>
+
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="BorderThickness" Value="2,0,0,0"/>
+                                            <Setter Property="BorderBrush" Value="Black" />
+
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Result in R" x:Name="ResultInRColumn"
                                         Binding="{Binding ResultInR, Converter={converters:OptionalDoubleToStringConverter}}" Width="1*" />
-                        <DataGridTextColumn Header="Size" 
+                        <DataGridTextColumn Header="Size" x:Name="SizeColumn"
                                         Binding="{Binding Size}" Width="0.5*" />
-                        <DataGridTextColumn Header="Profit / Loss" 
-                                        Binding="{Binding CashProfit}" Width="1*" />
+                        <DataGridTextColumn Header="Profit / Loss" x:Name="ProfitColumn"
+                                        Binding="{Binding CashProfit}" Width="1.1*" />
+
+
+                        <DataGridTemplateColumn Header="Edit" MinWidth="45" MaxWidth="45" x:Name="EditColumn">
+                            <DataGridTemplateColumn.HeaderStyle>
+                                <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                    <Setter  Property="BorderThickness" Value="2,0,1,0"/>
+                                </Style>
+                            </DataGridTemplateColumn.HeaderStyle>
+                            <DataGridTemplateColumn.CellStyle>
+                                <Style TargetType="DataGridCell" BasedOn="{StaticResource JournalGridCellStyle}">
+                                    <Setter Property="BorderThickness" Value="2,0,0,0"/>
+                                    <Setter Property="BorderBrush" Value="Black"/>
+                                    <EventSetter Event="MouseDoubleClick"
+                                                 Handler="OnEditTradeClicked"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="BorderThickness" Value="2,0,0,0"/>
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                        </Trigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="Brown" />
+                                            <Setter Property="BorderBrush" Value="CornflowerBlue" />
+                                            <Setter Property="BorderThickness" Value="1"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTemplateColumn.CellStyle>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Source="/Icons/Edit.png" Height="35" Width="25" ToolTip="Double Click to Edit"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="Delete" MinWidth="45" MaxWidth="45" x:Name="DeleteColumn">
+                            <DataGridTemplateColumn.CellStyle>
+                                <Style TargetType="DataGridCell" BasedOn="{StaticResource JournalGridCellStyle}">
+                                    <EventSetter Event="MouseDoubleClick"
+                                                 Handler="OnRemoveTradeClicked"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="Brown" />
+                                            <Setter Property="BorderBrush" Value="CornflowerBlue" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTemplateColumn.CellStyle>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Source="/Icons/Delete.png" Height="35" Width="25" ToolTip="Double Click to Delete"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
 
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
             <userControls:StrategyResultsStats Grid.Row="1" DataContext="{Binding StrategyResultsStatsViewModel}"/>
+            <oxy:PlotView Grid.Row="2" Model="{Binding Plot, Mode=OneTime}" MouseDoubleClick="OnGraphDoubleClick"
+                          ToolTip="Double Click to Pop-out"/>
         </Grid>
     </Border>
 </UserControl>

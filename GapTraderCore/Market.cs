@@ -12,7 +12,7 @@ using static GapTraderCore.FibonacciServices;
 
 namespace GapTraderCore
 {
-    public class Market : IMarket
+    public class Market : SerializableBase, IMarket, ISelectable
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -36,26 +36,26 @@ namespace GapTraderCore
             get => _isSelected;
             set
             {
-                value =! _isSelected;
+                value = !_isSelected;
                 _isSelected = value;
             }
         }
 
-        public string Name
+        public Market(string name = "") : base(name)
         {
-            get => _name;
-            set
-            {
-                if (value != _name)
-                {
-                    _name = value;
-                    PropertyChanged.Raise(this, nameof(Name));
-                }
-            }
+            
+        }
+
+        public void UpdateName(string name)
+        {
+            Name = name;
+            PropertyChanged.Raise(this, nameof(Name));
         }
 
         public void DeriveDailyFromMinute(Del counter)
         {
+            DailyCandles.Clear();
+
             foreach (var (date, minuteCandles) in MinuteData)
             {
                 var cash = false;
@@ -304,7 +304,6 @@ namespace GapTraderCore
 
                     if (MinuteData.TryGetValue(dailyCandle.Date.Date, out var minuteCandles))
                     {
-                        // todo this isn't working. Post MFA on Dax
                         var excursions = CompareMinuteData(minuteCandles, dailyCandle, level, false);
 
                         excursions.IfExistsThen(x =>
@@ -503,7 +502,6 @@ namespace GapTraderCore
         }
 
         private double _averageGapSize;
-        private string _name = "No Data";
         private bool _isSelected;
     }
 }

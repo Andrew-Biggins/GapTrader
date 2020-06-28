@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using GapTraderCore.ViewModels;
+using System;
 using System.Globalization;
-using System.Text;
 using System.Windows.Data;
-using GapTraderCore;
-using GapTraderCore.ViewModels;
 
 namespace GapTraderWPF.Converters
 {
@@ -18,7 +15,10 @@ namespace GapTraderWPF.Converters
                     return "Into Gap";
                 case StrategyType.OutOfGap:
                     return "Out Of Gap";
-                
+                case StrategyType.Triangle:
+                    return "Triangle";
+                case StrategyType.Other:
+                    return "Other";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(value), value, null);
             }

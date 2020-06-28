@@ -7,11 +7,31 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Icons\Delete.png" />
+    <None Remove="Icons\Edit.png" />
+    <None Remove="Icons\Graph.png" />
+    <None Remove="Icons\GreenTick.png" />
+    <None Remove="Icons\List.png" />
+    <None Remove="Icons\Plus.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MiqM.Xceed.Wpf.Toolkit.NETCore" Version="3.5.1.3" />
+    <PackageReference Include="OxyPlot.Core" Version="2.0.0" />
+    <PackageReference Include="OxyPlot.Wpf" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\GapTraderCore\GapTraderCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icons\Delete.png" />
+    <Resource Include="Icons\Edit.png" />
+    <Resource Include="Icons\Graph.png" />
+    <Resource Include="Icons\GreenTick.png" />
+    <Resource Include="Icons\List.png" />
+    <Resource Include="Icons\Plus.png" />
   </ItemGroup>
 
 </Project>

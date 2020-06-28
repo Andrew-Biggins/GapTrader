@@ -12,16 +12,19 @@
         xmlns:helpers="clr-namespace:GapTraderWPF.Helpers"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance {x:Type viewModels:AddTradeViewModel}}"
-        Title="Trade Details" Height="390" Width="445"
+        Title="Trade Details" MinHeight="445" MaxHeight="445" MinWidth="405" MaxWidth="405"
         Background="Black">
     <Window.Resources>
         <Style TargetType="TextBlock">
-            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
             <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,0,3,0" />
             <Setter Property="Foreground" Value="White" />
         </Style>
         <Style TargetType="TextBox">
             <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Width" Value="96" />
         </Style>
         <ControlTemplate x:Key="ValidationErrorTemplate">
             <DockPanel>
@@ -43,129 +46,194 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
-                <RowDefinition Height="30" />
-                <RowDefinition Height="30" />
-                <RowDefinition Height="30" />
-                <RowDefinition Height="30" />
-                <RowDefinition Height="30" />
-                <RowDefinition Height="30" />
-                <RowDefinition Height="30" />
-                <RowDefinition Height="30" />
-                <RowDefinition Height="30" />
+                <RowDefinition Height="140" />
+                <RowDefinition Height="110" />
+                <RowDefinition Height="80" />
                 <RowDefinition Height="40" />
 
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="140"/>
-                <ColumnDefinition Width="290"/>
+                <ColumnDefinition Width="145"/>
+                <ColumnDefinition Width="240"/>
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Column="0" Grid.Row="0" Text="Market"/>
-            <TextBlock Grid.Column="0" Grid.Row="1" Text="Strategy"/>
-            <TextBlock Grid.Column="0" Grid.Row="2" Text="Entry"/>
-            <TextBlock Grid.Column="0" Grid.Row="3" Text="Target"/>
-            <TextBlock Grid.Column="0" Grid.Row="4" Text="Stop"/>
-            <TextBlock Grid.Column="0" Grid.Row="5" Text="Open Level"/>
-            <TextBlock Grid.Column="0" Grid.Row="6" Text="Open Date/Time"/>
-            <TextBlock Grid.Column="0" Grid.Row="7" Text="Close Level"/>
-            <TextBlock Grid.Column="0" Grid.Row="8" Text="Close Date/Time"/>
-            <TextBlock Grid.Column="0" Grid.Row="9" Text="Size"/>
-
             <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-                <ComboBox Width="155" Height="22"
+                <ComboBox Width="96" Height="22"
                       SelectedItem="{Binding SelectedMarket}" ItemsSource="{Binding Markets}" DisplayMemberPath="Name" />
-                <Button Width="20" Height="20" Margin="5" Command="{Binding AddNewMarketCommand}" />
+                <Button Width="20" Height="20" Margin="5" Command="{Binding AddNewMarketCommand}" >
+                    <Image Source="Icons/Plus.png" ToolTip="Add New Market"/>
+                </Button>
             </StackPanel>
 
-            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-                <ComboBox Width="255" Height="22"
-                          SelectedItem="{Binding SelectedStrategy}" ItemsSource="{Binding Strategies}" DisplayMemberPath="Title" />
-                <Button Width="20" Height="20" Margin="5" Command="{Binding AddNewStrategyCommand}" />
-            </StackPanel>
 
-            <TextBox Grid.Column="1" Grid.Row="2" Margin="3,3,35,3"
+            <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="White" BorderThickness="1,1,1,0" Margin="5,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="18" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140"/>
+                        <ColumnDefinition Width="240"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Strategy Details" FontSize="11" HorizontalAlignment="Center"/>
+
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Entry"/>
+                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Target"/>
+                    <TextBlock Grid.Column="0" Grid.Row="4" Text="Stop"/>
+
+                    <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="15,0,0,0">
+                        <ComboBox Width="315" Height="22"
+                          SelectedItem="{Binding SelectedStrategy}" ItemsSource="{Binding Strategies}" DisplayMemberPath="ShortName" ToolTip="{Binding SelectedStrategy.Name}"/>
+                        <Button Width="20" Height="20" Margin="5" Command="{Binding AddNewStrategyCommand}">
+                            <Image Source="Icons/Plus.png" ToolTip="Add New Strategy"/>
+                        </Button>
+                    </StackPanel>
+
+                    <TextBox Grid.Column="1" Grid.Row="2" Margin="3,3,0,3"
                      Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
                      helpers:HasErrorUtility.MvvmHasError="{Binding Path=EntryHasError}">
-                <TextBox.Text>
-                    <Binding Path="Entry"
+                        <TextBox.Text>
+                            <Binding Path="Entry"
                          Mode="TwoWay"
                          UpdateSourceTrigger="PropertyChanged"
                          TargetNullValue="{x:Static system:String.Empty}"
                          Converter="{converters:EmptyDoubleToStringConverter}">
-                        <Binding.ValidationRules>
-                            <validationRules:PointsNumberValidationRule/>
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
+                                <Binding.ValidationRules>
+                                    <validationRules:PointsNumberValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
 
-            <TextBox Grid.Column="1" Grid.Row="3" Margin="3,3,35,3" 
+                    <TextBox Grid.Column="1" Grid.Row="3" Margin="3,3,0,3" 
                      Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
                      helpers:HasErrorUtility.MvvmHasError="{Binding Path=TargetHasError}">
-                <TextBox.Text>
-                    <Binding Path="Target"
+                        <TextBox.Text>
+                            <Binding Path="Target"
                              Mode="TwoWay"
                              UpdateSourceTrigger="PropertyChanged"
                              TargetNullValue="{x:Static system:String.Empty}"
                              Converter="{converters:EmptyDoubleToStringConverter}">
-                        <Binding.ValidationRules>
-                            <validationRules:PointsNumberValidationRule/>
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
+                                <Binding.ValidationRules>
+                                    <validationRules:PointsNumberValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
 
-            <TextBox Grid.Column="1" Grid.Row="4" Margin="3,3,35,3"
+                    <TextBox Grid.Column="1" Grid.Row="4" Margin="3,3,0,3"
                      Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
                      helpers:HasErrorUtility.MvvmHasError="{Binding Path=StopHasError}">
-                <TextBox.Text>
-                    <Binding Path="Stop"
+                        <TextBox.Text>
+                            <Binding Path="Stop"
                              Mode="TwoWay"
                              UpdateSourceTrigger="PropertyChanged"
                              TargetNullValue="{x:Static system:String.Empty}"
                              Converter="{converters:EmptyDoubleToStringConverter}">
-                        <Binding.ValidationRules>
-                            <validationRules:PointsNumberValidationRule/>
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
+                                <Binding.ValidationRules>
+                                    <validationRules:PointsNumberValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </Grid>
+            </Border>
 
-            <TextBox Grid.Column="1" Grid.Row="5" Margin="3,3,35,3"
+            <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="White" BorderThickness="1" Margin="5,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="18" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140"/>
+                        <ColumnDefinition Width="240"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Actual Open Details" FontSize="11" HorizontalAlignment="Center"/>
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Open Level"/>
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Size"/>
+                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Open Date/Time"/>
+
+                    <TextBox Grid.Column="1" Grid.Row="1" Margin="3,3,0,3"
                      Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
                      helpers:HasErrorUtility.MvvmHasError="{Binding Path=OpenLevelHasError}">
-                <TextBox.Text>
-                    <Binding Path="OpenLevel"
+                        <TextBox.Text>
+                            <Binding Path="OpenLevel"
                              Mode="TwoWay"
                              UpdateSourceTrigger="PropertyChanged"
                              TargetNullValue="{x:Static system:String.Empty}"
                              Converter="{converters:EmptyDoubleToStringConverter}">
-                        <Binding.ValidationRules>
-                            <validationRules:PointsNumberValidationRule/>
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
+                                <Binding.ValidationRules>
+                                    <validationRules:PointsNumberValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
 
-            <StackPanel Grid.Column="1" Grid.Row="6" Orientation="Horizontal">
-                <DatePicker SelectedDate="{Binding OpenDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+
+                    <TextBox Grid.Column="1" Grid.Row="2" Margin="3,3,0,3"
+                             Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
+                             helpers:HasErrorUtility.MvvmHasError="{Binding Path=SizeHasError}">
+                        <TextBox.Text>
+                            <Binding Path="Size"
+                                     Mode="TwoWay"
+                                     UpdateSourceTrigger="PropertyChanged"
+                                     TargetNullValue="{x:Static system:String.Empty}"
+                                     Converter="{converters:EmptyDoubleToStringConverter}">
+                                <Binding.ValidationRules>
+                                    <validationRules:PointsNumberValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+
+
+                    <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
+                        <DatePicker SelectedDate="{Binding OpenDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <xctk:TimePicker Width="75" Margin="5,2,5,2" Value="{Binding OpenTime}"/>
-                <DockPanel Visibility="{Binding DatesHaveError, Converter={converters:BoolToHiddenVisibilityConverter}}">
-                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Center" Margin="2">
-                        <Grid Width="12" Height="12">
-                            <Ellipse Width="12" Height="12" Fill="Red" HorizontalAlignment="Center" 
+                        <xctk:TimePicker Width="75" Height="20" Margin="5,2,5,2" Value="{Binding OpenTime}"/>
+                        <DockPanel Visibility="{Binding DatesHaveError, Converter={converters:BoolToHiddenVisibilityConverter}}">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="2">
+                                <Grid Width="12" Height="12">
+                                    <Ellipse Width="12" Height="12" Fill="Red" HorizontalAlignment="Center" 
                                      VerticalAlignment="Center" />
-                            <TextBlock Foreground="White" FontWeight="Heavy" 
+                                    <TextBlock Foreground="White" FontWeight="Heavy" Margin="-1,0,0,0"
                                        FontSize="8" HorizontalAlignment="Center" 
                                        VerticalAlignment="Center" TextAlignment="Center"
                                        ToolTip="Open Date/Time Must Be Earlier Than Close Date/Time">X</TextBlock>
-                        </Grid>
+                                </Grid>
+                            </StackPanel>
+                        </DockPanel>
                     </StackPanel>
-                </DockPanel>
-            </StackPanel>
+                </Grid>
+            </Border>
 
-            <TextBox Grid.Column="1" Grid.Row="7" Margin="3,3,35,3"
+            <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="White" BorderThickness="1,0,1,1" Margin="5,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="18" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140"/>
+                        <ColumnDefinition Width="240"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Actual Close Details" FontSize="11" HorizontalAlignment="Center"/>
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Close Level"/>
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Close Date/Time"/>
+
+                    <TextBox Grid.Column="1" Grid.Row="1" Margin="3,3,0,3"
                      Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
                      helpers:HasErrorUtility.MvvmHasError="{Binding Path=CloseLevelHasError}">
                 <TextBox.Text>
@@ -181,17 +249,17 @@
                 </TextBox.Text>
             </TextBox>
 
-            <StackPanel Grid.Column="1" Grid.Row="8" Orientation="Horizontal">
+            <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
                 <DatePicker SelectedDate="{Binding CloseDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <xctk:TimePicker Width="75" Margin="5,2,5,2" Value="{Binding CloseTime}"/>
+                <xctk:TimePicker Width="75" Height="20" Margin="5,2,5,2" Value="{Binding CloseTime}"/>
 
                 <DockPanel Visibility="{Binding DatesHaveError, Converter={converters:BoolToHiddenVisibilityConverter}}">
                     <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Center" Margin="2">
                         <Grid Width="12" Height="12">
                             <Ellipse Width="12" Height="12" Fill="Red" HorizontalAlignment="Center" 
                                  VerticalAlignment="Center" />
-                            <TextBlock Foreground="White" FontWeight="Heavy" 
+                            <TextBlock Foreground="White" FontWeight="Heavy" Margin="-1,0,0,0"
                                    FontSize="8" HorizontalAlignment="Center" 
                                    VerticalAlignment="Center" TextAlignment="Center"
                                    ToolTip="Open Date/Time Must Be Earlier Than Close Date/Time">X</TextBlock>
@@ -199,24 +267,10 @@
                     </StackPanel>
                 </DockPanel>
             </StackPanel>
+                    </Grid>
+                </Border>
 
-            <TextBox Grid.Column="1" Grid.Row="9" Margin="3,3,35,3"
-                     Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
-                     helpers:HasErrorUtility.MvvmHasError="{Binding Path=SizeHasError}">
-                <TextBox.Text>
-                    <Binding Path="Size"
-                             Mode="TwoWay"
-                             UpdateSourceTrigger="PropertyChanged"
-                             TargetNullValue="{x:Static system:String.Empty}"
-                             Converter="{converters:EmptyDoubleToStringConverter}">
-                        <Binding.ValidationRules>
-                            <validationRules:PointsNumberValidationRule/>
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
-
-            <Button Width="170" Height="30" Margin="5" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="10"
+            <Button Width="170" Height="30" Margin="5" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4"
                     HorizontalAlignment="Center" Content="Add Trade" VerticalContentAlignment="Center"
                     Command="{Binding ConfirmNewTradeCommand}" Click="OnTradeAdded" IsEnabled="{Binding IsAddEnabled}">
             </Button>
