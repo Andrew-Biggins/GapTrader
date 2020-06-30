@@ -23,7 +23,7 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="260" />
-                <RowDefinition Height="18"/>
+                <RowDefinition Height="28"/>
                 <RowDefinition Height="424" />
             </Grid.RowDefinitions>
             <Border Width="auto" MinWidth="100" HorizontalAlignment="Left" VerticalAlignment="Top" Background="BurlyWood" Grid.Row="0" Margin="10,3,0,0">
@@ -31,7 +31,7 @@
             </Border>
             <Grid Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="20" />
+                    <RowDefinition Height="25" />
                     <RowDefinition Height="235" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -40,7 +40,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Text="Strategy Tester" FontWeight="Bold" Grid.Row="0" Grid.Column="0" FontSize="15" Grid.ColumnSpan="2" HorizontalAlignment="Center" Foreground="White"/>
-                <Border Grid.Row="1" Grid.Column="0" >
+                <Border Grid.Row="1" Grid.Column="0"  Margin="0,0,15,0">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="150" />
@@ -58,7 +58,7 @@
                                                            DataContext="{Binding StrategyResultsStatsViewModel}"/>
                     </Grid>
                 </Border>
-                <userControls:StrategyTesterCommunalOptions Grid.Row="1" Grid.Column="1" Margin="5,0,0,0"/>
+                <userControls:StrategyTesterCommunalOptions Grid.Row="1" Grid.Column="1" Margin="15,0,0,0"/>
             </Grid>
 
             <StackPanel Grid.Row="1" Grid.Column="0"
@@ -66,13 +66,13 @@
                         HorizontalAlignment="Center">
                 <RadioButton Content="Find Static Strategies" Foreground="White"
                          HorizontalAlignment="Center" Margin="0,0,10,0" 
-                         VerticalAlignment="Top" IsChecked="{Binding IsDynamicTest , Converter={converters:BoolToInverseNullableBoolConverter}}"/>
+                         VerticalAlignment="Center" IsChecked="{Binding IsDynamicTest , Converter={converters:BoolToInverseNullableBoolConverter}}"/>
                 <RadioButton Content="Test Dynamic Strategy" Foreground="White"
                          HorizontalAlignment="Center" 
-                         VerticalAlignment="Top" IsChecked="{Binding IsDynamicTest}"/>
+                         VerticalAlignment="Center" IsChecked="{Binding IsDynamicTest}"/>
             </StackPanel>
 
-            <ContentControl Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" Margin="10"
+            <ContentControl Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" Margin="10,0,10,10"
                         Content="{Binding StrategyFinderViewModel}">
                 <ContentControl.Resources>
                     <DataTemplate DataType="{x:Type viewModels:StaticStrategyFinderViewModel}">

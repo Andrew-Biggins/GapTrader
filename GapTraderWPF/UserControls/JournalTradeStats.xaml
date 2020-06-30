@@ -20,16 +20,16 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <Border BorderBrush="White" BorderThickness="1" HorizontalAlignment="Stretch">
+    <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Stretch">
         <Grid Background="Transparent">
             <Grid.RowDefinitions>
                 <RowDefinition Height="35" />
                 <RowDefinition Height="20" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="55"/>
+                <ColumnDefinition Width="55"/>
+                <ColumnDefinition Width="55"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -48,9 +48,9 @@
                         <RowDefinition Height="35" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="55"/>
+                        <ColumnDefinition Width="55"/>
+                        <ColumnDefinition Width="55"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
@@ -77,8 +77,10 @@
                    TextWrapping="Wrap" ToolTip="Average Win (£)"/>
                     <TextBlock Grid.Column="8" Grid.Row="0" Text="Average Loss (pts)" TextAlignment="Center" 
                    TextWrapping="Wrap" ToolTip="Average Loss (points)"/>
-                    <TextBlock Grid.Column="9" Grid.Row="0" Text="LWS" ToolTip="Longest Winning Streak"/>
-                    <TextBlock Grid.Column="10" Grid.Row="0" Text="LLS" ToolTip="Longest Losing Streak" />
+                    <TextBlock Grid.Column="9" Grid.Row="0" Text="Longest Win Streak" ToolTip="Longest Winning Streak" 
+                               TextWrapping="Wrap" TextAlignment="Center" />
+                    <TextBlock Grid.Column="10" Grid.Row="0" Text="Longest Lose Streak" ToolTip="Longest Losing Streak" 
+                               TextWrapping="Wrap" TextAlignment="Center"/>
                     <TextBlock Grid.Column="11" Grid.Row="0" Text="Profit Factor" ToolTip="Profit Factor" TextWrapping="Wrap"/>
                     <TextBlock Grid.Column="12" Grid.Row="0" Text="Expectancy" ToolTip="Expectancy" />
                 </Grid>

@@ -1,0 +1,17 @@
+﻿<Window x:Class="GapTraderWPF.StrategyStatsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GapTraderWPF"
+        xmlns:userControls="clr-namespace:GapTraderWPF.UserControls"
+        xmlns:viewModels="clr-namespace:GapTraderCore.ViewModels;assembly=GapTraderCore"
+        d:DataContext="{d:DesignInstance {x:Type viewModels:StrategyResultsStatsViewModel}}"
+        mc:Ignorable="d" 
+        d:DesignHeight="65" d:DesignWidth="680" MaxHeight="100" MinHeight="100" MinWidth="1000" MaxWidth="1000"
+        Background="Black"
+        Title="Strategy Statistics">
+    <Grid>
+        <userControls:JournalTradeStats />
+    </Grid>
+</Window>

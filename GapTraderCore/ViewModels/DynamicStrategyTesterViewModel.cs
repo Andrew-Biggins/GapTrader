@@ -143,7 +143,8 @@ namespace GapTraderCore.ViewModels
             StrategyTester.SetSizing(AccountSizer.AccountStartSize, AccountSizer.RiskPercentage,
                 AccountSizer.Compound);
 
-            var (entryStartIndex, entryEndIndex, targetStartIndex, targetEndIndex) = SetFibIndexes();
+            var (entryStartIndex, entryEndIndex) = SetEntryFibIndexes();
+            var (targetStartIndex, targetEndIndex) = SetTargetFibIndexes();
 
             for (var k = _selector.MinStop; k <= _selector.MaxStop; k += _selector.StopIncrement)
             {

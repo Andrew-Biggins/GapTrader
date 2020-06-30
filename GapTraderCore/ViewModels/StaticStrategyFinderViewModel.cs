@@ -32,7 +32,30 @@ namespace GapTraderCore.ViewModels
         {
             LoadingBar.Maximum = GetNumberOfCombinations();
 
-            var (entryStartIndex, entryEndIndex, targetStartIndex, targetEndIndex) = SetFibIndexes();
+            int entryStartIndex;
+            int entryEndIndex;
+            int targetStartIndex;
+            int targetEndIndex;
+
+            if (_selector.IsFixedEntry)
+            {
+                entryStartIndex = Array.IndexOf(Enum.GetValues(typeof(FibonacciLevel)), _selector.SelectedEntry);
+                entryEndIndex = Array.IndexOf(Enum.GetValues(typeof(FibonacciLevel)), _selector.SelectedEntry);
+            }
+            else
+            {
+                (entryStartIndex, entryEndIndex) = SetEntryFibIndexes();
+            }
+
+            if (_selector.IsFixedTarget)
+            {
+                targetStartIndex = Array.IndexOf(Enum.GetValues(typeof(FibonacciLevel)), _selector.SelectedTarget);
+                targetEndIndex = Array.IndexOf(Enum.GetValues(typeof(FibonacciLevel)), _selector.SelectedTarget);
+            }
+            else
+            {
+                (targetStartIndex, targetEndIndex) = SetTargetFibIndexes();
+            }
 
             StrategyTester.IsFibEntry = true;
             StrategyTester.IsFibTarget = true;
@@ -45,7 +68,6 @@ namespace GapTraderCore.ViewModels
 
             var fibs = (FibonacciLevel[])Enum.GetValues(typeof(FibonacciLevel));
             var tempStrategies = new List<IGapFillStrategy>();
-
 
             StrategyTester.SelectedDirection = tradeDirection;
 
@@ -81,6 +103,19 @@ namespace GapTraderCore.ViewModels
             
             VariableSelector = _selector;
             FinishSearch();
+        }
+
+        public override void UpdateTester(GapFillStrategyTester tester)
+        {
+            var strategyType = StrategyType.OutOfGap;
+
+            if (tester is IntoGapStrategyTester)
+            {
+                strategyType = StrategyType.IntoGap;
+            }
+
+            _selector.UpdateFixedFibs(strategyType);
+            base.UpdateTester(tester);
         }
 
         protected override void StartStrategySearch()
@@ -137,7 +172,10 @@ namespace GapTraderCore.ViewModels
                 stopMultiplier = Math.Ceiling(stopMultiplier);
             }
 
-            return (int)gapMultiplier * stopMultiplier * 90;
+            var entryMultiplier = _selector.IsFixedEntry ? 1 : 10;
+            var targetMultiplier = _selector.IsFixedTarget ? 1 : 9;
+
+            return (int)gapMultiplier * stopMultiplier * entryMultiplier * targetMultiplier;
         }
 
         private readonly StaticStrategyVariableSelector _selector = new StaticStrategyVariableSelector();

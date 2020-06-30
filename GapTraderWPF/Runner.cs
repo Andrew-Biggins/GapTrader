@@ -44,6 +44,16 @@ namespace GapTraderWPF
             });
         }
 
+        public void ShowStrategyStatsWindow(object sender)
+        {
+            _context.Send(_ =>
+            {
+                var owner = GetOwner(sender);
+                var window = new StrategyStatsWindow { DataContext = sender, Owner = owner };
+                window.ShowDialog();
+            });
+        }
+
         public void ShowLoadSavedDataWindow(object sender)
         {
             _context.Send(_ =>

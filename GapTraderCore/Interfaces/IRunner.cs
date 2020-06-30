@@ -25,5 +25,7 @@
         void GetTradeDetails(object sender);
 
         void GetStrategyDetails(object sender);
+
+        void ShowStrategyStatsWindow(object sender);
     }
 }

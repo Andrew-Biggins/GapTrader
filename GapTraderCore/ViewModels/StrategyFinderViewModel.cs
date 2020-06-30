@@ -31,7 +31,8 @@ namespace GapTraderCore.ViewModels
 
         public ICommand FindStrategiesCommand => new BasicCommand(StartStrategySearch);
 
-        protected StrategyFinderViewModel(GapFillStrategyTester strategyTester, IMarket market, IRunner runner, AccountSizerViewModel accountSizer)
+        protected StrategyFinderViewModel(GapFillStrategyTester strategyTester, IMarket market, IRunner runner,
+            AccountSizerViewModel accountSizer)
         {
             Runner = runner;
             StrategyTester = strategyTester;
@@ -41,7 +42,7 @@ namespace GapTraderCore.ViewModels
             CheckDataExists();
         }
 
-        public void UpdateTester(GapFillStrategyTester tester)
+        public virtual void UpdateTester(GapFillStrategyTester tester)
         {
             StrategyTester = tester;
         }
@@ -68,22 +69,32 @@ namespace GapTraderCore.ViewModels
             }).Start();
         }
 
-        protected (int, int, int, int) SetFibIndexes()
+        protected (int, int) SetEntryFibIndexes()
         {
             var entryStartIndex = FibonacciServices.FirstFibRetraceIndex;
             var entryEndIndex = FibonacciServices.LastFibRetraceIndex;
+            
+            if (StrategyTester is IntoGapStrategyTester)
+            {
+                entryStartIndex = FibonacciServices.FirstFibExtensionIndex;
+                entryEndIndex = FibonacciServices.LastFibExtensionIndex;
+            }
+
+            return (entryStartIndex, entryEndIndex);
+        }
+
+        protected (int, int) SetTargetFibIndexes()
+        {
             var targetStartIndex = FibonacciServices.FirstFibExtensionIndex;
             var targetEndIndex = FibonacciServices.LastFibExtensionIndex;
 
             if (StrategyTester is IntoGapStrategyTester)
             {
-                entryStartIndex = FibonacciServices.FirstFibExtensionIndex;
-                entryEndIndex = FibonacciServices.LastFibExtensionIndex;
                 targetStartIndex = FibonacciServices.FirstFibRetraceIndex;
                 targetEndIndex = FibonacciServices.LastFibRetraceIndex;
             }
 
-            return (entryStartIndex, entryEndIndex, targetStartIndex, targetEndIndex);
+            return (targetStartIndex, targetEndIndex);
         }
 
         private void CheckDataExists()

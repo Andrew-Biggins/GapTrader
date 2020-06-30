@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Input;
-using Foundations;
+﻿using Foundations;
 using GapTraderCore.Interfaces;
-using GapTraderCore.Strategies;
+using System;
+using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace GapTraderCore.ViewModels
 {

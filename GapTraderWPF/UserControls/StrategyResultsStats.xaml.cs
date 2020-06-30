@@ -14,7 +14,7 @@ namespace GapTraderWPF.UserControls
         private void OnMouseLeftButtonUpOnStrategyResults(object sender, MouseButtonEventArgs e)
         {
             var vm = (StrategyResultsStatsViewModel)DataContext;
-            vm.ViewTradesCommand.Execute(null);
+            vm.MoreDetailsCommand.Execute(null);
         }
     }
 }

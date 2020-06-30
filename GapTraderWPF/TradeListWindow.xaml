@@ -9,20 +9,31 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance {x:Type interfaces:IStrategy}}"
         Title="{Binding Name}" Height="350" Width="800"
-        MinWidth="800" MaxWidth="800" MinHeight="350">
+        MinWidth="800" MaxWidth="800" MinHeight="350"
+        Background="Black">
     <Grid>
         <DataGrid CanUserResizeRows="False" IsReadOnly="True" Width="745"
                   AutoGenerateColumns="False" Margin="5" HorizontalContentAlignment="Center" 
-                  ItemsSource="{Binding Trades, Mode=OneWay}" >
+                  ItemsSource="{Binding Trades, Mode=OneWay}">
         <DataGrid.CellStyle>
             <Style TargetType="DataGridCell">
                 <Setter Property="TextBlock.TextAlignment" Value="Center" />
-            </Style>
+                <Setter Property="Foreground" Value="Black" />
+                    <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="{x:Null}" />
+                        <Setter Property="BorderBrush" Value="{x:Null}" />
+                    </Trigger>
+                </Style.Triggers>
+                </Style>
         </DataGrid.CellStyle>
         <DataGrid.ColumnHeaderStyle>
             <Style TargetType="DataGridColumnHeader">
+                <Setter Property="Background" Value="BurlyWood" />
                 <Setter Property="HorizontalContentAlignment" Value="Center" />
-            </Style>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                </Style>
         </DataGrid.ColumnHeaderStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date"

@@ -36,6 +36,8 @@ namespace GapTraderCore.ViewModels
 
         public ICommand ViewGraphCommand => new BasicCommand(ViewGraph);
 
+        public ICommand MoreDetailsCommand => new BasicCommand(() => _runner?.ShowStrategyStatsWindow(this));
+
         public bool HasResults { get; }
 
         public StrategyResultsStatsViewModel()
