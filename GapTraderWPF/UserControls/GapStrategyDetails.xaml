@@ -8,7 +8,7 @@
              xmlns:viewModels="clr-namespace:GapTraderCore.ViewModels;assembly=GapTraderCore"
              d:DataContext="{d:DesignInstance {x:Type viewModels:GapStrategyDetailsViewModel}}"
              mc:Ignorable="d" 
-             d:DesignHeight="107" d:DesignWidth="275">
+             d:DesignHeight="112" d:DesignWidth="405">
     <UserControl.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -19,30 +19,47 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="55" />
-            <RowDefinition Height="52" />
+            <RowDefinition Height="55" />
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="80"/>
-            <ColumnDefinition Width="115"/>
+            <ColumnDefinition Width="245"/>
             <ColumnDefinition Width="80"/>
 
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="Entry" VerticalAlignment="Bottom"/>
+        <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" BorderBrush="White" BorderThickness="1" Margin="0,5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="55" />
+                    <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
 
-        <ComboBox Grid.Row="1" Grid.Column="0" Width="70" Height="22" ItemsSource="{Binding EntryFibs}"
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Entry" FontWeight="Bold" VerticalAlignment="Bottom"/>
+
+                <ComboBox Grid.Row="1" Grid.Column="0" Width="70" Height="22" ItemsSource="{Binding EntryFibs}"
                   SelectedItem="{Binding SelectedEntry}" >
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Converter={converters:FibLevelToNumericStringConverter}}"/>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={converters:FibLevelToNumericStringConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
+        </Border>
 
         <local:StopSizeSetter Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="5"/>
-        <TextBlock Grid.Row="0" Grid.Column="2" Text="Target" VerticalAlignment="Bottom"/>
 
-        <ComboBox Grid.Row="1" Grid.Column="2" Width="70" Height="22" ItemsSource="{Binding TargetFibs}"
+        <Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" BorderBrush="White" BorderThickness="1" Margin="0,5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="55" />
+                    <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Text="Target" FontWeight="Bold" VerticalAlignment="Bottom"/>
+
+        <ComboBox Grid.Row="1" Width="70" Height="22" ItemsSource="{Binding TargetFibs}"
                   SelectedItem="{Binding SelectedTarget}" >
             <ComboBox.ItemTemplate>
                 <DataTemplate>
@@ -50,5 +67,7 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
+                </Grid>
+            </Border>
     </Grid>
 </UserControl>

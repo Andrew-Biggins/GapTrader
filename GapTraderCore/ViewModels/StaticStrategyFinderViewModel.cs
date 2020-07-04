@@ -67,30 +67,35 @@ namespace GapTraderCore.ViewModels
                     Market.DataDetails.OpenTime, Market.DataDetails.CloseTime);
 
             var fibs = (FibonacciLevel[])Enum.GetValues(typeof(FibonacciLevel));
-            var tempStrategies = new List<IGapFillStrategy>();
+            var tempStrategies = new List<IGapFillStrategy>(); // todo could use Observable collection?
 
             StrategyTester.SelectedDirection = tradeDirection;
 
-            for (var m = _selector.MinMinGapSize; m <= _selector.MaxMinGapSize; m += _selector.GapSizeIncrement)
+            for (var t = _selector.MinStopTrail; t <= _selector.MaxStopTrail; t+= _selector.StopTrailIncrement)
             {
-                for (var k = _selector.MinStop; k <= _selector.MaxStop; k += _selector.StopIncrement)
+                for (var m = _selector.MinMinGapSize; m <= _selector.MaxMinGapSize; m += _selector.GapSizeIncrement)
                 {
-                    for (var i = entryStartIndex; i <= entryEndIndex; i++)
+                    for (var k = _selector.MinStopSize; k <= _selector.MaxStopSize; k += _selector.StopSizeIncrement)
                     {
-                        for (var j = targetStartIndex; j <= targetEndIndex; j++)
+                        for (var i = entryStartIndex; i <= entryEndIndex; i++)
                         {
-                            StrategyTester.FibLevelEntry = fibs[i];
-                            StrategyTester.FibLevelTarget = fibs[j];
-                            StrategyTester.Stop = k;
-                            StrategyTester.SetSizing(AccountSizer.AccountStartSize, AccountSizer.RiskPercentage, AccountSizer.Compound);
-                            StrategyTester.TestStrategy(Market, dateTimeFilters, m);
-
-                            if (StrategyTester.Strategy.Stats.CashProfit > 0)
+                            for (var j = targetStartIndex; j <= targetEndIndex; j++)
                             {
-                                tempStrategies.Add(StrategyTester.Strategy);
-                            }
+                                StrategyTester.FibLevelEntry = fibs[i];
+                                StrategyTester.FibLevelTarget = fibs[j];
+                                StrategyTester.Stop = k;
+                                StrategyTester.IsStopTrailed = _selector.IsStopTrailed;
+                                StrategyTester.TrailedStopSize = t;
+                                StrategyTester.SetSizing(AccountSizer.AccountStartSize, AccountSizer.RiskPercentage, AccountSizer.Compound);
+                                StrategyTester.TestStrategy(Market, dateTimeFilters, m);
 
-                            LoadingBar.Progress++;
+                                if (StrategyTester.Strategy.Stats.CashProfit > 0)
+                                {
+                                    tempStrategies.Add(StrategyTester.Strategy);
+                                }
+
+                                LoadingBar.Progress++;
+                            }
                         }
                     }
                 }
@@ -160,22 +165,38 @@ namespace GapTraderCore.ViewModels
                 gapMultiplier = Math.Ceiling(gapMultiplier);
             }
 
-            var stopMultiplier = (double)(_selector.MaxStop - _selector.MinStop) /
-                                 _selector.StopIncrement;
+            var stopSizeMultiplier = (double)(_selector.MaxStopSize - _selector.MinStopSize) /
+                                 _selector.StopSizeIncrement;
 
-            if (Math.Abs(stopMultiplier % 1) < 0.0001)
+            if (Math.Abs(stopSizeMultiplier % 1) < 0.0001)
             {
-                stopMultiplier++;
+                stopSizeMultiplier++;
             }
             else
             {
-                stopMultiplier = Math.Ceiling(stopMultiplier);
+                stopSizeMultiplier = Math.Ceiling(stopSizeMultiplier);
+            }
+
+            var stopTrailMultiplier = 1.0;
+
+            if (_selector.IsStopTrailed)
+            {
+                stopTrailMultiplier = (double) (_selector.MaxStopTrail - _selector.MinStopTrail) / _selector.StopTrailIncrement;
+
+                if (Math.Abs(stopTrailMultiplier % 1) < 0.0001)
+                {
+                    stopTrailMultiplier++;
+                }
+                else
+                {
+                    stopTrailMultiplier = Math.Ceiling(stopTrailMultiplier);
+                }
             }
 
             var entryMultiplier = _selector.IsFixedEntry ? 1 : 10;
             var targetMultiplier = _selector.IsFixedTarget ? 1 : 9;
 
-            return (int)gapMultiplier * stopMultiplier * entryMultiplier * targetMultiplier;
+            return (int)gapMultiplier * stopSizeMultiplier * stopTrailMultiplier * entryMultiplier * targetMultiplier;
         }
 
         private readonly StaticStrategyVariableSelector _selector = new StaticStrategyVariableSelector();

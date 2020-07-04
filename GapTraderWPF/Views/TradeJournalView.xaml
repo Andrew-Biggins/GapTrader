@@ -23,6 +23,7 @@
         </Style>
         <Style TargetType="{x:Type DataGridCell}" x:Key="JournalGridCellStyle">
             <Setter Property="Foreground" Value="Black" />
+            <Setter Property="TextBlock.TextAlignment" Value="Right" />
             <Style.Triggers>
                 <Trigger Property="IsSelected" Value="True">
                     <Setter Property="Background" Value="{x:Null}" />
@@ -147,6 +148,7 @@
                             <DataGridTextColumn.ElementStyle>
                                 <Style>
                                     <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                    <Setter Property="TextBlock.Margin" Value="0,0,2,0" />
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                             <DataGridTextColumn.CellStyle>

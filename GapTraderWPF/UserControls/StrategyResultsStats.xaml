@@ -27,16 +27,16 @@
                 <RowDefinition Height="25" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40"/>
-                <ColumnDefinition Width="35"/>
-                <ColumnDefinition Width="38"/>
-                <ColumnDefinition Width="40"/>
-                <ColumnDefinition Width="55"/>
-                <ColumnDefinition Width="55"/>
-                <ColumnDefinition Width="55"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="45"/>
+                <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="60"/>
-                <ColumnDefinition Width="40"/>
-                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="75"/>
+                <ColumnDefinition Width="75"/>
+                <ColumnDefinition Width="65"/>
+                <ColumnDefinition Width="73"/>
+                <ColumnDefinition Width="45"/>
+                <ColumnDefinition Width="45"/>
             </Grid.ColumnDefinitions>
             <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="10" Background="BurlyWood"
                     BorderThickness="1" BorderBrush="White" Margin="0,-1,0,0">
@@ -45,22 +45,22 @@
                         <RowDefinition Height="35" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="40"/>
-                        <ColumnDefinition Width="35"/>
-                        <ColumnDefinition Width="38"/>
-                        <ColumnDefinition Width="40"/>
-                        <ColumnDefinition Width="55"/>
-                        <ColumnDefinition Width="55"/>
-                        <ColumnDefinition Width="55"/>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="45"/>
+                        <ColumnDefinition Width="50"/>
                         <ColumnDefinition Width="60"/>
-                        <ColumnDefinition Width="40"/>
-                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="75"/>
+                        <ColumnDefinition Width="75"/>
+                        <ColumnDefinition Width="65"/>
+                        <ColumnDefinition Width="73"/>
+                        <ColumnDefinition Width="45"/>
+                        <ColumnDefinition Width="45"/>
 
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Grid.Row="0" Text="Trades" ToolTip="Number of Trades"/>
                     <TextBlock Grid.Column="1" Grid.Row="0" Text="Wins" ToolTip="Wins"/>
                     <TextBlock Grid.Column="2" Grid.Row="0" Text="Loses" ToolTip="Loses"/>
-                    <TextBlock Grid.Column="3" Grid.Row="0" Text="Win Prob." TextAlignment="Center"
+                    <TextBlock Grid.Column="3" Grid.Row="0" Text="Win Probability" TextAlignment="Center"
                    TextWrapping="Wrap" ToolTip="Win Probability"/>
                     <TextBlock Grid.Column="4" Grid.Row="0" Text="Average Win (£)" TextAlignment="Center" 
                                TextWrapping="Wrap" ToolTip="Average Win (£)"/>

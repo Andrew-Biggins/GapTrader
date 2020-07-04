@@ -17,6 +17,8 @@ namespace GapTraderWPF.Converters
                     return "Out Of Gap";
                 case StrategyType.Triangle:
                     return "Triangle";
+                case StrategyType.FailedTriangle:
+                    return "Failed Triangle";
                 case StrategyType.Other:
                     return "Other";
                 default:

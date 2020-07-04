@@ -8,7 +8,7 @@
              xmlns:viewModels="clr-namespace:GapTraderCore.ViewModels;assembly=GapTraderCore"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance {x:Type viewModels:GapFillStrategyTesterViewModel}}"
-             d:DesignHeight="160" d:DesignWidth="363">
+             d:DesignHeight="210" d:DesignWidth="363">
     <UserControl.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="Foreground" Value="White" />
@@ -25,6 +25,7 @@
                 <RowDefinition Height="20" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="30" />
+                <RowDefinition Height="70" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>

@@ -7,7 +7,7 @@
              xmlns:converters="clr-namespace:GapTraderWPF.Converters"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance {x:Type variableSelectors:StaticStrategyVariableSelector}}"
-             d:DesignHeight="100" d:DesignWidth="900">
+             d:DesignHeight="115" d:DesignWidth="1075">
     <UserControl.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -18,25 +18,28 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="70" />
-            <RowDefinition Height="30" />
+            <RowDefinition Height="45" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="110"/>
-            <ColumnDefinition Width="110"/>
-            <ColumnDefinition Width="205"/>
-            <ColumnDefinition Width="205"/>
+            <ColumnDefinition Width="105"/>
+            <ColumnDefinition Width="375"/>
+            <ColumnDefinition Width="105"/>
+            <ColumnDefinition Width="173"/>
             <ColumnDefinition Width="265"/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="5">
+        <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="2.5, 5">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="60" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="40" />
                     <RowDefinition Height="40" />
                 </Grid.RowDefinitions>
-                <RadioButton Content="Fix Entry Fib" Foreground="White" VerticalAlignment="Bottom" 
+                <TextBlock Text="Entry" HorizontalAlignment="Center" FontWeight="Bold"
+                           VerticalAlignment="Center" Grid.Row="0" />
+                <RadioButton Content="Fix Fib Level" Foreground="White" VerticalAlignment="Bottom" Grid.Row="1"
                              HorizontalAlignment="Center" Margin="0,0,0,5" IsChecked="{Binding IsFixedEntry}"/>
-                <ComboBox Grid.Row="1" Width="70" Height="22" ItemsSource="{Binding EntryFibs}"
+                <ComboBox Grid.Row="2" Width="70" Height="22" ItemsSource="{Binding EntryFibs}"
                       SelectedItem="{Binding SelectedEntry}" VerticalAlignment="Top" IsEnabled="{Binding IsFixedEntry}">
                     <ComboBox.Style>
                         <Style TargetType="ComboBox">
@@ -58,15 +61,18 @@
                 </ComboBox>
             </Grid>
         </Border>
-        <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Margin="5">
+        <Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Margin="2.5, 5">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="60" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="40" />
                     <RowDefinition Height="40" />
                 </Grid.RowDefinitions>
-                <RadioButton Content="Fix Target Fib" Foreground="White" VerticalAlignment="Bottom" 
+                <TextBlock Text="Target" HorizontalAlignment="Center" FontWeight="Bold"
+                           VerticalAlignment="Center" Grid.Row="0" />
+                <RadioButton Content="Fix Fib Level" Foreground="White" VerticalAlignment="Bottom" Grid.Row="1"
                              HorizontalAlignment="Center" Margin="0,0,0,5" IsChecked="{Binding IsFixedTarget}"/>
-                <ComboBox Grid.Row="1" Width="70" Height="22" ItemsSource="{Binding TargetFibs}"
+                <ComboBox Grid.Row="2" Width="70" Height="22" ItemsSource="{Binding TargetFibs}"
                           SelectedItem="{Binding SelectedTarget, Mode=TwoWay}" VerticalAlignment="Top" IsEnabled="{Binding IsFixedTarget}" >
                     <ComboBox.Style>
                         <Style TargetType="ComboBox">
@@ -88,65 +94,140 @@
                 </ComboBox>
             </Grid>
         </Border>
-        <Border Margin="5" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2">
+        <Border Margin="2.5, 5" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="20" />
-                    <RowDefinition Height="20" />
-                    <RowDefinition Height="20" />
-                    <RowDefinition Height="40" />
+                    <RowDefinition Height="18" />
+                    <RowDefinition Height="82" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="60"/>
-                    <ColumnDefinition Width="65"/>
-                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="185"/>
+                    <ColumnDefinition Width="185"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Stop" HorizontalAlignment="Center" FontWeight="Bold"
-                               Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center"
+                               Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top"
                                Grid.Row="0" />
-                <StackPanel Grid.Column="0" Grid.ColumnSpan="3"
+                <Border Grid.Row="1" Grid.Column="0" BorderBrush="White" BorderThickness="0.5" Margin="5,0,2.5,0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="16" />
+                            <RowDefinition Height="13" />
+                            <RowDefinition Height="40" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="55"/>
+                            <ColumnDefinition Width="65"/>
+                            <ColumnDefinition Width="55"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Initial Size" FontWeight="Bold" HorizontalAlignment="Center"
+                                   Grid.ColumnSpan="3"/>
+                        <StackPanel Grid.Column="0" Grid.ColumnSpan="3"
                             Grid.Row="1"
                             Orientation="Horizontal">
-                    <RadioButton HorizontalAlignment="Center" Margin="5,0,0,0" 
+                            <RadioButton HorizontalAlignment="Center" Margin="5,0,0,0" 
                              IsChecked="{Binding IsFixedStop, Converter={converters:BoolToInverseNullableBoolConverter}}">
-                        <RadioButton.Content>
-                            <TextBlock Text="Gap Percentage" Margin="-5,1,0,0" FontSize="11"/>
-                        </RadioButton.Content>
-                    </RadioButton>
-                    <RadioButton HorizontalAlignment="Center" Margin="5,0,0,0" 
+                                <RadioButton.Content>
+                                    <TextBlock Text="Gap Percentage" Margin="-5,1,0,0" FontSize="11"/>
+                                </RadioButton.Content>
+                            </RadioButton>
+                            <RadioButton HorizontalAlignment="Center" Margin="5,0,0,0" 
                                 IsChecked="{Binding IsFixedStop}">
-                        <RadioButton.Content>
-                            <TextBlock Text="Fixed Points" Margin="-5,1,0,0" FontSize="11"/>
-                        </RadioButton.Content>
-                    </RadioButton>
-                </StackPanel>
-                <TextBlock Text="Min" VerticalAlignment="Top"
+                                <RadioButton.Content>
+                                    <TextBlock Text="Fixed Points" Margin="-5,1,0,0" FontSize="11"/>
+                                </RadioButton.Content>
+                            </RadioButton>
+                        </StackPanel>
+                        <TextBlock Text="Min" VerticalAlignment="Bottom"
                        Grid.Column="0" FontSize="11"
                        Grid.Row="2" />
-                <TextBlock Text="Increments" VerticalAlignment="Top"
+                        <TextBlock Text="Increments" VerticalAlignment="Bottom"
                        Grid.Column="1" FontSize="11"
                        Grid.Row="2" />
-                <TextBlock Text="Stop" VerticalAlignment="Top"
+                        <TextBlock Text="Max" VerticalAlignment="Bottom"
                        Grid.Column="2" FontSize="11"
                        Grid.Row="2" />
-                <TextBox Grid.Column="0" VerticalAlignment="Top"
-                     Grid.Row="3" Text="{Binding MinStop}"/>
-                <ComboBox Grid.Row="3" Grid.Column="1" Width="50" Height="22" 
-                      SelectedIndex="{Binding StopIncrement, Converter={converters:IncrementToIntegerConverter}, Mode=TwoWay}"
+                        <TextBox Grid.Column="0" VerticalAlignment="Top"
+                     Grid.Row="3" Text="{Binding MinStopSize}"/>
+                        <ComboBox Grid.Row="3" Grid.Column="1" Width="50" Height="22" 
+                      SelectedIndex="{Binding StopSizeIncrement, Converter={converters:IncrementToIntegerConverter}, Mode=TwoWay}"
                       SelectedItem="0" VerticalAlignment="Top">
-                    <ComboBoxItem Content="5" />
-                    <ComboBoxItem Content="10" />
-                    <ComboBoxItem Content="20" />
-                    <ComboBoxItem Content="50" />
-                    <ComboBoxItem Content="100" />
-                    <ComboBoxItem Content="200" />
-                </ComboBox>
-                <TextBox Grid.Column="2" VerticalAlignment="Top"
-                     Grid.Row="3" Text="{Binding MaxStop}"/>
+                            <ComboBoxItem Content="5" />
+                            <ComboBoxItem Content="10" />
+                            <ComboBoxItem Content="20" />
+                            <ComboBoxItem Content="50" />
+                            <ComboBoxItem Content="100" />
+                            <ComboBoxItem Content="200" />
+                        </ComboBox>
+                        <TextBox Grid.Column="2" VerticalAlignment="Top"
+                     Grid.Row="3" Text="{Binding MaxStopSize}"/>
+                    </Grid>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" BorderBrush="White" BorderThickness="0.5" Margin="2.5,0,5,0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="16" />
+                            <RowDefinition Height="13" />
+                            <RowDefinition Height="40" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="55"/>
+                            <ColumnDefinition Width="65"/>
+                            <ColumnDefinition Width="55"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Management" FontWeight="Bold" HorizontalAlignment="Center"
+                                   Grid.ColumnSpan="3"/>
+                        <RadioButton Grid.Column="0" Grid.ColumnSpan="3"
+                             Grid.Row="1" HorizontalAlignment="Center" Margin="5,0,0,0" 
+                             IsChecked="{Binding IsStopTrailed}">
+                            <RadioButton.Content>
+                                <TextBlock Text="Trail Points Behind Market" Margin="-5,1,0,0" FontSize="11"/>
+                            </RadioButton.Content>
+                        </RadioButton>
+
+                        <TextBlock Text="Min" VerticalAlignment="Bottom"
+                           Grid.Column="0" FontSize="11"
+                           Grid.Row="2" />
+                        <TextBlock Text="Increments" VerticalAlignment="Bottom"
+                           Grid.Column="1" FontSize="11"
+                           Grid.Row="2" />
+                        <TextBlock Text="Max" VerticalAlignment="Bottom"
+                           Grid.Column="2" FontSize="11"
+                           Grid.Row="2" />
+                        <TextBox Grid.Column="0" VerticalAlignment="Top"
+                         Grid.Row="3" Text="{Binding MinStopTrail}" IsEnabled="{Binding IsStopTrailed}"/>
+                        <ComboBox Grid.Row="3" Grid.Column="1" Width="50" Height="22" 
+                          SelectedIndex="{Binding StopTrailIncrement, Converter={converters:IncrementToIntegerConverter}, Mode=TwoWay}"
+                          SelectedItem="0" VerticalAlignment="Top" IsEnabled="{Binding IsStopTrailed}">
+                            <ComboBox.Style>
+                                <Style TargetType="ComboBox">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsStopTrailed}" Value="True">
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsStopTrailed}" Value="False">
+                                            <Setter Property="Foreground" Value="Transparent" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ComboBox.Style>
+                            <ComboBoxItem Content="5" />
+                            <ComboBoxItem Content="10" />
+                            <ComboBoxItem Content="20" />
+                            <ComboBoxItem Content="50" />
+                            <ComboBoxItem Content="100" />
+                            <ComboBoxItem Content="200" />
+                        </ComboBox>
+                        <TextBox Grid.Column="2" VerticalAlignment="Top"
+                         Grid.Row="3" Text="{Binding MaxStopTrail}" IsEnabled="{Binding IsStopTrailed}"/>
+                    </Grid>
+                </Border>
+
             </Grid>
         </Border>
 
-        <Border Margin="5" Grid.Column="3" Grid.Row="0">
+        <Border Margin="2.5, 5" Grid.Column="3" Grid.Row="0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="16" />
@@ -154,9 +235,9 @@
                     <RowDefinition Height="40" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="65"/>
-                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="50"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Minimum Gap Size" 
                            HorizontalAlignment="Center" FontWeight="Bold"
@@ -192,10 +273,10 @@
                      Content="Apply Date and Time Filters" 
                      VerticalAlignment="Center" IsChecked="{Binding ApplyDateTimeFilters}"
                      ToolTip="Apply Date and Time Filters From Communal Controls"
-                     Margin="15,0,0,0"
+                     Margin="3,0,0,0"
                      Foreground="White"/>
 
-        <Border Margin="5" Grid.Column="4" Grid.Row="0" Grid.RowSpan="2">
+        <Border Margin="2.5, 5" Grid.Column="4" Grid.Row="0" Grid.RowSpan="2">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="16" />

@@ -39,9 +39,9 @@ namespace GapTraderCore.VariableSelectors
         public List<FibonacciLevel> TargetFibs { get; private set; } = GetFibExtensionLevels();
         public FibonacciLevel SelectedTarget { get; set; }
 
-        public int MaxMinGapSize { get; set; } = 1000;
-        public int MinMinGapSize { get; set; } = 10;
-        public int GapSizeIncrement { get; set; } = 100;
+        public int MaxMinGapSize { get; set; } = 200;
+        public int MinMinGapSize { get; set; } = 50;
+        public int GapSizeIncrement { get; set; } = 50;
 
         public bool ApplyDateTimeFilters
         {
@@ -52,6 +52,27 @@ namespace GapTraderCore.VariableSelectors
                 SetProperty(ref _applyDateTimeFilters, value);
             }
         }
+
+        public bool IsStopTrailed
+        {
+            get => _isStopTrailed;
+            set
+            {
+                value = !_isStopTrailed;
+                SetProperty(ref _isStopTrailed, value);
+
+                // Set Min and Max to the values to prevent unnecessary iterations during the search
+                if (!_isStopTrailed)
+                {
+                    MaxStopTrail = 10;
+                    MinStopTrail = 10;
+                }
+            }
+        }
+
+        public int MaxStopTrail { get; set; } = 10;
+        public int MinStopTrail { get; set; } = 10;
+        public int StopTrailIncrement { get; set; } = 20;
 
         public double MinTrades { get; set; } = 10;
         public double MinProfitFactor { get; set; } = 2;
@@ -87,5 +108,6 @@ namespace GapTraderCore.VariableSelectors
         private bool _isFixedEntry;
         private bool _isFixedTarget;
         private StrategyType _strategyType = StrategyType.OutOfGap;
+        private bool _isStopTrailed;
     }
 }

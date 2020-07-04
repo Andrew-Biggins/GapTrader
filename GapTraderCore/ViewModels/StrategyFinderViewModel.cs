@@ -11,6 +11,8 @@ namespace GapTraderCore.ViewModels
     {
         public EventHandler? StartSearchEventHandler;
 
+       // public EventHandler? SearchCompleteEventHandler;
+
         public IGapFillStrategy SelectedStrategy
         {
             get => _selectedStrategy;
@@ -54,12 +56,15 @@ namespace GapTraderCore.ViewModels
             SearchEnabled = true;
             LoadingBar.Progress = 0;
             StrategyTester.ResetLevels();
+          //  SearchCompleteEventHandler.Raise(this);
+            StrategyTester.IsSearching = false;
         }
 
         protected virtual void StartStrategySearch()
         {
             VariableSelector = LoadingBar;
             SearchEnabled = false;
+            StrategyTester.IsSearching = true;
 
             // Raise the event to start the search on a separate thread to allow the UI to update  
             new Thread(() =>

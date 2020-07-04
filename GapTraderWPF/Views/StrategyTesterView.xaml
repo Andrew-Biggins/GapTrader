@@ -47,18 +47,27 @@
                             <RowDefinition Height="70" />
                         </Grid.RowDefinitions>
                         <Button Content="Test" HorizontalAlignment="Right" Width="50" Grid.Row="0"
-                    Margin="5,5,8,5" VerticalAlignment="Bottom" 
-                    Command="{Binding TestStrategyCommand}"
-                    IsEnabled="{Binding CanCalculate, Mode=OneWay}"/>
+                                Margin="5,5,8,5" VerticalAlignment="Bottom" Command="{Binding TestStrategyCommand}">
+                            <Button.IsEnabled>
+                                <MultiBinding Converter="{converters:InverseBoolAndBoolToSingleBoolConverter}">
+                                    <Binding Path="CanCalculate" Mode="OneWay" />
+                                    <Binding Path="StrategyTester.IsSearching" Mode="OneWay" />
+                                </MultiBinding>
+                            </Button.IsEnabled>
+                        </Button>
 
-                        <userControls:GapStrategySetupContainer Grid.Row="0" Grid.Column="0" Margin="5,0,5,0"/>
+                        <userControls:GapStrategySetupContainer Grid.Row="0" Grid.Column="0" 
+                                                                Margin="5,0,5,0" 
+                                                                IsEnabled="{Binding StrategyTester.IsSearching, Converter={converters:InverseBoolConverter}}" />
 
                         <userControls:StrategyResultsStats Grid.Row="1" Grid.Column="0"
                                                            HorizontalAlignment="Stretch" Margin="10,3"
                                                            DataContext="{Binding StrategyResultsStatsViewModel}"/>
                     </Grid>
                 </Border>
-                <userControls:StrategyTesterCommunalOptions Grid.Row="1" Grid.Column="1" Margin="15,0,0,0"/>
+                <userControls:StrategyTesterCommunalOptions Grid.Row="1" Grid.Column="1" 
+                                                            Margin="15,0,0,0" 
+                                                            IsEnabled="{Binding StrategyTester.IsSearching, Converter={converters:InverseBoolConverter}}"/>
             </Grid>
 
             <StackPanel Grid.Row="1" Grid.Column="0"

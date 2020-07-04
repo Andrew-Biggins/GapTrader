@@ -11,7 +11,7 @@
              xmlns:helpers="clr-namespace:GapTraderWPF.Helpers"
              xmlns:validationRules="clr-namespace:GapTraderWPF.ValidationRules"
              d:DataContext="{d:DesignInstance {x:Type strategyTesters:OutOfGapStrategyTester}}"
-             d:DesignHeight="95" d:DesignWidth="465">
+             d:DesignHeight="95" d:DesignWidth="595">
 
     <UserControl.Resources>
         <ControlTemplate x:Key="ValidationErrorTemplate">
@@ -34,14 +34,25 @@
             <Setter Property="Height" Value="20" />
             <Setter Property="Width" Value="40" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsSearching}" Value="True">
+                    <Setter Property="Foreground" Value="Transparent" />
+                </DataTrigger>
+            </Style.Triggers>
+            </Style>
+        <Style TargetType="ComboBox">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsSearching}" Value="True">
+                    <Setter Property="Foreground" Value="Transparent" />
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
-        
     </UserControl.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="175"/>
-            <ColumnDefinition Width="105"/>
+            <ColumnDefinition Width="235"/>
             <ColumnDefinition Width="185"/>
         </Grid.ColumnDefinitions>
 

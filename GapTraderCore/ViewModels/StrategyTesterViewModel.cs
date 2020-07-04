@@ -90,6 +90,8 @@ namespace GapTraderCore.ViewModels
             StrategyFinderViewModel.StartSearchEventHandler += FindStrategies;
         }
 
+        protected abstract void TestStrategy();
+
         private void FindStrategies(object sender, EventArgs e)
         {
             var filters = new StrategyTestFilters(TestStartDate, TestEndDate, TestStartTime.TimeOfDay,
@@ -123,7 +125,6 @@ namespace GapTraderCore.ViewModels
             StrategyFinderViewModel.StartSearchEventHandler += FindStrategies;
         }
 
-        protected abstract void TestStrategy();
 
         protected readonly IRunner Runner;
 

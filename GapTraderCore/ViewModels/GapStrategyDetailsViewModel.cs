@@ -6,7 +6,7 @@ using static GapTraderCore.FibonacciServices;
 
 namespace GapTraderCore.ViewModels
 {
-    public class GapStrategyDetailsViewModel : BindableBase, IStrategyDetails
+    public class GapStrategyDetailsViewModel : StrategyDetailsViewModel
     {
         public List<FibonacciLevel> EntryFibs { get; }
         public List<FibonacciLevel> TargetFibs { get; }
@@ -29,23 +29,19 @@ namespace GapTraderCore.ViewModels
             }
         }
 
-        public bool HasError { get; private set; }
-
         public FibonacciLevel SelectedEntry { get; set; }
         public FibonacciLevel SelectedTarget { get; set; }
 
-        public GapStrategyDetailsViewModel(StrategyType strategyType)
+        public GapStrategyDetailsViewModel(StrategyType strategyType) : base(strategyType)
         {
-            _strategyType = strategyType;
-
-            if (_strategyType == StrategyType.OutOfGap)
+            if (StrategyType == StrategyType.OutOfGap)
             {
                 EntryFibs = GetFibRetraceLevels();
                 TargetFibs = GetFibExtensionLevels();
                 SelectedEntry = FibonacciLevel.FivePointNine;
                 SelectedTarget = FibonacciLevel.OneHundredAndTwentySevenPointOne;
             }
-            else if (_strategyType == StrategyType.IntoGap)
+            else if (StrategyType == StrategyType.IntoGap)
             {
                 EntryFibs = GetFibExtensionLevels();
                 TargetFibs = GetFibRetraceLevels();
@@ -54,19 +50,17 @@ namespace GapTraderCore.ViewModels
             }
         }
 
-        public ISelectableStrategy GetNewStrategy()
+        public override ISelectableStrategy GetNewStrategy()
         {
-            if (_strategyType == StrategyType.OutOfGap)
+            if (StrategyType == StrategyType.OutOfGap)
             {
-                return new OutOfGapStrategy<FibonacciLevel, FibonacciLevel>(SelectedEntry, Stop, SelectedTarget, 200, IsFixedStop);
+                return new OutOfGapStrategy<FibonacciLevel, FibonacciLevel>(SelectedEntry, Stop, SelectedTarget, 200, IsFixedStop, IsStopTrailed, TrailedStopSize);
             }
             else
             {
-                return new IntoGapStrategy<FibonacciLevel, FibonacciLevel>(SelectedEntry, Stop, SelectedTarget, 200, IsFixedStop);
+                return new IntoGapStrategy<FibonacciLevel, FibonacciLevel>(SelectedEntry, Stop, SelectedTarget, 200, IsFixedStop, IsStopTrailed, TrailedStopSize);
             }
         }
-
-        private readonly StrategyType _strategyType;
 
         private bool _isFixedStop;
         private bool _stopHasError;

@@ -146,7 +146,7 @@ namespace GapTraderCore.ViewModels
             var (entryStartIndex, entryEndIndex) = SetEntryFibIndexes();
             var (targetStartIndex, targetEndIndex) = SetTargetFibIndexes();
 
-            for (var k = _selector.MinStop; k <= _selector.MaxStop; k += _selector.StopIncrement)
+            for (var k = _selector.MinStopSize; k <= _selector.MaxStopSize; k += _selector.StopSizeIncrement)
             {
                 for (var i = entryStartIndex; i <= entryEndIndex; i++)
                 {
@@ -169,7 +169,7 @@ namespace GapTraderCore.ViewModels
             return strategies;
         }
 
-        private void AttemptStrategy(IGapFillStrategy strategy, DateTime currentDate)
+        private void AttemptStrategy(IStrategy strategy, DateTime currentDate)
         {
             GapFillStrategyTester dynamicTester;
             switch (StrategyTester)

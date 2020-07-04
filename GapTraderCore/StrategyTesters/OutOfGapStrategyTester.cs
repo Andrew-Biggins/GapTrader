@@ -17,7 +17,7 @@ namespace GapTraderCore.StrategyTesters
 
         protected override void NewStrategy<TEntry, TTarget>(object entry, object target)
         {
-            Strategy = new OutOfGapStrategy<TEntry, TTarget>(entry, Stop, target, Stats, MinimumGapSize, Trades, IsFixedStop);
+            Strategy = new OutOfGapStrategy<TEntry, TTarget>(entry, Stop, target, Stats, MinimumGapSize, Trades, IsFixedStop, IsStopTrailed, TrailedStopSize);
         }
 
         protected override (double, double, double) CalculateTradeLevels(DailyCandle candle)

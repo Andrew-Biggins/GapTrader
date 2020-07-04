@@ -10,7 +10,7 @@
         d:DataContext="{d:DesignInstance {x:Type viewModels:AddStrategyViewModel}}"
         mc:Ignorable="d"
         Background="Black"
-        Title="Strategy Details" Height="152" Width="440">
+        Title="Strategy Details" MinHeight="155" MaxHeight="155" MinWidth="595" MaxWidth="595">
     <Window.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -21,18 +21,17 @@
     <Border BorderBrush="White" BorderThickness="2">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="55" />
-                <RowDefinition Height="52" />
-
+                <RowDefinition Height="60" />
+                <RowDefinition Height="46" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="275"/>
-                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="415"/>
+                <ColumnDefinition Width="30"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="Type" VerticalAlignment="Bottom"/>
-            <ComboBox Grid.Row="1" Grid.Column="0" Width="90" Height="22" ItemsSource="{Binding StrategyTypes}"
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Type" FontWeight="Bold" VerticalAlignment="Bottom"/>
+            <ComboBox Grid.Row="1" Grid.Column="0" Width="110" Height="22" ItemsSource="{Binding StrategyTypes}" Margin="0,0,0,15"
                   SelectedItem="{Binding SelectedStrategyType}" >
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -46,11 +45,13 @@
                     <DataTemplate DataType="{x:Type viewModels:GapStrategyDetailsViewModel}">
                         <userControls:GapStrategyDetails />
                     </DataTemplate>
-                    
+                    <DataTemplate DataType="{x:Type viewModels:StrategyDetailsViewModel}">
+                        <userControls:StopManagement Width="115" HorizontalAlignment="Center" Height="95"/>
+                    </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>
 
-                    <Button Grid.Row="1" Grid.Column="2" Height="20" Width="30" Content="Add" 
+            <Button Grid.Row="1" Grid.Column="2" Height="20" Width="30" Content="Add" Margin="0,0,0,15"
                     Command="{Binding ConfirmNewStrategyCommand}" 
                     IsEnabled="{Binding StrategyDetails.HasError, Converter={converters:InverseBoolConverter}}"
                     Click="OnAddClick"/>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Foundations.Optional;
 using GapTraderCore.Interfaces;
 
 namespace GapTraderCore.Strategies
@@ -19,6 +20,8 @@ namespace GapTraderCore.Strategies
 
         public List<ITrade> Trades { get; }
 
+        public Optional<double> TrailedStopSize { get; }
+
         public bool IsSelected
         {
             get => _isSelected;
@@ -29,20 +32,23 @@ namespace GapTraderCore.Strategies
             }
         }
 
-        public Strategy(object entry, double stop, object target, StrategyStats stats, List<ITrade> trades) : base()
+        public Strategy(object entry, double stop, object target, StrategyStats stats, List<ITrade> trades,
+            bool isStopTrailed, double trailedStopSize)
         {
             Entry = (TEntry) entry;
             Stop = stop;
             Target = (TTarget) target;
             Stats = stats;
             Trades = trades;
+            TrailedStopSize = isStopTrailed ? Option.Some(trailedStopSize) : Option.None<double>();
         }
 
-        public Strategy(object entry, double stop, object target) : base()
+        public Strategy(object entry, double stop, object target, bool isStopTrailed, double trailedStopSize)
         {
             Entry = (TEntry)entry;
             Stop = stop;
             Target = (TTarget)target;
+            TrailedStopSize = isStopTrailed ? Option.Some(trailedStopSize) : Option.None<double>();
         }
 
         public Strategy(string name, string shortName) : base(name, shortName)

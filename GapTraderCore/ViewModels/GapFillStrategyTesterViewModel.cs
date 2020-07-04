@@ -45,6 +45,7 @@ namespace GapTraderCore.ViewModels
         {
             var filters = new StrategyTestFilters(TestStartDate, TestEndDate, TestStartTime.TimeOfDay,
                 TestEndTime.TimeOfDay);
+            StrategyTester.IsStopTrailed = StrategyTester.IsStopTrailedForwarder;
             StrategyTester.SelectedDirection = TradeDirection;
             StrategyTester.SetSizing(AccountSizer.AccountStartSize, AccountSizer.RiskPercentage, AccountSizer.Compound);
             StrategyTester.TestStrategy(Market, filters, MinimumGapSize);

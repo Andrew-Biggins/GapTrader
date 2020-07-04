@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Foundations.Optional;
 
 namespace GapTraderCore.Interfaces
 {
@@ -15,5 +16,7 @@ namespace GapTraderCore.Interfaces
         List<ITrade> Trades { get; }
 
         string Name { get; }
+
+        Optional<double> TrailedStopSize { get; }
     }
 }

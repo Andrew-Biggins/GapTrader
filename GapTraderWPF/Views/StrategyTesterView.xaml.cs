@@ -8,10 +8,5 @@ namespace GapTraderWPF.Views
         {
             InitializeComponent();
         }
-
-        private void GapStrategySetupContainer_Loaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-
-        }
     }
 }

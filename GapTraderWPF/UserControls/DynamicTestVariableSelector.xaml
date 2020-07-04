@@ -66,9 +66,9 @@
                        Grid.Column="2" FontSize="11"
                        Grid.Row="1" />
                 <TextBox Grid.Column="0" VerticalAlignment="Top"
-                     Grid.Row="2" Text="{Binding MinStop}"/>
+                     Grid.Row="2" Text="{Binding MinStopSize}"/>
                 <ComboBox Grid.Row="2" Grid.Column="1" Width="50" Height="22" 
-                      SelectedIndex="{Binding StopIncrement, Converter={converters:IncrementToIntegerConverter}, Mode=TwoWay}"
+                      SelectedIndex="{Binding StopSizeIncrement, Converter={converters:IncrementToIntegerConverter}, Mode=TwoWay}"
                       SelectedItem="0" VerticalAlignment="Top">
                     <ComboBoxItem Content="5" />
                     <ComboBoxItem Content="10" />
@@ -78,7 +78,7 @@
                     <ComboBoxItem Content="200" />
                 </ComboBox>
                 <TextBox Grid.Column="2" VerticalAlignment="Top"
-                     Grid.Row="2" Text="{Binding MaxStop}"/>
+                     Grid.Row="2" Text="{Binding MaxStopSize}"/>
             </Grid>
         </Border>
         <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Margin="10,0,0,0">

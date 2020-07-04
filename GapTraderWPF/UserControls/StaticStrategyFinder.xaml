@@ -23,7 +23,7 @@
         </Style>
         <Style TargetType="{x:Type DataGridCell}" x:Key="DataGridCellStyle">
             <Setter Property="Foreground" Value="Black" />
-            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+            <Setter Property="TextBlock.TextAlignment" Value="Right" />
             <Style.Triggers>
                 <Trigger Property="IsSelected" Value="True">
                     <Setter Property="Background" Value="{x:Null}" />
@@ -44,13 +44,12 @@
             <Setter Property="BorderThickness" Value="0,0,1,0"/>
             <Setter Property="BorderBrush" Value="Black" />
             <Setter Property="HorizontalContentAlignment" Value="Center" />
-
         </Style>
     </UserControl.Resources>
-    <Border >
+    <Border>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="100" />
+                <RowDefinition Height="115" />
                 <RowDefinition Height="250" />
             </Grid.RowDefinitions>
             <Grid HorizontalAlignment="Stretch">
@@ -69,7 +68,7 @@
                 </ContentControl>
 
                 <Button Content="Search" HorizontalAlignment="Right" VerticalAlignment="Bottom" Command="{Binding FindStrategiesCommand}"
-                    Grid.Row="0" Grid.Column="0" Height="25" Width="60" Margin="0,0,5,0" IsEnabled="{Binding SearchEnabled}" />
+                    Grid.Row="0" Grid.Column="0" Height="25" Width="50" Margin="0,0,5,0" IsEnabled="{Binding SearchEnabled}" />
             </Grid>
 
             <DataGrid Grid.Column="0" Grid.Row="1" CanUserResizeRows="False"
@@ -89,39 +88,31 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Entry"
                                         Binding="{Binding Entry, Converter={converters:FibLevelToNumericStringConverter}}" Width="*" >
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="HorizontalAlignment" Value="Right" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
+                    
+                    <DataGridTextColumn Header="Initial Stop Size"
+                                        Binding="{Binding Stop}" Width="*" >
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource WrappedColumnHeaderStyle}" />
+                        </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Header="Stop Trailed By"
+                                        Binding="{Binding TrailedStopSize, Converter={converters:OptionalDoubleToNaStringConverter}}" Width="*" >
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource WrappedColumnHeaderStyle}" />
+                        </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
+
                     <DataGridTextColumn Header="Target"
                                         Binding="{Binding Target, Converter={converters:FibLevelToNumericStringConverter}}" Width="*" >
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="HorizontalAlignment" Value="Right" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Stop"
-                                        Binding="{Binding Stop}" Width="*" >
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="HorizontalAlignment" Value="Right" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
+
                     <DataGridTextColumn Header="Minimum Gap Size"
                                         Binding="{Binding MinimumGapSize}" Width="*" >
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="HorizontalAlignment" Value="Right" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
                         <DataGridTextColumn.HeaderStyle>
                             <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource WrappedColumnHeaderStyle}">
                                 <Setter Property="ToolTip" Value="Minimum Gap Size"/>
-                                
                             </Style>
                         </DataGridTextColumn.HeaderStyle>
                     </DataGridTextColumn>

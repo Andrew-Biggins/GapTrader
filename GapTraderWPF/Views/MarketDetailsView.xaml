@@ -7,6 +7,7 @@
              xmlns:core="clr-namespace:GapTraderCore;assembly=GapTraderCore"
              xmlns:viewModels="clr-namespace:GapTraderCore.ViewModels;assembly=GapTraderCore"
              xmlns:userControls="clr-namespace:GapTraderWPF.UserControls"
+             xmlns:converters="clr-namespace:GapTraderWPF.Converters"
              d:DataContext="{d:DesignInstance {x:Type viewModels:MarketDetailsViewModel}}"
              mc:Ignorable="d" Background="Black"
              d:DesignHeight="750" d:DesignWidth="1000">
@@ -27,14 +28,14 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
-            <Button Margin="5"
+                <Button Margin="5"
                     HorizontalAlignment="Left" Width="40" Content="New" 
                     Height="20" Command="{Binding UploadNewDataCommand}"/>
-            <Button Margin="5" 
+                <Button Margin="5" 
                     HorizontalAlignment="Left" Width="60" Content="Add Data" 
                     Height="20" Command="{Binding AddDataCommand}" IsEnabled="{Binding DataExists}"/>
             </StackPanel>
-                    <TextBlock Text="Market Data Details" FontWeight="Bold" Grid.Row="0" FontSize="15" />
+            <TextBlock Text="Market Data Details" FontWeight="Bold" Grid.Row="0" FontSize="15" />
             <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Margin="5" Width="40" Content="Load" 
                         Height="20" Command="{Binding LoadDataCommand}"/>
@@ -156,19 +157,32 @@
                HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
 
             <DataGrid Grid.Row="3" Margin="7,0,10,0" Height="120" CanUserResizeRows="False"
-              AutoGenerateColumns="False" VerticalAlignment="Top" IsReadOnly="True"
+              AutoGenerateColumns="False" VerticalAlignment="Top" IsReadOnly="True" HorizontalAlignment="Center" 
               ItemsSource="{Binding UnfilledGaps, Mode=OneWay}">
+                <DataGrid.Resources>
+                    <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="Background" Value="BurlyWood" />
+                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        <Setter Property="BorderBrush" Value="Black"/>
+                        <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                    </Style>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <Setter Property="Foreground" Value="Black" />
+                        <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="{x:Null}" />
+                                <Setter Property="BorderBrush" Value="{x:Null}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Date"
-                                Binding="{Binding Date.Date, StringFormat=dd-MM-yyyy}" Width="*" />
-                    <DataGridTextColumn Header="Close"
-                                Binding="{Binding Close, StringFormat=N1}" Width="*" />
-                    <DataGridTextColumn Header="Open"
-                                Binding="{Binding Open, StringFormat=N1}" Width="*" />
-                    <DataGridTextColumn Header="Size"
-                                Binding="{Binding AbsoluteGapPoints, StringFormat=N1}" Width="*" />
-                    <DataGridTextColumn Header="50% level" 
-                                Binding="{Binding FiftyPercentGapFillLevel, StringFormat=N1}" Width="*" />
+                    <DataGridTextColumn Header="Date" Binding="{Binding Date.Date, StringFormat=dd-MM-yyyy}" Width="*" MaxWidth="80"/>
+                    <DataGridTextColumn Header="Close" Binding="{Binding Close, StringFormat=N1}" Width="*"  MaxWidth="80"/>
+                    <DataGridTextColumn Header="Open" Binding="{Binding Open, StringFormat=N1}" Width="*"  MaxWidth="80"/>
+                    <DataGridTextColumn Header="Size" Binding="{Binding AbsoluteGapPoints, StringFormat=N1}" Width="*"  MaxWidth="80"/>
+                    <DataGridTextColumn Header="50% level" Binding="{Binding FiftyPercentGapFillLevel, StringFormat=N1}" Width="*"  MaxWidth="80"/>
                 </DataGrid.Columns>
             </DataGrid>
 
