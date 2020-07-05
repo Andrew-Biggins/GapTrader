@@ -35,17 +35,25 @@
             <RadioButton Content="Trade into gap" Grid.Column="0" 
                      Grid.Row="1" Foreground="White"
                      HorizontalAlignment="Center" 
-                     IsChecked="{Binding TradeIntoGap}"/>
+                     IsChecked="{Binding TradeIntoGap}">
+                <RadioButton.ToolTip>
+                    <Image Source="/Images/TradeIntoGapExample.PNG" />
+                </RadioButton.ToolTip>
+            </RadioButton>
             <RadioButton Content="Trade out of gap" Grid.Column="1" 
                      Grid.Row="1" Foreground="White"
                      HorizontalAlignment="Center"
-                     IsChecked="{Binding TradeIntoGap, Converter={converters:BoolToInverseNullableBoolConverter}}"/>
+                     IsChecked="{Binding TradeIntoGap, Converter={converters:BoolToInverseNullableBoolConverter}}">
+                <RadioButton.ToolTip>
+                    <Image Source="/Images/TradeOutOfGapExample.PNG" />
+                </RadioButton.ToolTip>
+            </RadioButton>
 
             <local:DateAndTimePicker Grid.Column="1" Grid.Row="2" Margin="5,0"/>
             <local:AccountSizer Grid.Column="0" Grid.Row="2" Margin="5,0,0,0"
                                    DataContext="{Binding AccountSizer}"/>
 
-            <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal" Margin="-85,5,0,0">
+            <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal" Margin="-80,5,0,0">
                 <TextBlock Text="Trade Direction" Margin="0,5,0,0"/>
                 <ComboBox Width="90" Height="22" Margin="5,0,0,0"
                       SelectedIndex="{Binding TradeDirection, Converter={converters:TradeDirectionToIntegerConverter}, Mode=TwoWay}"

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Foundations;
+﻿using Foundations;
 using GapTraderCore.Interfaces;
 
 namespace GapTraderCore.ViewModels
@@ -8,7 +7,7 @@ namespace GapTraderCore.ViewModels
     {
         public MarketDetailsViewModel MarketDetailsViewModel { get; }
 
-        public GapFillStrategyTesterViewModel StrategyTesterViewModel { get; }
+        public GapFillStrategyTesterViewModel StrategyTesterViewModel { get; private set; }
         
         public TradeJournalViewModel TradeJournalViewModel { get; }
 
@@ -17,6 +16,15 @@ namespace GapTraderCore.ViewModels
             StrategyTesterViewModel = new GapFillStrategyTesterViewModel(_market, runner);
             MarketDetailsViewModel = new MarketDetailsViewModel(runner, _market);
             TradeJournalViewModel = new TradeJournalViewModel(runner);
+
+            MarketDetailsViewModel.MarketDataChanged += (s, e) =>
+            {
+                StrategyTesterViewModel = new GapFillStrategyTesterViewModel(_market, runner);
+                RaisePropertyChanged(nameof(StrategyTesterViewModel));
+
+                StrategyTesterViewModel.StrategyFinderViewModel.DataInUseToggle +=
+                    (x, y) => MarketDetailsViewModel.ToggleDataInUse();
+            };
         }
 
         private readonly IMarket _market = new Market();

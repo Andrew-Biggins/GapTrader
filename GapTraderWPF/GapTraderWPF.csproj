@@ -13,6 +13,10 @@
     <None Remove="Icons\GreenTick.png" />
     <None Remove="Icons\List.png" />
     <None Remove="Icons\Plus.png" />
+    <None Remove="Images\GapFibExtensionExample.PNG" />
+    <None Remove="Images\GapFibRetraceExample.PNG" />
+    <None Remove="Images\TradeIntoGapExample.PNG" />
+    <None Remove="Images\TradeOutOfGapExample.PNG" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +36,10 @@
     <Resource Include="Icons\GreenTick.png" />
     <Resource Include="Icons\List.png" />
     <Resource Include="Icons\Plus.png" />
+    <Resource Include="Images\GapFibExtensionExample.PNG" />
+    <Resource Include="Images\GapFibRetraceExample.PNG" />
+    <Resource Include="Images\TradeIntoGapExample.PNG" />
+    <Resource Include="Images\TradeOutOfGapExample.PNG" />
   </ItemGroup>
 
 </Project>

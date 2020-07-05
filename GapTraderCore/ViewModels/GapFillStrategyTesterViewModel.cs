@@ -97,6 +97,8 @@ namespace GapTraderCore.ViewModels
             }
 
             StrategyFinderViewModel.UpdateTester(StrategyTester);
+            StrategyFinderViewModel.ClearSearchResults();
+            StrategyResultsStatsViewModel = new StrategyResultsStatsViewModel();
         }
 
         private bool _tradeIntoGap;

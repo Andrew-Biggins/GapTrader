@@ -78,6 +78,16 @@ namespace GapTraderCore.ViewModels
         public string NinetyFourPointOneDateOfHighestPreHitAdverseExcursion { get; } = string.Empty;
         public string OneHundredDateOfHighestPreHitAdverseExcursion { get; } = string.Empty;
 
+        public string OneHundredAndTwentySevenPointOneDateOfHighestPreHitAdverseExcursion { get; } = string.Empty;
+        public string OneHundredAndFortyOnePointFourDateOfHighestPreHitAdverseExcursion { get; } = string.Empty;
+        public string OneHundredAndSixtyOnePointEightDateOfHighestPreHitAdverseExcursion { get; } = string.Empty;
+        public string TwoHundredDateOfHighestPreHitAdverseExcursion { get; } = string.Empty;
+        public string TwoHundredAndTwentySevenPointOneDateOfHighestPreHitAdverseExcursion { get; } = string.Empty;
+        public string TwoHundredAndFortyOnePointFourDateOfHighestPreHitAdverseExcursion { get; } = string.Empty;
+        public string TwoHundredAndSixtyOnePointEightDateOfHighestPreHitAdverseExcursion { get; } = string.Empty;
+        public string ThreeHundredDateOfHighestPreHitAdverseExcursion { get; } = string.Empty;
+        public string ThreeHundredAndSixtyOnePointEightDateOfHighestPreHitAdverseExcursion { get; } = string.Empty;
+
         public string FivePointNineAveragePostHitMaximumAdverseExcursion { get; } = string.Empty;
         public string ElevenPointFourAveragePostHitMaximumAdverseExcursion { get; } = string.Empty;
         public string TwentyThreePointSixAveragePostHitMaximumAdverseExcursion { get; } = string.Empty;
@@ -131,6 +141,16 @@ namespace GapTraderCore.ViewModels
         public string NinetyFourPointOneDateOfHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
         public string OneHundredDateOfHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
 
+        public string OneHundredAndTwentySevenPointOneDateOfHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
+        public string OneHundredAndFortyOnePointFourDateOfHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
+        public string OneHundredAndSixtyOnePointEightDateOfHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
+        public string TwoHundredDateOfHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
+        public string TwoHundredAndTwentySevenPointOneDateOfHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
+        public string TwoHundredAndFortyOnePointFourDateOfHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
+        public string TwoHundredAndSixtyOnePointEightDateOfHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
+        public string ThreeHundredDateOfHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
+        public string ThreeHundredAndSixtyOnePointEightDateOfHighestPostHitMaximumAdverseExcursion { get; } = string.Empty;
+
         public string FivePointNineAveragePostHitMaximumFavourableExcursion { get; } = string.Empty;
         public string ElevenPointFourAveragePostHitMaximumFavourableExcursion { get; } = string.Empty;
         public string TwentyThreePointSixAveragePostHitMaximumFavourableExcursion { get; } = string.Empty;
@@ -183,6 +203,16 @@ namespace GapTraderCore.ViewModels
         public string EightyEightPointSixDateOfHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
         public string NinetyFourPointOneDateOfHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
         public string OneHundredDateOfHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
+
+        public string OneHundredAndTwentySevenPointOneDateOfHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
+        public string OneHundredAndFortyOnePointFourDateOfHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
+        public string OneHundredAndSixtyOnePointEightDateOfHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
+        public string TwoHundredDateOfHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
+        public string TwoHundredAndTwentySevenPointOneDateOfHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
+        public string TwoHundredAndFortyOnePointFourDateOfHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
+        public string TwoHundredAndSixtyOnePointEightDateOfHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
+        public string ThreeHundredDateOfHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
+        public string ThreeHundredAndSixtyOnePointEightDateOfHighestPostHitMaximumFavourableExcursion { get; } = string.Empty;
 
         public GapFillStatsViewModel() { }
 
@@ -308,26 +338,45 @@ namespace GapTraderCore.ViewModels
             ThreeHundredAndSixtyOnePointEightHighestPreHitAdverseExcursion =
                 $"{market.GapFibExtensionLevels[FibonacciLevel.ThreeHundredAndSixtyOnePointEight].HighestPreHitAdverseExcursion:N1}";
 
-            //FivePointNineDateOfHighestPreHitAdverseExcursion =
-            //    $"{market.GapFibRetraceLevels[FibonacciLevel.FivePointNine].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
-            //ElevenPointFourDateOfHighestPreHitAdverseExcursion =
-            //    $"{market.GapFibRetraceLevels[FibonacciLevel.ElevenPointFour].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
-            //TwentyThreePointSixDateOfHighestPreHitAdverseExcursion =
-            //    $"{market.GapFibRetraceLevels[FibonacciLevel.TwentyThreePointSix].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
-            //ThirtyEightPointTwoDateOfHighestPreHitAdverseExcursion =
-            //    $"{market.GapFibRetraceLevels[FibonacciLevel.ThirtyEightPointTwo].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
-            //FiftyDateOfHighestPreHitAdverseExcursion =
-            //    $"{market.GapFibRetraceLevels[FibonacciLevel.Fifty].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
-            //SixtyOnePointEightDateOfHighestPreHitAdverseExcursion =
-            //    $"{market.GapFibRetraceLevels[FibonacciLevel.SixtyOnePointEight].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
-            //SeventyEightPointSixDateOfHighestPreHitAdverseExcursion =
-            //    $"{market.GapFibRetraceLevels[FibonacciLevel.SeventyEightPointSix].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
-            //EightyEightPointSixDateOfHighestPreHitAdverseExcursion =
-            //    $"{market.GapFibRetraceLevels[FibonacciLevel.EightyEightPointSix].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
-            //NinetyFourPointOneDateOfHighestPreHitAdverseExcursion =
-            //    $"{market.GapFibRetraceLevels[FibonacciLevel.NinetyFourPointOne].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
-            //OneHundredDateOfHighestPreHitAdverseExcursion =
-            //    $"{market.GapFibRetraceLevels[FibonacciLevel.OneHundred].DateOfHighestPreHitAdverseExcursion:M/d/yy}";
+            FivePointNineDateOfHighestPreHitAdverseExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.FivePointNine].DateOfHighestPreHitAdverseExcursion:d/M/yy}";
+            ElevenPointFourDateOfHighestPreHitAdverseExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.ElevenPointFour].DateOfHighestPreHitAdverseExcursion:d/M/yy}";
+            TwentyThreePointSixDateOfHighestPreHitAdverseExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.TwentyThreePointSix].DateOfHighestPreHitAdverseExcursion:d/M/yy}";
+            ThirtyEightPointTwoDateOfHighestPreHitAdverseExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.ThirtyEightPointTwo].DateOfHighestPreHitAdverseExcursion:d/M/yy}";
+            FiftyDateOfHighestPreHitAdverseExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.Fifty].DateOfHighestPreHitAdverseExcursion:d/M/yy}";
+            SixtyOnePointEightDateOfHighestPreHitAdverseExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.SixtyOnePointEight].DateOfHighestPreHitAdverseExcursion:d/M/yy}";
+            SeventyEightPointSixDateOfHighestPreHitAdverseExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.SeventyEightPointSix].DateOfHighestPreHitAdverseExcursion:d/M/yy}";
+            EightyEightPointSixDateOfHighestPreHitAdverseExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.EightyEightPointSix].DateOfHighestPreHitAdverseExcursion:d/M/yy}";
+            NinetyFourPointOneDateOfHighestPreHitAdverseExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.NinetyFourPointOne].DateOfHighestPreHitAdverseExcursion:d/M/yy}";
+            OneHundredDateOfHighestPreHitAdverseExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.OneHundred].DateOfHighestPreHitAdverseExcursion:d/M/yy}";
+
+            OneHundredAndTwentySevenPointOneDateOfHighestPreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndTwentySevenPointOne].DateOfHighestPreHitAdverseExcursion:d/M/yy}";
+            OneHundredAndFortyOnePointFourDateOfHighestPreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndFortyOnePointFour].DateOfHighestPreHitAdverseExcursion:d/M/yy}";
+            OneHundredAndSixtyOnePointEightDateOfHighestPreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndSixtyOnePointEight].DateOfHighestPreHitAdverseExcursion:d/M/yy}";
+            TwoHundredDateOfHighestPreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundred].DateOfHighestPreHitAdverseExcursion:d/M/yy}";
+            TwoHundredAndTwentySevenPointOneDateOfHighestPreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndTwentySevenPointOne].DateOfHighestPreHitAdverseExcursion:d/M/yy}";
+            TwoHundredAndFortyOnePointFourDateOfHighestPreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndFortyOnePointFour].DateOfHighestPreHitAdverseExcursion:d/M/yy}";
+            TwoHundredAndSixtyOnePointEightDateOfHighestPreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndSixtyOnePointEight].DateOfHighestPreHitAdverseExcursion:d/M/yy}";
+            ThreeHundredDateOfHighestPreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.ThreeHundred].DateOfHighestPreHitAdverseExcursion:d/M/yy}";
+            ThreeHundredAndSixtyOnePointEightDateOfHighestPreHitAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.ThreeHundredAndSixtyOnePointEight].DateOfHighestPreHitAdverseExcursion:d/M/yy}";
 
             FivePointNineAveragePostHitMaximumAdverseExcursion =
                 $"{market.GapFibRetraceLevels[FibonacciLevel.FivePointNine].AveragePostHitAdverseExcursion:N1}";
@@ -409,6 +458,46 @@ namespace GapTraderCore.ViewModels
             ThreeHundredAndSixtyOnePointEightHighestPostHitMaximumAdverseExcursion =
                 $"{market.GapFibExtensionLevels[FibonacciLevel.ThreeHundredAndSixtyOnePointEight].HighestPostHitAdverseExcursion:N1}";
 
+            FivePointNineDateOfHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.FivePointNine].DateOfHighestPostHitAdverseExcursion:d/M/yy}";
+            ElevenPointFourDateOfHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.ElevenPointFour].DateOfHighestPostHitAdverseExcursion:d/M/yy}";
+            TwentyThreePointSixDateOfHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.TwentyThreePointSix].DateOfHighestPostHitAdverseExcursion:d/M/yy}";
+            ThirtyEightPointTwoDateOfHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.ThirtyEightPointTwo].DateOfHighestPostHitAdverseExcursion:d/M/yy}";
+            FiftyDateOfHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.Fifty].DateOfHighestPostHitAdverseExcursion:d/M/yy}";
+            SixtyOnePointEightDateOfHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.SixtyOnePointEight].DateOfHighestPostHitAdverseExcursion:d/M/yy}";
+            SeventyEightPointSixDateOfHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.SeventyEightPointSix].DateOfHighestPostHitAdverseExcursion:d/M/yy}";
+            EightyEightPointSixDateOfHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.EightyEightPointSix].DateOfHighestPostHitAdverseExcursion:d/M/yy}";
+            NinetyFourPointOneDateOfHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.NinetyFourPointOne].DateOfHighestPostHitAdverseExcursion:d/M/yy}";
+            OneHundredDateOfHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.OneHundred].DateOfHighestPostHitAdverseExcursion:d/M/yy}";
+
+            OneHundredAndTwentySevenPointOneDateOfHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndTwentySevenPointOne].DateOfHighestPostHitAdverseExcursion:d/M/yy}";
+            OneHundredAndFortyOnePointFourDateOfHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndFortyOnePointFour].DateOfHighestPostHitAdverseExcursion:d/M/yy}";
+            OneHundredAndSixtyOnePointEightDateOfHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndSixtyOnePointEight].DateOfHighestPostHitAdverseExcursion:d/M/yy}";
+            TwoHundredDateOfHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundred].DateOfHighestPostHitAdverseExcursion:d/M/yy}";
+            TwoHundredAndTwentySevenPointOneDateOfHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndTwentySevenPointOne].DateOfHighestPostHitAdverseExcursion:d/M/yy}";
+            TwoHundredAndFortyOnePointFourDateOfHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndFortyOnePointFour].DateOfHighestPostHitAdverseExcursion:d/M/yy}";
+            TwoHundredAndSixtyOnePointEightDateOfHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndSixtyOnePointEight].DateOfHighestPostHitAdverseExcursion:d/M/yy}";
+            ThreeHundredDateOfHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.ThreeHundred].DateOfHighestPostHitAdverseExcursion:d/M/yy}";
+            ThreeHundredAndSixtyOnePointEightDateOfHighestPostHitMaximumAdverseExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.ThreeHundredAndSixtyOnePointEight].DateOfHighestPostHitAdverseExcursion:d/M/yy}";
+
             FivePointNineAveragePostHitMaximumFavourableExcursion =
                 $"{market.GapFibRetraceLevels[FibonacciLevel.FivePointNine].AveragePostHitFavourableExcursion:N1}";
             ElevenPointFourAveragePostHitMaximumFavourableExcursion =
@@ -488,6 +577,46 @@ namespace GapTraderCore.ViewModels
                 $"{market.GapFibExtensionLevels[FibonacciLevel.ThreeHundred].HighestPostHitFavourableExcursion:N1}";
             ThreeHundredAndSixtyOnePointEightHighestPostHitMaximumFavourableExcursion =
                 $"{market.GapFibExtensionLevels[FibonacciLevel.ThreeHundredAndSixtyOnePointEight].HighestPostHitFavourableExcursion:N1}";
+
+            FivePointNineDateOfHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.FivePointNine].DateOfHighestPostHitFavourableExcursion:d/M/yy}";
+            ElevenPointFourDateOfHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.ElevenPointFour].DateOfHighestPostHitFavourableExcursion:d/M/yy}";
+            TwentyThreePointSixDateOfHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.TwentyThreePointSix].DateOfHighestPostHitFavourableExcursion:d/M/yy}";
+            ThirtyEightPointTwoDateOfHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.ThirtyEightPointTwo].DateOfHighestPostHitFavourableExcursion:d/M/yy}";
+            FiftyDateOfHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.Fifty].DateOfHighestPostHitFavourableExcursion:d/M/yy}";
+            SixtyOnePointEightDateOfHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.SixtyOnePointEight].DateOfHighestPostHitFavourableExcursion:d/M/yy}";
+            SeventyEightPointSixDateOfHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.SeventyEightPointSix].DateOfHighestPostHitFavourableExcursion:d/M/yy}";
+            EightyEightPointSixDateOfHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.EightyEightPointSix].DateOfHighestPostHitFavourableExcursion:d/M/yy}";
+            NinetyFourPointOneDateOfHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.NinetyFourPointOne].DateOfHighestPostHitFavourableExcursion:d/M/yy}";
+            OneHundredDateOfHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibRetraceLevels[FibonacciLevel.OneHundred].DateOfHighestPostHitFavourableExcursion:d/M/yy}";
+
+            OneHundredAndTwentySevenPointOneDateOfHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndTwentySevenPointOne].DateOfHighestPostHitFavourableExcursion:d/M/yy}";
+            OneHundredAndFortyOnePointFourDateOfHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndFortyOnePointFour].DateOfHighestPostHitFavourableExcursion:d/M/yy}";
+            OneHundredAndSixtyOnePointEightDateOfHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.OneHundredAndSixtyOnePointEight].DateOfHighestPostHitFavourableExcursion:d/M/yy}";
+            TwoHundredDateOfHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundred].DateOfHighestPostHitFavourableExcursion:d/M/yy}";
+            TwoHundredAndTwentySevenPointOneDateOfHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndTwentySevenPointOne].DateOfHighestPostHitFavourableExcursion:d/M/yy}";
+            TwoHundredAndFortyOnePointFourDateOfHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndFortyOnePointFour].DateOfHighestPostHitFavourableExcursion:d/M/yy}";
+            TwoHundredAndSixtyOnePointEightDateOfHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.TwoHundredAndSixtyOnePointEight].DateOfHighestPostHitFavourableExcursion:d/M/yy}";
+            ThreeHundredDateOfHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.ThreeHundred].DateOfHighestPostHitFavourableExcursion:d/M/yy}";
+            ThreeHundredAndSixtyOnePointEightDateOfHighestPostHitMaximumFavourableExcursion =
+                $"{market.GapFibExtensionLevels[FibonacciLevel.ThreeHundredAndSixtyOnePointEight].DateOfHighestPostHitFavourableExcursion:d/M/yy}";
         }
     }
 }

@@ -9,9 +9,8 @@ namespace GapTraderCore.ViewModels
 {
     public abstract class StrategyFinderViewModel : BindableBase
     {
-        public EventHandler? StartSearchEventHandler;
-
-       // public EventHandler? SearchCompleteEventHandler;
+        public EventHandler StartSearchEventHandler;
+        public EventHandler DataInUseToggle;
 
         public IGapFillStrategy SelectedStrategy
         {
@@ -40,13 +39,18 @@ namespace GapTraderCore.ViewModels
             StrategyTester = strategyTester;
             Market = market;
             AccountSizer = accountSizer;
-            Market.PropertyChanged += (s, e) => CheckDataExists();
+            Market.PropertyChanged += (s, e) => ClearSearchResults();
             CheckDataExists();
         }
 
         public virtual void UpdateTester(GapFillStrategyTester tester)
         {
             StrategyTester = tester;
+        }
+
+        public virtual void ClearSearchResults()
+        {
+            CheckDataExists();
         }
 
         public abstract void FindStrategies(StrategyTestFilters filters, TradeDirection tradeDirection);
@@ -56,8 +60,8 @@ namespace GapTraderCore.ViewModels
             SearchEnabled = true;
             LoadingBar.Progress = 0;
             StrategyTester.ResetLevels();
-          //  SearchCompleteEventHandler.Raise(this);
             StrategyTester.IsSearching = false;
+            DataInUseToggle.Raise(this);
         }
 
         protected virtual void StartStrategySearch()
@@ -65,6 +69,7 @@ namespace GapTraderCore.ViewModels
             VariableSelector = LoadingBar;
             SearchEnabled = false;
             StrategyTester.IsSearching = true;
+            DataInUseToggle.Raise(this);
 
             // Raise the event to start the search on a separate thread to allow the UI to update  
             new Thread(() =>

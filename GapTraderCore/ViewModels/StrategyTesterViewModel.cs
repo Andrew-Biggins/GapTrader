@@ -57,8 +57,6 @@ namespace GapTraderCore.ViewModels
             set => SetProperty(ref _canCalculate, value, nameof(CanCalculate));
         }
 
-        public string DataName { get; } = string.Empty;
-
         public TradeDirection TradeDirection { get; set; } = TradeDirection.Both;
 
         public bool IsDynamicTest

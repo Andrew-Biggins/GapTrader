@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using GapTraderCore.Interfaces;
+﻿using GapTraderCore.Interfaces;
 
 namespace GapTraderCore.Strategies
 {

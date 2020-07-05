@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              xmlns:viewModels="clr-namespace:GapTraderCore.ViewModels;assembly=GapTraderCore"
              d:DataContext="{d:DesignInstance {x:Type viewModels:GapFillStatsViewModel}, IsDesignTimeCreatable=True}"
-             d:DesignHeight="294" d:DesignWidth="1190">
+             d:DesignHeight="394" d:DesignWidth="1190">
     <UserControl.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -20,7 +20,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
                 <RowDefinition Height="20"/>
-                <RowDefinition Height="240" />
+                <RowDefinition Height="330" />
             </Grid.RowDefinitions>
 
 
@@ -28,22 +28,26 @@
 
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="145"/>
                     <ColumnDefinition Width="10*"/>
                     <ColumnDefinition Width="9*"/>
                 </Grid.ColumnDefinitions>
                 <Border BorderBrush="White" BorderThickness="1" Margin="-1,0,-1,0" />
-                    <Border BorderBrush="White" BorderThickness="1" Margin="-0.5,0,-0.5,0"
+                <Border BorderBrush="White" BorderThickness="1" Margin="-0.5,0,-0.5,0"
                         Grid.Column="1"
                         Grid.Row="0" >
-                <TextBlock Text="Retraces" FontSize="12"/>
-                    </Border>
+                    <Border.ToolTip>
+                        <Image Source="/Images/GapFibRetraceExample.PNG"/>
+                    </Border.ToolTip>
+                    <TextBlock Text="Retraces" FontSize="12" HorizontalAlignment="Stretch" TextAlignment="Center"/>
+                </Border>
                 <Border BorderBrush="White" BorderThickness="1" Margin="-0.5,0,-1,0"
                         Grid.Column="2"
-                        Grid.Row="0" >
-                    <TextBlock Text="Extensions"
-                           
-                           FontSize="12"/>
+                        Grid.Row="0">
+                    <Border.ToolTip>
+                        <Image Source="/Images/GapFibExtensionExample.PNG"/>
+                    </Border.ToolTip>
+                    <TextBlock FontSize="12" Text="Extensions" HorizontalAlignment="Stretch" TextAlignment="Center"/>
                 </Border>
             </Grid>
 
@@ -52,14 +56,17 @@
                     <RowDefinition Height="30" />
                     <RowDefinition Height="30" />
                     <RowDefinition Height="30" />
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="30" />
                     <RowDefinition Height="30" />
                     <RowDefinition Height="30" />
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="30" />
                     <RowDefinition Height="30" />
+                    <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="145"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -80,14 +87,25 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="20" Background="BurlyWood"
-                        BorderBrush="White" BorderThickness="1" Margin="-1,-1,-1,0">
+                <Border Grid.Column="0" Grid.Row="0" Background="BurlyWood"
+                        BorderBrush="White" BorderThickness="1" Margin="0,-1,-1,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="145"/>
+                            </Grid.ColumnDefinitions>
+                                <TextBlock Text="Fib Level" Foreground="Black" HorizontalAlignment="Right" Margin="0,0,10,0"/>
+                    </Grid>
+                </Border>
+                        <Border Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="10" Background="BurlyWood"
+                        BorderBrush="White" BorderThickness="1" Margin="0,-1,-1,0">
+                    <Border.ToolTip>
+                        <Image Source="/Images/GapFibRetraceExample.PNG"/>
+                    </Border.ToolTip>
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="120"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -98,6 +116,65 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
+                           
+                            
+                        </Grid.ColumnDefinitions>
+                        
+
+                        <TextBlock Text="5.9%" 
+                               Grid.Column="0"
+                               Grid.Row="0" 
+                               Foreground="Black"/>
+                        <TextBlock Text="11.4%"
+                               Grid.Column="1"
+                               Grid.Row="0" 
+                               Foreground="Black"/>
+                        <TextBlock Text="23.6%"
+                               Grid.Column="2"
+                               Grid.Row="0" 
+                               Foreground="Black"/>
+                        <TextBlock Text="38.2%"
+                               Grid.Column="3"
+                               Grid.Row="0" 
+                               Foreground="Black"/>
+                        <TextBlock Text="50%"
+                               Grid.Column="4"
+                               Grid.Row="0" 
+                               Foreground="Black"/>
+                        <TextBlock Text="61.8%"
+                               Grid.Column="5"
+                               Grid.Row="0" 
+                               Foreground="Black"/>
+                        <TextBlock Text="78.6%"
+                               Grid.Column="6"
+                               Grid.Row="0" 
+                               Foreground="Black"/>
+                        <TextBlock Text="88.6%"
+                               Grid.Column="7"
+                               Grid.Row="0" 
+                               Foreground="Black"/>
+                        <TextBlock Text="94.1%"
+                               Grid.Column="8"
+                               Grid.Row="0" 
+                               Foreground="Black"/>
+                        <TextBlock Text="100%"
+                               Grid.Column="9"
+                               Grid.Row="0" 
+                               Foreground="Black"/>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Column="11" Grid.Row="0" Grid.ColumnSpan="9" Background="BurlyWood"
+                        BorderBrush="White" BorderThickness="1" Margin="-0.5,-1,-1,0">
+                    <Border.ToolTip>
+                        <Image Source="/Images/GapFibExtensionExample.PNG"/>
+                    </Border.ToolTip>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -108,153 +185,135 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Border BorderBrush="White" BorderThickness="1" Margin="-1,-1,-1,0" 
-                                Grid.Column="0"
-                                Grid.Row="0" >
 
-                        <TextBlock Text="Fib Level"
-                               HorizontalAlignment="Right"
-                               Margin="0,0,5,0"
-                               Foreground="Black"/>
-                            </Border>
-
-                                <TextBlock Text="5.9%" 
-                               Grid.Column="1"
-                               Grid.Row="0" 
-                               Foreground="Black"/>
-                        <TextBlock Text="11.4%"
-                               Grid.Column="2"
-                               Grid.Row="0" 
-                               Foreground="Black"/>
-                        <TextBlock Text="23.6%"
-                               Grid.Column="3"
-                               Grid.Row="0" 
-                               Foreground="Black"/>
-                        <TextBlock Text="38.2%"
-                               Grid.Column="4"
-                               Grid.Row="0" 
-                               Foreground="Black"/>
-                        <TextBlock Text="50%"
-                               Grid.Column="5"
-                               Grid.Row="0" 
-                               Foreground="Black"/>
-                        <TextBlock Text="61.8%"
-                               Grid.Column="6"
-                               Grid.Row="0" 
-                               Foreground="Black"/>
-                        <TextBlock Text="78.6%"
-                               Grid.Column="7"
-                               Grid.Row="0" 
-                               Foreground="Black"/>
-                        <TextBlock Text="88.6%"
-                               Grid.Column="8"
-                               Grid.Row="0" 
-                               Foreground="Black"/>
-                        <TextBlock Text="94.1%"
-                               Grid.Column="9"
-                               Grid.Row="0" 
-                               Foreground="Black"/>
-                        <TextBlock Text="100%"
-                               Grid.Column="10"
-                               Grid.Row="0" 
-                               Foreground="Black"/>
                         <TextBlock Text="127.1%"
-                                   Grid.Column="11"
+                                   Grid.Column="0"
                                    Grid.Row="0" 
                                    Foreground="Black"/>
                         <TextBlock Text="141.4%"
-                                   Grid.Column="12"
+                                   Grid.Column="1"
                                    Grid.Row="0" 
                                    Foreground="Black"/>
                         <TextBlock Text="161.8%"
-                                   Grid.Column="13"
+                                   Grid.Column="2"
                                    Grid.Row="0" 
                                    Foreground="Black"/>
                         <TextBlock Text="200%"
-                                   Grid.Column="14"
+                                   Grid.Column="3"
                                    Grid.Row="0" 
                                    Foreground="Black"/>
                         <TextBlock Text="227.1%"
-                                   Grid.Column="15"
+                                   Grid.Column="4"
                                    Grid.Row="0" 
                                    Foreground="Black"/>
                         <TextBlock Text="241.4%"
-                                   Grid.Column="16"
+                                   Grid.Column="5"
                                    Grid.Row="0" 
                                    Foreground="Black"/>
                         <TextBlock Text="261.8%"
-                                   Grid.Column="17"
+                                   Grid.Column="6"
                                    Grid.Row="0" 
                                    Foreground="Black"/>
                         <TextBlock Text="300%"
-                                   Grid.Column="18"
+                                   Grid.Column="7"
                                    Grid.Row="0" 
                                    Foreground="Black"/>
                         <TextBlock Text="361.8%"
-                                   Grid.Column="19"
+                                   Grid.Column="8"
                                    Grid.Row="0" 
                                    Foreground="Black"/>
                     </Grid>
                 </Border>
 
-                <Border Grid.Column="0" Grid.Row="1" Grid.RowSpan="7" Background="BurlyWood"
-                        BorderThickness="1" BorderBrush="White" Margin="-1,-1,-1,-1">
+
+                <Border Grid.Column="0" Grid.Row="1" Grid.RowSpan="10" Background="BurlyWood"
+                        BorderThickness="1" BorderBrush="White" Margin="-1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30" />
                             <RowDefinition Height="30" />
                             <RowDefinition Height="30" />
+                            <RowDefinition Height="30"/>
                             <RowDefinition Height="30" />
                             <RowDefinition Height="30" />
+                            <RowDefinition Height="30"/>
                             <RowDefinition Height="30" />
                             <RowDefinition Height="30" />
+                            <RowDefinition Height="30"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="125"/>
+                            <ColumnDefinition Width="150"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Next Day Hit Rate (%)"
                        HorizontalAlignment="Right"
                        Margin="0,0,10,0"
                        Grid.Column="0"
                        Grid.Row="0" 
-                       Foreground="Black"/>
+                       Foreground="Black"
+                       ToolTip="Percentage of Times the Market Hits the Given Level the Following Day"/>
                         <TextBlock Text="Average Pre-Hit AE"
                        HorizontalAlignment="Right"
                        Margin="0,0,10,0"
                        Grid.Column="0"
                        Grid.Row="1" 
-                       Foreground="Black"/>
+                       Foreground="Black"
+                       ToolTip="Average Pre-Hit Adverse Excursion. &#x0a;&#x0a;The average number of points the &#x0a;market moves in the opposite &#x0a;direction before hitting the level."/>
                         <TextBlock Text="Highest Pre-Hit AE"
                        HorizontalAlignment="Right"
                        Margin="0,0,10,0"
                        Grid.Column="0"
                        Grid.Row="2" 
-                       Foreground="Black"/>
-                        <TextBlock Text="Average Post-Hit MAE"
-                               HorizontalAlignment="Right"
-                               Margin="0,0,10,0"
-                               Grid.Column="0"
-                               Grid.Row="3" 
-                               Foreground="Black"/>
-                        <TextBlock Text="Highest Post-Hit MAE"
+                       Foreground="Black"
+                       ToolTip="Highest Pre-Hit Adverse Excursion. &#x0a;&#x0a;The highest number of points the &#x0a;market moved in the opposite &#x0a;direction before hitting the level."/>
+                        <TextBlock Text="Date of Highest Pre-Hit AE"
+                                   HorizontalAlignment="Right"
+                                   Margin="0,0,10,0"
+                                   Grid.Column="0"
+                                   Grid.Row="3" 
+                                   Foreground="Black"
+                                   ToolTip="Date the Highest Pre-Hit Adverse Excursion Occured."/>
+                        <TextBlock Text="Average Post-Hit AE"
                                HorizontalAlignment="Right"
                                Margin="0,0,10,0"
                                Grid.Column="0"
                                Grid.Row="4" 
-                               Foreground="Black"/>
-                        <TextBlock Text="Average Post-Hit MFE"
+                               Foreground="Black" 
+                               ToolTip="Average Post-Hit Adverse Excursion. &#x0a;&#x0a;The average number of points the &#x0a;market continues in the same &#x0a;direction after hitting the level."/>
+                        <TextBlock Text="Highest Post-Hit AE"
                                HorizontalAlignment="Right"
                                Margin="0,0,10,0"
                                Grid.Column="0"
                                Grid.Row="5" 
-                               Foreground="Black"/>
-                        <TextBlock Text="Highest Post-Hit MFE"
+                               Foreground="Black"
+                               ToolTip="Highest Post-Hit Adverse Excursion. &#x0a;&#x0a;The highest number of points the &#x0a;market continued in the same &#x0a;direction after hitting the level."/>
+                        <TextBlock Text="Date of Highest Post-Hit AE"
+                                   HorizontalAlignment="Right"
+                                   Margin="0,0,10,0"
+                                   Grid.Column="0"
+                                   Grid.Row="6" 
+                                   Foreground="Black"
+                                   ToolTip="Date the Highest Post-Hit Adverse Excursion Occured."/>
+                        <TextBlock Text="Average Post-Hit FE"
                                HorizontalAlignment="Right"
                                Margin="0,0,10,0"
                                Grid.Column="0"
-                               Grid.Row="6" 
-                               Foreground="Black"/>
-
+                               Grid.Row="7" 
+                               Foreground="Black"
+                               ToolTip="Average Post-Hit Favourable Excursion. &#x0a;&#x0a;The average number of points the &#x0a;market moves in the opposite &#x0a;direction after hitting the level."/>
+                        <TextBlock Text="Highest Post-Hit FE"
+                               HorizontalAlignment="Right"
+                               Margin="0,0,10,0"
+                               Grid.Column="0"
+                               Grid.Row="8" 
+                               Foreground="Black"
+                               ToolTip="Highest Post-Hit Favourable Excursion. &#x0a;&#x0a;The highest number of points the &#x0a;market moved in the opposite &#x0a;direction after hitting the level."/>
+                        <TextBlock Text="Date of Highest Post-Hit FE"
+                                   HorizontalAlignment="Right"
+                                   Margin="0,0,10,0"
+                                   Grid.Column="0"
+                                   Grid.Row="9" 
+                                   Foreground="Black"
+                                   ToolTip="Date the Highest Post-Hit Favourable Excursion Occured."/>
                     </Grid>
                 </Border>
 
@@ -437,272 +496,418 @@
                            Grid.Column="19"
                            Grid.Row="3" />
 
-                <!--<TextBlock Text="{Binding FivePointNineDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
+                <TextBlock Text="{Binding FivePointNineDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
                  Grid.Column="1"
                  Grid.Row="4"/>
-            <TextBlock Text="{Binding ElevenPointFourDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
+                <TextBlock Text="{Binding ElevenPointFourDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
                  Grid.Column="2"
                  Grid.Row="4"/>
-            <TextBlock Text="{Binding TwentyThreePointSixDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
+                <TextBlock Text="{Binding TwentyThreePointSixDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
                  Grid.Column="3"
                  Grid.Row="4" />
-            <TextBlock Text="{Binding ThirtyEightPointTwoDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
+                <TextBlock Text="{Binding ThirtyEightPointTwoDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
                  Grid.Column="4"
                  Grid.Row="4" />
-            <TextBlock Text="{Binding FiftyDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
+                <TextBlock Text="{Binding FiftyDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
                  Grid.Column="5"
                  Grid.Row="4" />
-            <TextBlock Text="{Binding SixtyOnePointEightDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
+                <TextBlock Text="{Binding SixtyOnePointEightDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
                  Grid.Column="6"
                  Grid.Row="4" />
-            <TextBlock Text="{Binding SeventyEightPointSixDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
+                <TextBlock Text="{Binding SeventyEightPointSixDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
                  Grid.Column="7"
                  Grid.Row="4" />
-            <TextBlock Text="{Binding EightyEightPointSixDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
+                <TextBlock Text="{Binding EightyEightPointSixDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
                  Grid.Column="8"
                  Grid.Row="4" />
-            <TextBlock Text="{Binding NinetyFourPointOneDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
+                <TextBlock Text="{Binding NinetyFourPointOneDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
                  Grid.Column="9"
                  Grid.Row="4" />
-            <TextBlock Text="{Binding OneHundredDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
+                <TextBlock Text="{Binding OneHundredDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
                  Grid.Column="10"
-                 Grid.Row="4" />-->
+                 Grid.Row="4" />
+
+                <TextBlock Text="{Binding OneHundredAndTwentySevenPointOneDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
+                           Grid.Column="11"
+                           Grid.Row="4"/>
+                <TextBlock Text="{Binding OneHundredAndFortyOnePointFourDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
+                           Grid.Column="12"
+                           Grid.Row="4"/>
+                <TextBlock Text="{Binding OneHundredAndSixtyOnePointEightDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
+                           Grid.Column="13"
+                           Grid.Row="4" />
+                <TextBlock Text="{Binding TwoHundredDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
+                           Grid.Column="14"
+                           Grid.Row="4" />
+                <TextBlock Text="{Binding TwoHundredAndTwentySevenPointOneDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
+                           Grid.Column="15"
+                           Grid.Row="4" />
+                <TextBlock Text="{Binding TwoHundredAndFortyOnePointFourDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
+                           Grid.Column="16"
+                           Grid.Row="4" />
+                <TextBlock Text="{Binding TwoHundredAndSixtyOnePointEightDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
+                           Grid.Column="17"
+                           Grid.Row="4" />
+                <TextBlock Text="{Binding ThreeHundredDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
+                           Grid.Column="18"
+                           Grid.Row="4" />
+                <TextBlock Text="{Binding ThreeHundredAndSixtyOnePointEightDateOfHighestPreHitAdverseExcursion, Mode=OneWay}"
+                           Grid.Column="19"
+                           Grid.Row="4" />
 
                 <TextBlock Text="{Binding FivePointNineAveragePostHitMaximumAdverseExcursion, Mode=OneWay}"
                        Grid.Column="1"
-                       Grid.Row="4"/>
+                       Grid.Row="5"/>
                 <TextBlock Text="{Binding ElevenPointFourAveragePostHitMaximumAdverseExcursion, Mode=OneWay}"
                        Grid.Column="2"
-                       Grid.Row="4"/>
+                       Grid.Row="5"/>
                 <TextBlock Text="{Binding TwentyThreePointSixAveragePostHitMaximumAdverseExcursion, Mode=OneWay}"
                        Grid.Column="3"
-                       Grid.Row="4" />
+                       Grid.Row="5" />
                 <TextBlock Text="{Binding ThirtyEightPointTwoAveragePostHitMaximumAdverseExcursion, Mode=OneWay}"
                        Grid.Column="4"
-                       Grid.Row="4" />
+                       Grid.Row="5" />
                 <TextBlock Text="{Binding FiftyAveragePostHitMaximumAdverseExcursion, Mode=OneWay}"
                        Grid.Column="5"
-                       Grid.Row="4" />
+                       Grid.Row="5" />
                 <TextBlock Text="{Binding SixtyOnePointEightAveragePostHitMaximumAdverseExcursion, Mode=OneWay}"
                        Grid.Column="6"
-                       Grid.Row="4" />
+                       Grid.Row="5" />
                 <TextBlock Text="{Binding SeventyEightPointSixAveragePostHitMaximumAdverseExcursion, Mode=OneWay}"
                        Grid.Column="7"
-                       Grid.Row="4" />
+                       Grid.Row="5" />
                 <TextBlock Text="{Binding EightyEightPointSixAveragePostHitMaximumAdverseExcursion, Mode=OneWay}"
                        Grid.Column="8"
-                       Grid.Row="4" />
+                       Grid.Row="5" />
                 <TextBlock Text="{Binding NinetyFourPointOneAveragePostHitMaximumAdverseExcursion, Mode=OneWay}"
                        Grid.Column="9"
-                       Grid.Row="4" />
+                       Grid.Row="5" />
                 <TextBlock Text="{Binding OneHundredAveragePostHitMaximumAdverseExcursion, Mode=OneWay}"
                        Grid.Column="10"
-                       Grid.Row="4" />
+                       Grid.Row="5" />
 
                 <TextBlock Text="{Binding OneHundredAndTwentySevenPointOneAveragePostHitMaximumAdverseExcursion, Mode=OneWay}"
                            Grid.Column="11"
-                           Grid.Row="4"/>
+                           Grid.Row="5"/>
                 <TextBlock Text="{Binding OneHundredAndFortyOnePointFourAveragePostHitMaximumAdverseExcursion, Mode=OneWay}"
                            Grid.Column="12"
-                           Grid.Row="4" />
+                           Grid.Row="5" />
                 <TextBlock Text="{Binding OneHundredAndSixtyOnePointEightAveragePostHitMaximumAdverseExcursion, Mode=OneWay}"
                            Grid.Column="13"
-                           Grid.Row="4" />
+                           Grid.Row="5" />
                 <TextBlock Text="{Binding TwoHundredAveragePostHitMaximumAdverseExcursion, Mode=OneWay}"
                            Grid.Column="14"
-                           Grid.Row="4" />
+                           Grid.Row="5" />
                 <TextBlock Text="{Binding TwoHundredAndTwentySevenPointOneAveragePostHitMaximumAdverseExcursion, Mode=OneWay}"
                            Grid.Column="15"
-                           Grid.Row="4" />
+                           Grid.Row="5" />
                 <TextBlock Text="{Binding TwoHundredAndFortyOnePointFourAveragePostHitMaximumAdverseExcursion, Mode=OneWay}"
                            Grid.Column="16"
-                           Grid.Row="4" />
+                           Grid.Row="5" />
                 <TextBlock Text="{Binding TwoHundredAndSixtyOnePointEightAveragePostHitMaximumAdverseExcursion, Mode=OneWay}"
                            Grid.Column="17"
-                           Grid.Row="4" />
+                           Grid.Row="5" />
                 <TextBlock Text="{Binding ThreeHundredAveragePostHitMaximumAdverseExcursion, Mode=OneWay}"
                            Grid.Column="18"
-                           Grid.Row="4" />
+                           Grid.Row="5" />
                 <TextBlock Text="{Binding ThreeHundredAndSixtyOnePointEightAveragePostHitMaximumAdverseExcursion, Mode=OneWay}"
                            Grid.Column="19"
-                           Grid.Row="4" />
+                           Grid.Row="5" />
 
                 <TextBlock Text="{Binding FivePointNineHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
                        Grid.Column="1"
-                       Grid.Row="5"/>
+                       Grid.Row="6"/>
                 <TextBlock Text="{Binding ElevenPointFourHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
                        Grid.Column="2"
-                       Grid.Row="5"/>
+                       Grid.Row="6"/>
                 <TextBlock Text="{Binding TwentyThreePointSixHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
                        Grid.Column="3"
-                       Grid.Row="5" />
+                       Grid.Row="6" />
                 <TextBlock Text="{Binding ThirtyEightPointTwoHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
                        Grid.Column="4"
-                       Grid.Row="5" />
+                       Grid.Row="6" />
                 <TextBlock Text="{Binding FiftyHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
                        Grid.Column="5"
-                       Grid.Row="5" />
+                       Grid.Row="6" />
                 <TextBlock Text="{Binding SixtyOnePointEightHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
                        Grid.Column="6"
-                       Grid.Row="5" />
+                       Grid.Row="6" />
                 <TextBlock Text="{Binding SeventyEightPointSixHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
                        Grid.Column="7"
-                       Grid.Row="5" />
+                       Grid.Row="6" />
                 <TextBlock Text="{Binding EightyEightPointSixHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
                        Grid.Column="8"
-                       Grid.Row="5" />
+                       Grid.Row="6" />
                 <TextBlock Text="{Binding NinetyFourPointOneHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
                        Grid.Column="9"
-                       Grid.Row="5" />
+                       Grid.Row="6" />
                 <TextBlock Text="{Binding OneHundredHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
                        Grid.Column="10"
-                       Grid.Row="5" />
+                       Grid.Row="6" />
 
                 <TextBlock Text="{Binding OneHundredAndTwentySevenPointOneHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
                            Grid.Column="11"
-                           Grid.Row="5"/>
+                           Grid.Row="6"/>
                 <TextBlock Text="{Binding OneHundredAndFortyOnePointFourHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
                            Grid.Column="12"
-                           Grid.Row="5" />
+                           Grid.Row="6" />
                 <TextBlock Text="{Binding OneHundredAndSixtyOnePointEightHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
                            Grid.Column="13"
-                           Grid.Row="5" />
+                           Grid.Row="6" />
                 <TextBlock Text="{Binding TwoHundredHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
                            Grid.Column="14"
-                           Grid.Row="5" />
+                           Grid.Row="6" />
                 <TextBlock Text="{Binding TwoHundredAndTwentySevenPointOneHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
                            Grid.Column="15"
-                           Grid.Row="5" />
+                           Grid.Row="6" />
                 <TextBlock Text="{Binding TwoHundredAndFortyOnePointFourHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
                            Grid.Column="16"
-                           Grid.Row="5" />
+                           Grid.Row="6" />
                 <TextBlock Text="{Binding TwoHundredAndSixtyOnePointEightHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
                            Grid.Column="17"
-                           Grid.Row="5" />
+                           Grid.Row="6" />
                 <TextBlock Text="{Binding ThreeHundredHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
                            Grid.Column="18"
-                           Grid.Row="5" />
+                           Grid.Row="6" />
                 <TextBlock Text="{Binding ThreeHundredAndSixtyOnePointEightHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
                            Grid.Column="19"
-                           Grid.Row="5" />
+                           Grid.Row="6" />
+
+                <TextBlock Text="{Binding FivePointNineDateOfHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
+                 Grid.Column="1"
+                 Grid.Row="7"/>
+                <TextBlock Text="{Binding ElevenPointFourDateOfHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
+                 Grid.Column="2"
+                 Grid.Row="7"/>
+                <TextBlock Text="{Binding TwentyThreePointSixDateOfHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
+                 Grid.Column="3"
+                 Grid.Row="7" />
+                <TextBlock Text="{Binding ThirtyEightPointTwoDateOfHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
+                 Grid.Column="4"
+                 Grid.Row="7" />
+                <TextBlock Text="{Binding FiftyDateOfHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
+                 Grid.Column="5"
+                 Grid.Row="7" />
+                <TextBlock Text="{Binding SixtyOnePointEightDateOfHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
+                 Grid.Column="6"
+                 Grid.Row="7" />
+                <TextBlock Text="{Binding SeventyEightPointSixDateOfHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
+                 Grid.Column="7"
+                 Grid.Row="7" />
+                <TextBlock Text="{Binding EightyEightPointSixDateOfHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
+                 Grid.Column="8"
+                 Grid.Row="7" />
+                <TextBlock Text="{Binding NinetyFourPointOneDateOfHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
+                 Grid.Column="9"
+                 Grid.Row="7" />
+                <TextBlock Text="{Binding OneHundredDateOfHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
+                 Grid.Column="10"
+                 Grid.Row="7" />
+
+                <TextBlock Text="{Binding OneHundredAndTwentySevenPointOneDateOfHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
+                           Grid.Column="11"
+                           Grid.Row="7"/>
+                <TextBlock Text="{Binding OneHundredAndFortyOnePointFourDateOfHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
+                           Grid.Column="12"
+                           Grid.Row="7"/>
+                <TextBlock Text="{Binding OneHundredAndSixtyOnePointEightDateOfHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
+                           Grid.Column="13"
+                           Grid.Row="7" />
+                <TextBlock Text="{Binding TwoHundredDateOfHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
+                           Grid.Column="14"
+                           Grid.Row="7" />
+                <TextBlock Text="{Binding TwoHundredAndTwentySevenPointOneDateOfHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
+                           Grid.Column="15"
+                           Grid.Row="7" />
+                <TextBlock Text="{Binding TwoHundredAndFortyOnePointFourDateOfHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
+                           Grid.Column="16"
+                           Grid.Row="7" />
+                <TextBlock Text="{Binding TwoHundredAndSixtyOnePointEightDateOfHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
+                           Grid.Column="17"
+                           Grid.Row="7" />
+                <TextBlock Text="{Binding ThreeHundredDateOfHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
+                           Grid.Column="18"
+                           Grid.Row="7" />
+                <TextBlock Text="{Binding ThreeHundredAndSixtyOnePointEightDateOfHighestPostHitMaximumAdverseExcursion, Mode=OneWay}"
+                           Grid.Column="19"
+                           Grid.Row="7" />
 
                 <TextBlock Text="{Binding FivePointNineAveragePostHitMaximumFavourableExcursion, Mode=OneWay}"
                        Grid.Column="1"
-                       Grid.Row="6"/>
+                       Grid.Row="8"/>
                 <TextBlock Text="{Binding ElevenPointFourAveragePostHitMaximumFavourableExcursion, Mode=OneWay}"
                        Grid.Column="2"
-                       Grid.Row="6"/>
+                       Grid.Row="8"/>
                 <TextBlock Text="{Binding TwentyThreePointSixAveragePostHitMaximumFavourableExcursion, Mode=OneWay}"
                        Grid.Column="3"
-                       Grid.Row="6" />
+                       Grid.Row="8" />
                 <TextBlock Text="{Binding ThirtyEightPointTwoAveragePostHitMaximumFavourableExcursion, Mode=OneWay}"
                        Grid.Column="4"
-                       Grid.Row="6" />
+                       Grid.Row="8" />
                 <TextBlock Text="{Binding FiftyAveragePostHitMaximumFavourableExcursion, Mode=OneWay}"
                        Grid.Column="5"
-                       Grid.Row="6" />
+                       Grid.Row="8" />
                 <TextBlock Text="{Binding SixtyOnePointEightAveragePostHitMaximumFavourableExcursion, Mode=OneWay}"
                        Grid.Column="6"
-                       Grid.Row="6" />
+                       Grid.Row="8" />
                 <TextBlock Text="{Binding SeventyEightPointSixAveragePostHitMaximumFavourableExcursion, Mode=OneWay}"
                        Grid.Column="7"
-                       Grid.Row="6" />
+                       Grid.Row="8" />
                 <TextBlock Text="{Binding EightyEightPointSixAveragePostHitMaximumFavourableExcursion, Mode=OneWay}"
                        Grid.Column="8"
-                       Grid.Row="6" />
+                       Grid.Row="8" />
                 <TextBlock Text="{Binding NinetyFourPointOneAveragePostHitMaximumFavourableExcursion, Mode=OneWay}"
                        Grid.Column="9"
-                       Grid.Row="6" />
+                       Grid.Row="8" />
                 <TextBlock Text="{Binding OneHundredAveragePostHitMaximumFavourableExcursion, Mode=OneWay}"
                        Grid.Column="10"
-                       Grid.Row="6" />
+                       Grid.Row="8" />
 
                 <TextBlock Text="{Binding OneHundredAndTwentySevenPointOneAveragePostHitMaximumFavourableExcursion, Mode=OneWay}"
                            Grid.Column="11"
-                           Grid.Row="6"/>
+                           Grid.Row="8"/>
                 <TextBlock Text="{Binding OneHundredAndFortyOnePointFourAveragePostHitMaximumFavourableExcursion, Mode=OneWay}"
                            Grid.Column="12"
-                           Grid.Row="6" />
+                           Grid.Row="8" />
                 <TextBlock Text="{Binding OneHundredAndSixtyOnePointEightAveragePostHitMaximumFavourableExcursion, Mode=OneWay}"
                            Grid.Column="13"
-                           Grid.Row="6" />
+                           Grid.Row="8" />
                 <TextBlock Text="{Binding TwoHundredAveragePostHitMaximumFavourableExcursion, Mode=OneWay}"
                            Grid.Column="14"
-                           Grid.Row="6" />
+                           Grid.Row="8" />
                 <TextBlock Text="{Binding TwoHundredAndTwentySevenPointOneAveragePostHitMaximumFavourableExcursion, Mode=OneWay}"
                            Grid.Column="15"
-                           Grid.Row="6" />
+                           Grid.Row="8" />
                 <TextBlock Text="{Binding TwoHundredAndFortyOnePointFourAveragePostHitMaximumFavourableExcursion, Mode=OneWay}"
                            Grid.Column="16"
-                           Grid.Row="6" />
+                           Grid.Row="8" />
                 <TextBlock Text="{Binding TwoHundredAndSixtyOnePointEightAveragePostHitMaximumFavourableExcursion, Mode=OneWay}"
                            Grid.Column="17"
-                           Grid.Row="6" />
+                           Grid.Row="8" />
                 <TextBlock Text="{Binding ThreeHundredAveragePostHitMaximumFavourableExcursion, Mode=OneWay}"
                            Grid.Column="18"
-                           Grid.Row="6" />
+                           Grid.Row="8" />
                 <TextBlock Text="{Binding ThreeHundredAndSixtyOnePointEightAveragePostHitMaximumFavourableExcursion, Mode=OneWay}"
                            Grid.Column="19"
-                           Grid.Row="6" />
+                           Grid.Row="8" />
 
                 <TextBlock Text="{Binding FivePointNineHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
                        Grid.Column="1"
-                       Grid.Row="7"/>
+                       Grid.Row="9"/>
                 <TextBlock Text="{Binding ElevenPointFourHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
                        Grid.Column="2"
-                       Grid.Row="7"/>
+                       Grid.Row="9"/>
                 <TextBlock Text="{Binding TwentyThreePointSixHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
                        Grid.Column="3"
-                       Grid.Row="7" />
+                       Grid.Row="9" />
                 <TextBlock Text="{Binding ThirtyEightPointTwoHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
                        Grid.Column="4"
-                       Grid.Row="7" />
+                       Grid.Row="9" />
                 <TextBlock Text="{Binding FiftyHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
                        Grid.Column="5"
-                       Grid.Row="7" />
+                       Grid.Row="9" />
                 <TextBlock Text="{Binding SixtyOnePointEightHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
                        Grid.Column="6"
-                       Grid.Row="7" />
+                       Grid.Row="9" />
                 <TextBlock Text="{Binding SeventyEightPointSixHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
                        Grid.Column="7"
-                       Grid.Row="7" />
+                       Grid.Row="9" />
                 <TextBlock Text="{Binding EightyEightPointSixHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
                        Grid.Column="8"
-                       Grid.Row="7" />
+                       Grid.Row="9" />
                 <TextBlock Text="{Binding NinetyFourPointOneHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
                        Grid.Column="9"
-                       Grid.Row="7" />
+                       Grid.Row="9" />
                 <TextBlock Text="{Binding OneHundredHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
                        Grid.Column="10"
-                       Grid.Row="7" />
+                       Grid.Row="9" />
 
                 <TextBlock Text="{Binding OneHundredAndTwentySevenPointOneHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
                            Grid.Column="11"
-                           Grid.Row="7"/>
+                           Grid.Row="9"/>
                 <TextBlock Text="{Binding OneHundredAndFortyOnePointFourHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
                            Grid.Column="12"
-                           Grid.Row="7" />
+                           Grid.Row="9" />
                 <TextBlock Text="{Binding OneHundredAndSixtyOnePointEightHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
                            Grid.Column="13"
-                           Grid.Row="7" />
+                           Grid.Row="9" />
                 <TextBlock Text="{Binding TwoHundredHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
                            Grid.Column="14"
-                           Grid.Row="7" />
+                           Grid.Row="9" />
                 <TextBlock Text="{Binding TwoHundredAndTwentySevenPointOneHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
                            Grid.Column="15"
-                           Grid.Row="7" />
+                           Grid.Row="9" />
                 <TextBlock Text="{Binding TwoHundredAndFortyOnePointFourHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
                            Grid.Column="16"
-                           Grid.Row="7" />
+                           Grid.Row="9" />
                 <TextBlock Text="{Binding TwoHundredAndSixtyOnePointEightHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
                            Grid.Column="17"
-                           Grid.Row="7" />
+                           Grid.Row="9" />
                 <TextBlock Text="{Binding ThreeHundredHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
                            Grid.Column="18"
-                           Grid.Row="7" />
+                           Grid.Row="9" />
                 <TextBlock Text="{Binding ThreeHundredAndSixtyOnePointEightHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
                            Grid.Column="19"
-                           Grid.Row="7" />
+                           Grid.Row="9" />
+
+                <TextBlock Text="{Binding FivePointNineDateOfHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
+                 Grid.Column="1"
+                 Grid.Row="10"/>
+                <TextBlock Text="{Binding ElevenPointFourDateOfHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
+                 Grid.Column="2"
+                 Grid.Row="10"/>
+                <TextBlock Text="{Binding TwentyThreePointSixDateOfHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
+                 Grid.Column="3"
+                 Grid.Row="10" />
+                <TextBlock Text="{Binding ThirtyEightPointTwoDateOfHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
+                 Grid.Column="4"
+                 Grid.Row="10" />
+                <TextBlock Text="{Binding FiftyDateOfHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
+                 Grid.Column="5"
+                 Grid.Row="10" />
+                <TextBlock Text="{Binding SixtyOnePointEightDateOfHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
+                 Grid.Column="6"
+                 Grid.Row="10" />
+                <TextBlock Text="{Binding SeventyEightPointSixDateOfHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
+                 Grid.Column="7"
+                 Grid.Row="10" />
+                <TextBlock Text="{Binding EightyEightPointSixDateOfHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
+                 Grid.Column="8"
+                 Grid.Row="10" />
+                <TextBlock Text="{Binding NinetyFourPointOneDateOfHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
+                 Grid.Column="9"
+                 Grid.Row="10" />
+                <TextBlock Text="{Binding OneHundredDateOfHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
+                 Grid.Column="10"
+                 Grid.Row="10" />
+
+                <TextBlock Text="{Binding OneHundredAndTwentySevenPointOneDateOfHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
+                           Grid.Column="11"
+                           Grid.Row="10"/>
+                <TextBlock Text="{Binding OneHundredAndFortyOnePointFourDateOfHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
+                           Grid.Column="12"
+                           Grid.Row="10"/>
+                <TextBlock Text="{Binding OneHundredAndSixtyOnePointEightDateOfHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
+                           Grid.Column="13"
+                           Grid.Row="10" />
+                <TextBlock Text="{Binding TwoHundredDateOfHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
+                           Grid.Column="14"
+                           Grid.Row="10" />
+                <TextBlock Text="{Binding TwoHundredAndTwentySevenPointOneDateOfHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
+                           Grid.Column="15"
+                           Grid.Row="10" />
+                <TextBlock Text="{Binding TwoHundredAndFortyOnePointFourDateOfHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
+                           Grid.Column="16"
+                           Grid.Row="10" />
+                <TextBlock Text="{Binding TwoHundredAndSixtyOnePointEightDateOfHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
+                           Grid.Column="17"
+                           Grid.Row="10" />
+                <TextBlock Text="{Binding ThreeHundredDateOfHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
+                           Grid.Column="18"
+                           Grid.Row="10" />
+                <TextBlock Text="{Binding ThreeHundredAndSixtyOnePointEightDateOfHighestPostHitMaximumFavourableExcursion, Mode=OneWay}"
+                           Grid.Column="19"
+                           Grid.Row="10" />
             </Grid>
         </Grid>
     </Border>

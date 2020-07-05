@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Foundations;
 using GapTraderCore.Interfaces;
 using GapTraderCore.Strategies;
 using static GapTraderCore.FibonacciServices;

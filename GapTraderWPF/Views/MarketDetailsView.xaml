@@ -17,8 +17,15 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Foreground" Value="White" />
         </Style>
+        <Style TargetType="WrapPanel">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding DataInUse}" Value="true">
+                    <Setter Property="ToolTip" Value="Data In Use" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
-    <Border BorderBrush="Black" BorderThickness="2">
+    <Border BorderBrush="Black" BorderThickness="2" >
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
@@ -27,23 +34,29 @@
                 <RowDefinition Height="140" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
+            <WrapPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left">
+                <StackPanel Orientation="Horizontal" 
+                        IsEnabled="{Binding DataInUse, Converter={converters:InverseBoolConverter}}">
                 <Button Margin="5"
                     HorizontalAlignment="Left" Width="40" Content="New" 
-                    Height="20" Command="{Binding UploadNewDataCommand}"/>
+                    Height="20" Command="{Binding UploadNewDataCommand}"
+                    ToolTip="Add New Data Set"/>
                 <Button Margin="5" 
                     HorizontalAlignment="Left" Width="60" Content="Add Data" 
                     Height="20" Command="{Binding AddDataCommand}" IsEnabled="{Binding DataExists}"/>
             </StackPanel>
+            </WrapPanel>
             <TextBlock Text="Market Data Details" FontWeight="Bold" Grid.Row="0" FontSize="15" />
-            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right">
+            <WrapPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right">
+                <StackPanel  Orientation="Horizontal" 
+                        IsEnabled="{Binding DataInUse, Converter={converters:InverseBoolConverter}}">
                 <Button Margin="5" Width="40" Content="Load" 
                         Height="20" Command="{Binding LoadDataCommand}"/>
                 <Button Margin="5" Width="40" Content="Save" IsEnabled="{Binding DataExists}"
                         Height="20" Command="{Binding SaveDataCommand}"/>
             </StackPanel>
-
-            <Border BorderBrush="White" BorderThickness="1" 
+                </WrapPanel>
+                    <Border BorderBrush="White" BorderThickness="1" 
                     HorizontalAlignment="Stretch" Margin="5,0" Grid.Row="1">
 
                 <ContentControl Content="{Binding MarketStats}">

@@ -28,6 +28,12 @@ namespace GapTraderCore.ViewModels
             _selector.FiltersChanged += RefreshStrategies;
         }
 
+        public override void ClearSearchResults()
+        {
+            Strategies = new List<IGapFillStrategy>();
+            base.ClearSearchResults();
+        }
+
         public override void FindStrategies(StrategyTestFilters filters, TradeDirection tradeDirection)
         {
             LoadingBar.Maximum = GetNumberOfCombinations();
@@ -67,7 +73,7 @@ namespace GapTraderCore.ViewModels
                     Market.DataDetails.OpenTime, Market.DataDetails.CloseTime);
 
             var fibs = (FibonacciLevel[])Enum.GetValues(typeof(FibonacciLevel));
-            var tempStrategies = new List<IGapFillStrategy>(); // todo could use Observable collection?
+            var tempStrategies = new List<IGapFillStrategy>(); 
 
             StrategyTester.SelectedDirection = tradeDirection;
 

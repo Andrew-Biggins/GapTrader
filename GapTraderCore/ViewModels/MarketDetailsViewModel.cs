@@ -1,6 +1,8 @@
 ﻿using System;
+using Foundations;
+using Foundations.Optional;
+using GapTraderCore.Interfaces;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -8,12 +10,9 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System.Windows.Input;
-using Foundations;
-using Foundations.Optional;
-using GapTraderCore.Interfaces;
-using static System.IO.Directory;
 using static GapTraderCore.CsvServices;
 using static GapTraderCore.Strings;
+using static System.IO.Directory;
 
 namespace GapTraderCore.ViewModels
 {
@@ -24,6 +23,8 @@ namespace GapTraderCore.ViewModels
 
     public sealed class MarketDetailsViewModel : BindableBase
     {
+        public EventHandler MarketDataChanged;
+
         public GapFillStatsViewModel GapFillStatsViewModel
         {
             get => _gapFillStatsViewModel;
@@ -60,6 +61,12 @@ namespace GapTraderCore.ViewModels
             set => SetProperty(ref _marketStats, value);
         }
 
+        public bool DataInUse
+        {
+            get => _dataInUse;
+            private set => SetProperty(ref _dataInUse, value);
+        }
+
         public DataUploaderViewModel DataUploaderViewModel { get; private set; }
 
         public string NewName { get; set; }
@@ -84,14 +91,6 @@ namespace GapTraderCore.ViewModels
 
         public ICommand OverwriteSavedDataCommand => new BasicCommand(OverwriteSavedData);
 
-        private void OverwriteSavedData()
-        {
-            var name = SelectedSerializableMarket.SaveName;
-            DeleteData();
-            NewName = name;
-            SaveData();
-        }
-
         public MarketDetailsViewModel(IRunner runner, IMarket market)
         {
             Market = market;
@@ -102,6 +101,8 @@ namespace GapTraderCore.ViewModels
             GapFillStatsViewModel = new GapFillStatsViewModel();
             CheckForData();
         }
+
+        public void ToggleDataInUse() => DataInUse = !DataInUse;
 
         private void UpdateStats()
         {
@@ -144,6 +145,14 @@ namespace GapTraderCore.ViewModels
             SavedMarkets = GetSavedMarkets(_savedDataPath);
         }
 
+        private void OverwriteSavedData()
+        {
+            var name = SelectedSerializableMarket.SaveName;
+            DeleteData();
+            NewName = name;
+            SaveData();
+        }
+
         private void UploadNewData()
         {
             DataProcessDel processNewData = ProcessNewData;
@@ -169,7 +178,7 @@ namespace GapTraderCore.ViewModels
         private void AddDataToExisting(string minuteBidDataFilePath, string minuteAskDataFilePath,
             string dailyDataFilePath, bool deriveDailyFromMinute, bool isUkData)
         {
-            UnfilledGaps = new List<Gap>();
+            ClearExistingData();
             MarketStats = _loadingBar;
 
             _loadingBar.Maximum = WriteSafeReadAllLines(minuteBidDataFilePath).Length +
@@ -239,8 +248,7 @@ namespace GapTraderCore.ViewModels
             _loadingBar.Maximum = WriteSafeReadAllLines(marketData.MinuteDataFilePath).Length +
                                   WriteSafeReadAllLines(marketData.DailyDataFilePath).Length;
 
-            Market.ClearData();
-            UnfilledGaps = new List<Gap>();
+            ClearExistingData();
 
             Market.MinuteData = ReadInSavedMinuteData(marketData, () => { _loadingBar.Progress++; });
 
@@ -260,9 +268,8 @@ namespace GapTraderCore.ViewModels
         private void ProcessNewData(string minuteBidDataFilePath, string minuteAskDataFilePath,
             string dailyDataFilePath, bool deriveDailyFromMinute, bool isUkData)
         {
-            UnfilledGaps = new List<Gap>();
+            ClearExistingData();
             MarketStats = _loadingBar;
-            Market.ClearData();
             _loadingBar.Maximum = WriteSafeReadAllLines(minuteBidDataFilePath).Length +
                                   WriteSafeReadAllLines(minuteAskDataFilePath).Length * 2;
 
@@ -325,6 +332,14 @@ namespace GapTraderCore.ViewModels
             Market.UpdateName(name);
         }
 
+        private void ClearExistingData()
+        {
+            Market.ClearData();
+            MarketDataChanged.Raise(this);
+            UnfilledGaps = new List<Gap>();
+            GapFillStatsViewModel = new GapFillStatsViewModel();
+        }
+
         private void DeleteData()
         {
             var dataFile = $"{SelectedSerializableMarket.SaveName}.txt";
@@ -380,5 +395,6 @@ namespace GapTraderCore.ViewModels
         private List<Gap> _unfilledGaps;
         private Optional<double> _previousClose = Option.None<double>();
         private GapFillStatsViewModel _gapFillStatsViewModel;
+        private bool _dataInUse;
     }
 }
