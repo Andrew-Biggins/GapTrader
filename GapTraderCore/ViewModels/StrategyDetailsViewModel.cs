@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using GapTraderCore.Interfaces;
+﻿using GapTraderCore.Interfaces;
 using GapTraderCore.Strategies;
 
 namespace GapTraderCore.ViewModels
 {
     public class StrategyDetailsViewModel : TrailingStopBaseViewModel, IStrategyDetails
     {
-        public bool HasError { get; protected set; }
+        public bool HasError
+        {
+            get => _hasError;
+            protected set => SetProperty(ref _hasError, value, nameof(HasError));
+        }
 
         public StrategyDetailsViewModel(StrategyType strategyType)
         {
@@ -29,6 +30,7 @@ namespace GapTraderCore.ViewModels
         }
 
         protected readonly StrategyType StrategyType;
+        private bool _hasError;
     }
 
 }

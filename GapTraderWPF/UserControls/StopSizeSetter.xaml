@@ -70,7 +70,7 @@
                             <ColumnDefinition Width="60" />
                         </Grid.ColumnDefinitions>
                         <TextBox Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
-                                 helpers:HasErrorUtility.MvvmHasError="{Binding Path=StopHasError}"
+                                 helpers:HasErrorUtility.MvvmHasError="{Binding Path=StopSizeHasError}"
                                  VerticalContentAlignment="Center"
                                  HorizontalContentAlignment="Right"
                                  HorizontalAlignment="Left"
@@ -79,7 +79,7 @@
                             <TextBox.Text>
                                 <Binding Path="Stop"
                                          Mode="TwoWay"
-                                         UpdateSourceTrigger="PropertyChanged"
+                                         UpdateSourceTrigger="LostFocus"
                                          TargetNullValue="{x:Static system:String.Empty}"
                                          Converter="{converters:EmptyDoubleToStringConverter}">
                                     <Binding.ValidationRules>
@@ -127,8 +127,26 @@
                     </RadioButton>
                     <StackPanel Orientation="Horizontal" Grid.Row="2" Height="22" >
                         <TextBlock  Text="By" Margin="3,0" VerticalAlignment="Center"/>
-                        <TextBox Height="22" Width="35" VerticalContentAlignment="Center"
-                                 Text="{Binding TrailedStopSize}" IsEnabled="{Binding IsStopTrailedForwarder}"/>
+                        <!--<TextBox Height="22" Width="35" VerticalContentAlignment="Center"
+                                 Text="{Binding TrailedStopSize}" IsEnabled="{Binding IsStopTrailedForwarder}"/>-->
+                        
+                        <TextBox Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
+                                 helpers:HasErrorUtility.MvvmHasError="{Binding Path=StopTrailHasError}"
+                                 VerticalContentAlignment="Center"
+                                 Width="35" Height="22"
+                                 IsEnabled="{Binding IsStopTrailedForwarder}">
+                            <TextBox.Text>
+                                <Binding Path="TrailedStopSize"
+                                         Mode="TwoWay"
+                                         UpdateSourceTrigger="LostFocus"
+                                         TargetNullValue="{x:Static system:String.Empty}"
+                                         Converter="{converters:EmptyDoubleToStringConverter}">
+                                    <Binding.ValidationRules>
+                                        <validationRules:PointsNumberValidationRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
                         <TextBlock  Text="points" Margin="3,0" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Grid>

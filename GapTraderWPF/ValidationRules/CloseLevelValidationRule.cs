@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using GapTraderWPF.Helpers;
 using System.Globalization;
-using System.Text;
 using System.Windows.Controls;
-using GapTraderWPF.Helpers;
 
 namespace GapTraderWPF.ValidationRules
 {

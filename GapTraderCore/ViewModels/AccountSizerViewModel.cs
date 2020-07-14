@@ -7,6 +7,18 @@ namespace GapTraderCore.ViewModels
         public double AccountStartSize { get; set; } = 10000;
         public double RiskPercentage { get; set; } = 1;
 
+        public bool AccountStartSizeHasError
+        {
+            get => _accountStartSizeHasError;
+            set => SetProperty(ref _accountStartSizeHasError, value, nameof(AccountStartSizeHasError));
+        }
+
+        public bool RiskPercentageHasError
+        {
+            get => _riskPercentageHasError;
+            set => SetProperty(ref _riskPercentageHasError, value, nameof(RiskPercentageHasError));
+        }
+
         public bool Compound
         {
             get => _compound;
@@ -18,5 +30,7 @@ namespace GapTraderCore.ViewModels
         }
 
         private bool _compound = true;
+        private bool _accountStartSizeHasError;
+        private bool _riskPercentageHasError;
     }
 }

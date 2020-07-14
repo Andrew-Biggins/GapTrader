@@ -50,7 +50,7 @@
     <Border BorderBrush="White" BorderThickness="2">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="350" />
+                <RowDefinition Height="370" />
                 <RowDefinition Height="58" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
@@ -65,14 +65,14 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,5,0">
                     <userControls:TradeFilterSelector DataContext="{Binding FilterSelector}" Margin="5"/>
                     <Border BorderBrush="White" BorderThickness="1" Margin="0,5,0,5" VerticalAlignment="Stretch">
-                        <Button  HorizontalAlignment="Center" Margin="5,5" VerticalAlignment="Top"
-                        Height="60" Width="67" Command="{Binding AddNewTradeCommand}">
+                        <Button HorizontalAlignment="Center" Margin="5,5" VerticalAlignment="Top"
+                                Height="60" Width="67" Command="{Binding AddNewTradeCommand}">
                             <TextBlock Foreground="Black" TextAlignment="Center" TextWrapping="Wrap">Add New Trade</TextBlock>
                         </Button>
                     </Border>
                 </StackPanel>
 
-                <Grid Grid.Row="1" HorizontalAlignment="Stretch" Margin="7,0" x:Name="Grid">
+                <Grid Grid.Row="1" HorizontalAlignment="Stretch" Margin="0,0" x:Name="Grid">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="18" />
                     </Grid.RowDefinitions>
@@ -82,50 +82,77 @@
                         <ColumnDefinition Width="{Binding ElementName=EntryColumn, Path=ActualWidth}" MaxWidth="1000"/>
                         <ColumnDefinition Width="{Binding ElementName=StopColumn, Path=ActualWidth}" MaxWidth="1000"/>
                         <ColumnDefinition Width="{Binding ElementName=TargetColumn, Path=ActualWidth}" MaxWidth="1000"/>
+                        <ColumnDefinition Width="{Binding ElementName=DirectionColumn, Path=ActualWidth}" MaxWidth="1000"/>
                         <ColumnDefinition Width="{Binding ElementName=RrrColumn, Path=ActualWidth}" MaxWidth="1000"/>
                         <ColumnDefinition Width="{Binding ElementName=OpenTimeColumn, Path=ActualWidth}" MaxWidth="1000"/>
                         <ColumnDefinition Width="{Binding ElementName=OpenLevelColumn, Path=ActualWidth}" MaxWidth="1000"/>
+                        <ColumnDefinition Width="{Binding ElementName=SizeColumn, Path=ActualWidth}" MaxWidth="1000"/>
                         <ColumnDefinition Width="{Binding ElementName=CloseTimeColumn, Path=ActualWidth}" MaxWidth="1000"/>
                         <ColumnDefinition Width="{Binding ElementName=CloseLevelColumn, Path=ActualWidth}" MaxWidth="1000"/>
                         <ColumnDefinition Width="{Binding ElementName=TotalPointsColumn, Path=ActualWidth}" MaxWidth="1000"/>
-                        <ColumnDefinition Width="{Binding ElementName=ResultInRColumn, Path=ActualWidth}" MaxWidth="1000"/>
-                        <ColumnDefinition Width="{Binding ElementName=SizeColumn, Path=ActualWidth}" MaxWidth="1000"/>
                         <ColumnDefinition Width="{Binding ElementName=ProfitColumn, Path=ActualWidth}" MaxWidth="1000"/>
+                        <ColumnDefinition Width="{Binding ElementName=ResultInRColumn, Path=ActualWidth}" MaxWidth="1000"/>
+                        <ColumnDefinition Width="{Binding ElementName=MaeColumn, Path=ActualWidth}" MaxWidth="1000"/>
+                        <ColumnDefinition Width="{Binding ElementName=MfaColumn, Path=ActualWidth}" MaxWidth="1000"/>
+                        <ColumnDefinition Width="{Binding ElementName=DrawdownColumn, Path=ActualWidth}" MaxWidth="1000"/>
+                        <ColumnDefinition Width="{Binding ElementName=RealisedProfitColumn, Path=ActualWidth}" MaxWidth="1000"/>
+                        <ColumnDefinition Width="{Binding ElementName=UnrealisedProfitPointsColumn, Path=ActualWidth}" MaxWidth="1000"/>
+                        <ColumnDefinition Width="{Binding ElementName=UnrealisedProfitCashColumn, Path=ActualWidth}" MaxWidth="1000"/>
                         <ColumnDefinition Width="{Binding ElementName=EditColumn, Path=ActualWidth}" MaxWidth="1000"/>
                         <ColumnDefinition Width="{Binding ElementName=DeleteColumn, Path=ActualWidth}" MaxWidth="1000"/>
                     </Grid.ColumnDefinitions>
-                    <Border Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4" BorderBrush="Black" BorderThickness="0,0,3,0" Background="BurlyWood" Margin="0,0,-2,0">
+                    <Border Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="5" BorderBrush="Black" BorderThickness="0,0,0,0" Background="BurlyWood" Margin="1,0,-0.5,0">
                         <TextBlock  Text="Strategy Trade Details" FontWeight="Bold" HorizontalAlignment="Center" Background="BurlyWood" Foreground="Black"/>
                     </Border>
-                    <Border Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="0" Background="BurlyWood" Margin="1.5,0,3,0">
+                    <Border Grid.Row="0" Grid.Column="7" Grid.ColumnSpan="3" BorderBrush="Black" BorderThickness="0" Background="BurlyWood" Margin="3,0,1.5,0">
                         <TextBlock  Text="Actual Trade Open Details" FontWeight="Bold" HorizontalAlignment="Center" Background="BurlyWood" Foreground="Black"/>
                     </Border>
-                    <Border Grid.Row="0" Grid.Column="8" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="1,0,0,0" Background="BurlyWood" Margin="-1.25,0,0.75,0">
+                    <Border Grid.Row="0" Grid.Column="10" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="1,0,0,0" Background="BurlyWood" Margin="0.25,0,0,0">
                         <TextBlock Text="Actual Trade Close Details" FontWeight="Bold" HorizontalAlignment="Center" Background="BurlyWood" Foreground="Black"/>
                     </Border>
-
-                    <Border Grid.Row="0" Grid.Column="11" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="1,0,0,0" Background="BurlyWood" Margin="-1,0,1,0">
-                        <TextBlock Text="Account Start Size:" FontWeight="Bold" HorizontalAlignment="Right" Background="BurlyWood" Foreground="Black" FontSize="11.5" Margin="0,0,2,0"/>
+                    <Border Grid.Row="0" Grid.Column="12" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="1,0,0,0" Background="BurlyWood" Margin="2,0,0,0">
+                        <TextBlock Text="Profit / Loss" FontWeight="Bold" HorizontalAlignment="Center" Background="BurlyWood" Foreground="Black" FontSize="11.5"/>
                     </Border>
-                    <TextBox Grid.Row="0" Grid.Column="13" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}">
-                    <TextBox.Text>
-                        <Binding Path="AccountStartSize"
-                                 Mode="TwoWay"
-                                 UpdateSourceTrigger="LostFocus"
-                                 Converter="{converters:EmptyDoubleToStringConverter}">
-                            <Binding.ValidationRules>
-                                <validationRules:MinimumGapSizeValidationRule/>
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                    </TextBox>
+                    <Border Grid.Row="0" Grid.Column="14" Grid.ColumnSpan="5" BorderBrush="Black" BorderThickness="1,0,0,0" Background="BurlyWood" Margin="1.5,0,-0.25,0">
+                        <TextBlock Text="Trade Metrics" FontWeight="Bold" HorizontalAlignment="Center" Background="BurlyWood" Foreground="Black" FontSize="11.5" />
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="1,0,0,3" Background="BurlyWood" Margin="0,0,2,-1">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <TextBlock Text="Account Start Size:" FontWeight="Bold" HorizontalAlignment="Right" Background="BurlyWood" Foreground="Black" FontSize="11.5" Margin="0,0,2,2"/>
+                        <TextBox Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Width="70" Height="18" Margin="0,0,0,0.5" >
+                            <TextBox.Text>
+                                <Binding Path="AccountStartSize"
+                                         Mode="TwoWay"
+                                         UpdateSourceTrigger="LostFocus"
+                                         Converter="{converters:EmptyDoubleToStringConverter}">
+                                    <Binding.ValidationRules>
+                                        <validationRules:MinimumGapSizeValidationRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                            </StackPanel>
+                    </Border>
+                    
+
+                    <Border Grid.Row="0" Grid.Column="19" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="0.5,0,0,0" Background="BurlyWood" Margin="2.5,0,0,0">
+                        <TextBlock Text="Unrealised Profit" FontWeight="Bold" HorizontalAlignment="Center" Background="BurlyWood" Foreground="Black" FontSize="11.5"/>
+                    </Border>
                 </Grid>
 
-                <DataGrid Grid.Row="2"  ItemsSource="{Binding Trades, Mode=OneWay}" IsReadOnly="True"
-                      AutoGenerateColumns="False" CanUserResizeColumns="False" 
-                      SelectedItem="{Binding SelectedTrade}">
+                <DataGrid Grid.Row="2"  ItemsSource="{Binding Trades, Mode=OneWay}" IsReadOnly="True" x:Name="JDataGrid"
+                      AutoGenerateColumns="False" CanUserResizeColumns="False" CanUserReorderColumns="False"
+                      SelectedItem="{Binding SelectedTrade}" RowHeaderWidth="0">
                     <DataGrid.Resources>
                         <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="ContentTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <TextBlock TextWrapping="Wrap" Text="{Binding}" 
+                                                   TextAlignment="Center" Background="BurlyWood" />
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
                             <Setter Property="Background" Value="BurlyWood" />
                             <Setter Property="HorizontalContentAlignment" Value="Center" />
                             <Setter Property="BorderBrush" Value="Black"/>
@@ -138,20 +165,13 @@
                         <DataGridTextColumn Header="Market" x:Name="MarketColumn"
                                     Binding="{Binding Market.Name}" Width="0.75*" />
 
-                        <DataGridTextColumn Header="Strategy" x:Name="StrategyColumn"
-                                    Binding="{Binding Strategy.ShortName}" Width="2.5*">
-                            <DataGridTextColumn.HeaderStyle>
+                        <DataGridTemplateColumn Header="Strategy" Width="2.7*" x:Name="StrategyColumn">
+                            <DataGridTemplateColumn.HeaderStyle>
                                 <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
-                                    <Setter Property="BorderThickness" Value="0, 0, 3, 0"/>
+                                    <Setter Property="BorderThickness" Value="0,0,3,0"/>
                                 </Style>
-                            </DataGridTextColumn.HeaderStyle>
-                            <DataGridTextColumn.ElementStyle>
-                                <Style>
-                                    <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
-                                    <Setter Property="TextBlock.Margin" Value="0,0,2,0" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                            <DataGridTextColumn.CellStyle>
+                            </DataGridTemplateColumn.HeaderStyle>
+                            <DataGridTemplateColumn.CellStyle>
                                 <Style TargetType="DataGridCell" BasedOn="{StaticResource JournalGridCellStyle}">
                                     <Setter Property="BorderThickness" Value="0,0,2,0"/>
                                     <Setter Property="BorderBrush" Value="Black"/>
@@ -164,18 +184,30 @@
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
-
-                            </DataGridTextColumn.CellStyle>
-                        </DataGridTextColumn>
+                            </DataGridTemplateColumn.CellStyle>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Strategy.ShortName}" ToolTip="{Binding Strategy.Name}" TextWrapping="Wrap" Margin="0,0,2,0"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
 
                         <DataGridTextColumn Header="Entry" x:Name="EntryColumn"
-                                    Binding="{Binding StrategyEntryLevel}" Width="0.85*" />
+                                    Binding="{Binding StrategyEntryLevel, StringFormat=N1}" Width="0.85*" />
                         <DataGridTextColumn Header="Stop" x:Name="StopColumn"
                                         Binding="{Binding StopLevel}" Width="0.85*" />
                         <DataGridTextColumn Header="Target" x:Name="TargetColumn"
                                         Binding="{Binding Target}" Width="0.85*" />
+                        <DataGridTextColumn Header="Long/Short" x:Name="DirectionColumn"
+                                            Binding="{Binding Direction}" Width="0.55*" />
                         <DataGridTextColumn Header="RRR" x:Name="RrrColumn"
-                                        Binding="{Binding RiskRewardRatio}" Width="0.75*" />
+                                        Binding="{Binding RiskRewardRatio, StringFormat=N1}" Width="0.5*" >
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                    <Setter Property="ToolTip" Value="Risk Reward Ratio"/>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                        </DataGridTextColumn>
 
                         <DataGridTextColumn Header="Open Date/Time" x:Name="OpenTimeColumn"
                                         Binding="{Binding OpenTime, StringFormat=dd-MM-yy HH:mm}" Width="1.5*" >
@@ -200,9 +232,14 @@
                         </DataGridTextColumn>
 
                         <DataGridTextColumn Header="Open Level" x:Name="OpenLevelColumn"
-                                        Binding="{Binding OpenLevel}" Width="1*" >
+                                        Binding="{Binding OpenLevel, StringFormat=N1}" Width="1*" >
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Header="Size" x:Name="SizeColumn"
+                                            Binding="{Binding Size}" Width="0.5*">
                             <DataGridTextColumn.HeaderStyle>
-                                <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                    <Setter Property="ToolTip" Value="Position Size (£ per point) "/>
                                     <Setter  Property="BorderThickness" Value="0,0,3,0"/>
                                 </Style>
                             </DataGridTextColumn.HeaderStyle>
@@ -226,9 +263,8 @@
                         <DataGridTextColumn Header="Close Level" x:Name="CloseLevelColumn"
                                         Binding="{Binding CloseLevel, Converter={converters:OptionalDoubleToStringConverter}}" Width="1*" />
 
-
-                        <DataGridTextColumn Header="+/- Points" x:Name="TotalPointsColumn"
-                                        Binding="{Binding PointsProfit, Converter={converters:OptionalDoubleToStringConverter}}" Width="1*" >
+                        <DataGridTextColumn Header="Points" x:Name="TotalPointsColumn"
+                                        Binding="{Binding PointsProfit, Converter={converters:OptionalDoubleToStringConverter}, StringFormat=N1}" Width="0.9*" >
                             <DataGridTextColumn.HeaderStyle>
                                 <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
                                     <Setter  Property="BorderThickness" Value="2,0,1,0"/>
@@ -249,13 +285,105 @@
                                 </Style>
                             </DataGridTextColumn.CellStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="Result in R" x:Name="ResultInRColumn"
-                                        Binding="{Binding ResultInR, Converter={converters:OptionalDoubleToStringConverter}}" Width="1*" />
-                        <DataGridTextColumn Header="Size" x:Name="SizeColumn"
-                                        Binding="{Binding Size}" Width="0.5*" />
-                        <DataGridTextColumn Header="Profit / Loss" x:Name="ProfitColumn"
-                                        Binding="{Binding CashProfit}" Width="1.1*" />
 
+                        <DataGridTextColumn Header="£" x:Name="ProfitColumn"
+                                            Binding="{Binding CashProfit, Converter={converters:OptionalDoubleToStringConverter}, StringFormat=N2}" Width=".9*" >
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Foreground" Value="{Binding CashProfit, Converter={converters:OptionalDoubleToBrushConverter}}"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Header="Result In R" x:Name="ResultInRColumn"
+                                        Binding="{Binding ResultInR, Converter={converters:OptionalDoubleToStringConverter}, StringFormat=N1}" Width="0.6*" >
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                    <Setter Property="BorderThickness" Value="2,0,1,0"/>
+                                    <Setter Property="ToolTip" Value="Result Measured In Relation To Risk"/>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell" BasedOn="{StaticResource JournalGridCellStyle}">
+                                    <Setter Property="BorderThickness" Value="2,0,0,0"/>
+                                    <Setter Property="BorderBrush" Value="Black"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="BorderThickness" Value="2,0,0,0"/>
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                        </Trigger>
+
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Header="MAE" x:Name="MaeColumn"
+                                            Binding="{Binding MaximumAdverseExcursionPoints, Converter={converters:OptionalDoubleToStringConverter}, StringFormat=N1}" Width="0.7*" >
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                    <Setter Property="ToolTip" Value="Maximum Adverse Excursion"/>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Header="MFA" x:Name="MfaColumn"
+                                            Binding="{Binding MaximumFavourableExcursionPoints, Converter={converters:OptionalDoubleToStringConverter}, StringFormat=N1}" Width="0.7*">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                    <Setter Property="ToolTip" Value="Maximum Favourable Excursion"/>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Header="Drawdown" x:Name="DrawdownColumn"
+                                            Binding="{Binding MaximumAdverseExcursionPercentageOfStop, Converter={converters:OptionalDoubleToStringConverter}, StringFormat=P}" Width="0.9*" >
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                    <Setter Property="ToolTip" Value="Drawdown or 'Heat'. &#x0a;&#x0a;Measured as percentage of stop/risk."/>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Header="Realised Profit %" x:Name="RealisedProfitColumn"
+                                            Binding="{Binding PointsProfitPercentageOfMaximumFavourableExcursion, Converter={converters:OptionalDoubleToStringConverter}, StringFormat=P}" Width="0.82*">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                    <Setter Property="ToolTip" Value="Realised Profit Percentage. &#x0a;&#x0a;Measure of trade efficiency in relation &#x0a;to its Maximum Favourable Excursion."/>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Header="Points" x:Name="UnrealisedProfitPointsColumn"
+                                            Binding="{Binding UnrealisedProfitPoints, Converter={converters:OptionalDoubleToStringConverter}, StringFormat=N1}" Width="0.8*">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                    <Setter Property="BorderThickness" Value="2,0,1,0"/>
+                                    <Setter Property="ToolTip" Value="Unrealised Profit (points)"/>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell" BasedOn="{StaticResource JournalGridCellStyle}">
+                                    <Setter Property="BorderThickness" Value="2,0,0,0"/>
+                                    <Setter Property="BorderBrush" Value="Black"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="BorderThickness" Value="2,0,0,0"/>
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Header="£" x:Name="UnrealisedProfitCashColumn"
+                                            Binding="{Binding UnrealisedProfitCash, Converter={converters:OptionalDoubleToStringConverter}, StringFormat=N2}" Width="0.8*">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                    <Setter Property="ToolTip" Value="Unrealised Profit (£)"/>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                        </DataGridTextColumn>
 
                         <DataGridTemplateColumn Header="Edit" MinWidth="45" MaxWidth="45" x:Name="EditColumn">
                             <DataGridTemplateColumn.HeaderStyle>

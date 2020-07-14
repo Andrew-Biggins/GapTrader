@@ -30,6 +30,8 @@ namespace GapTraderCore.ViewModels
             protected set => SetProperty(ref _searchEnabled, value);
         }
 
+        public bool IsSearching => StrategyTester.IsSearching;
+
         public ICommand FindStrategiesCommand => new BasicCommand(StartStrategySearch);
 
         protected StrategyFinderViewModel(GapFillStrategyTester strategyTester, IMarket market, IRunner runner,
@@ -39,8 +41,18 @@ namespace GapTraderCore.ViewModels
             StrategyTester = strategyTester;
             Market = market;
             AccountSizer = accountSizer;
+            AccountSizer.PropertyChanged += OnAccountSizePropertyChanged;
             Market.PropertyChanged += (s, e) => ClearSearchResults();
-            CheckDataExists();
+            VerifyInputs();
+        }
+
+        private void OnAccountSizePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(AccountSizer.AccountStartSizeHasError) ||
+                e.PropertyName == nameof(AccountSizer.RiskPercentageHasError))
+            {
+                VerifyInputs();
+            }
         }
 
         public virtual void UpdateTester(GapFillStrategyTester tester)
@@ -50,25 +62,25 @@ namespace GapTraderCore.ViewModels
 
         public virtual void ClearSearchResults()
         {
-            CheckDataExists();
+            VerifyInputs();
         }
 
         public abstract void FindStrategies(StrategyTestFilters filters, TradeDirection tradeDirection);
 
         protected void FinishSearch()
         {
-            SearchEnabled = true;
             LoadingBar.Progress = 0;
             StrategyTester.ResetLevels();
             StrategyTester.IsSearching = false;
+            RaisePropertyChanged(nameof(IsSearching));
             DataInUseToggle.Raise(this);
         }
 
         protected virtual void StartStrategySearch()
         {
             VariableSelector = LoadingBar;
-            SearchEnabled = false;
             StrategyTester.IsSearching = true;
+            RaisePropertyChanged(nameof(IsSearching));
             DataInUseToggle.Raise(this);
 
             // Raise the event to start the search on a separate thread to allow the UI to update  
@@ -107,9 +119,14 @@ namespace GapTraderCore.ViewModels
             return (targetStartIndex, targetEndIndex);
         }
 
-        private void CheckDataExists()
+        private void VerifyInputs()
         {
-            if (Market.DailyCandles.Count != 0)
+            if (Market.DailyCandles.Count == 0 || AccountSizer.AccountStartSizeHasError ||
+                AccountSizer.RiskPercentageHasError)
+            {
+                SearchEnabled = false;
+            }
+            else
             {
                 SearchEnabled = true;
             }

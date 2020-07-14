@@ -171,7 +171,7 @@
 
             <DataGrid Grid.Row="3" Margin="7,0,10,0" Height="120" CanUserResizeRows="False"
               AutoGenerateColumns="False" VerticalAlignment="Top" IsReadOnly="True" HorizontalAlignment="Center" 
-              ItemsSource="{Binding UnfilledGaps, Mode=OneWay}">
+              ItemsSource="{Binding UnfilledGaps, Mode=OneWay}" RowHeaderWidth="0">
                 <DataGrid.Resources>
                     <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
                         <Setter Property="Background" Value="BurlyWood" />

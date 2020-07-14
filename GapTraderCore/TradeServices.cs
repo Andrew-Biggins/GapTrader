@@ -31,6 +31,10 @@ namespace GapTraderCore
             var low = double.PositiveInfinity;
 
             var originalStop = stop;
+            var maximumAdverseExcursion = 0.0;
+            var maximumFavourableExcursion = 0.0;
+
+            var stopTrailed = false;
 
             foreach (var candle in candles)
             {
@@ -38,16 +42,18 @@ namespace GapTraderCore
                 {
                     if (direction == TradeDirection.Long)
                     {
-                        if (trialStop)
+                        if (trialStop && executed)
                         {
                             if (candle.BidOpen > high)
                             {
                                 high = candle.BidOpen;
                             }
-
-                            if (executed && high > stop + trialedStopSize)
+                            
+                            // Trail stop only if in profit by at least the size of the trailed stop
+                            if (high > stop + trialedStopSize && high > openLevel + trialedStopSize)
                             {
                                 stop = candle.BidOpen - trialedStopSize;
+                                stopTrailed = true;
                             }
                         }
 
@@ -57,8 +63,8 @@ namespace GapTraderCore
                         if (candle.AskOpen <= entry && !executed)
                         {
                             openLevel = candle.AskOpen;
-                            stop = entry - stopSize;
-                            originalStop = entry - stopSize;
+                            stop = openLevel - stopSize;
+                            originalStop = openLevel - stopSize;
                             executed = true;
                             openTime = candle.DateTime;
                         }
@@ -70,31 +76,61 @@ namespace GapTraderCore
                             openTime = candle.DateTime;
                         }
 
+                        if (executed)
+                        {
+                            var adverseExcursion = openLevel - candle.AskLow;
+
+                            if (adverseExcursion > maximumAdverseExcursion)
+                            {
+                                maximumAdverseExcursion = adverseExcursion;
+                            }
+
+                            var favourableExcursion = candle.BidHigh - openLevel;
+
+                            if (favourableExcursion > maximumAdverseExcursion)
+                            {
+                                maximumFavourableExcursion = favourableExcursion;
+                            }
+
+                            // Ensure MFA is 100% if target is hit 
+                            if (candle.BidHigh > target)
+                            {
+                                maximumFavourableExcursion = target - openLevel;
+                            }
+                        }
+
                         if (candle.BidLow < stop && executed)
                         {
-                            return Option.Some((ITrade) new Trade(entry, originalStop, target, openLevel, Option.Some(stop), openTime, Option.Some(candle.DateTime), positionSize));
+                            // Ensure MAE is 100% if full original stop is hit
+                            if (!stopTrailed)
+                            {
+                                maximumAdverseExcursion = stopSize;
+                            }
+
+                            return Option.Some((ITrade) new Trade(entry, originalStop, target, openLevel, Option.Some(stop), openTime, Option.Some(candle.DateTime), positionSize, Option.Some(maximumAdverseExcursion), Option.Some(maximumFavourableExcursion)));
                         }
 
                         if (candle.BidHigh > target && executed)
                         {
-                            return Option.Some((ITrade) new Trade(entry, originalStop, target, openLevel, Option.Some(target), openTime, Option.Some(candle.DateTime), positionSize));
+                            return Option.Some((ITrade) new Trade(entry, originalStop, target, openLevel, Option.Some(target), openTime, Option.Some(candle.DateTime), positionSize, Option.Some(maximumAdverseExcursion), Option.Some(maximumFavourableExcursion)));
                         }
                     }
                     else if (direction == TradeDirection.Short)
                     {
-                        if (trialStop)
+                        if (trialStop && executed)
                         {
                             if (candle.AskOpen < low)
                             {
                                 low = candle.AskOpen;
                             }
 
-                            if (executed && low < stop - trialedStopSize)
+                            if (low < stop - trialedStopSize && low < openLevel - trialedStopSize)
                             {
                                 stop = candle.AskOpen + trialedStopSize;
+                                stopTrailed = true;
                             }
                         }
-                        
+
                         // See above comment on opposite direction trade
                         if (candle.BidOpen >= entry && !executed)
                         {
@@ -112,14 +148,43 @@ namespace GapTraderCore
                             openTime = candle.DateTime;
                         }
 
+                        if (executed)
+                        {
+                            var adverseExcursion = candle.BidHigh - openLevel;
+
+                            if (adverseExcursion > maximumAdverseExcursion)
+                            {
+                                maximumAdverseExcursion = adverseExcursion;
+                            }
+
+                            var favourableExcursion = openLevel - candle.AskLow;
+
+                            if (favourableExcursion > maximumAdverseExcursion)
+                            {
+                                maximumFavourableExcursion = favourableExcursion;
+                            }
+
+                            // Ensure MFA is 100% if target is hit 
+                            if (candle.AskLow < target)
+                            {
+                                maximumFavourableExcursion = openLevel - target;
+                            }
+                        }
+
                         if (candle.AskHigh > stop && executed)
                         {
-                            return Option.Some((ITrade) new Trade(entry, originalStop, target, openLevel, Option.Some(stop), openTime, Option.Some(candle.DateTime), positionSize));
+                            // Ensure MAE is 100% if full original stop is hit
+                            if (!stopTrailed)
+                            {
+                                maximumAdverseExcursion = stopSize;
+                            }
+
+                            return Option.Some((ITrade) new Trade(entry, originalStop, target, openLevel, Option.Some(stop), openTime, Option.Some(candle.DateTime), positionSize, Option.Some(maximumAdverseExcursion), Option.Some(maximumFavourableExcursion)));
                         }
 
                         if (candle.AskLow < target && executed)
                         {
-                            return Option.Some((ITrade) new Trade(entry, originalStop, target, openLevel, Option.Some(target), openTime, Option.Some(candle.DateTime), positionSize));
+                            return Option.Some((ITrade) new Trade(entry, originalStop, target, openLevel, Option.Some(target), openTime, Option.Some(candle.DateTime), positionSize, Option.Some(maximumAdverseExcursion), Option.Some(maximumFavourableExcursion)));
                         }
                     }
 
@@ -133,9 +198,11 @@ namespace GapTraderCore
             }
             
             // When trade is executed but neither stop or target is hit close trade at close level of last candle
-            var close = direction == TradeDirection.Long ? lastCandle.BidClose : lastCandle.AskClose;
+            double close;
 
-            return Option.Some((ITrade) new Trade(entry, originalStop, target, entry, Option.Some(close), openTime, Option.Some(lastCandle.DateTime), positionSize));
+            close = direction == TradeDirection.Long ? lastCandle.BidClose : lastCandle.AskClose;
+
+            return Option.Some((ITrade) new Trade(entry, originalStop, target, entry, Option.Some(close), openTime, Option.Some(lastCandle.DateTime), positionSize, Option.Some(maximumAdverseExcursion), Option.Some(maximumFavourableExcursion)));
         }
 
         internal static double GetGapTradeEntryLevel(double gap, double open, double pointsEntry, bool fibEntry = false,

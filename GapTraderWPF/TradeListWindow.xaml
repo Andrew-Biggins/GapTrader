@@ -8,67 +8,129 @@
         xmlns:converters="clr-namespace:GapTraderWPF.Converters"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance {x:Type interfaces:IStrategy}}"
-        Title="{Binding Name}" Height="350" Width="800"
-        MinWidth="800" MaxWidth="800" MinHeight="350"
+        Title="{Binding Name}" 
+        MinWidth="1100" MinHeight="350" Width="1100"
         Background="Black">
     <Grid>
-        <DataGrid CanUserResizeRows="False" IsReadOnly="True" Width="745"
-                  AutoGenerateColumns="False" Margin="5" HorizontalContentAlignment="Center" 
+        <DataGrid CanUserResizeRows="False" IsReadOnly="True" RowHeaderWidth="0" x:Name="TradeListDataGrid"
+                  AutoGenerateColumns="False" Margin="5" HorizontalContentAlignment="Stretch" CanUserResizeColumns="False"
                   ItemsSource="{Binding Trades, Mode=OneWay}">
-        <DataGrid.CellStyle>
-            <Style TargetType="DataGridCell">
-                <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                <Setter Property="Foreground" Value="Black" />
+            <DataGrid.Resources>
+                <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding}" 
+                                           TextAlignment="Center" Background="BurlyWood" />
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Background" Value="BurlyWood" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                    <Setter Property="Foreground" Value="Black" />
                     <Style.Triggers>
-                    <Trigger Property="IsSelected" Value="True">
-                        <Setter Property="Background" Value="{x:Null}" />
-                        <Setter Property="BorderBrush" Value="{x:Null}" />
-                    </Trigger>
-                </Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{x:Null}" />
+                            <Setter Property="BorderBrush" Value="{x:Null}" />
+                        </Trigger>
+                    </Style.Triggers>
                 </Style>
-        </DataGrid.CellStyle>
-        <DataGrid.ColumnHeaderStyle>
-            <Style TargetType="DataGridColumnHeader">
-                <Setter Property="Background" Value="BurlyWood" />
-                <Setter Property="HorizontalContentAlignment" Value="Center" />
-                <Setter Property="BorderBrush" Value="Black"/>
-                <Setter Property="BorderThickness" Value="0,0,1,0"/>
-                </Style>
-        </DataGrid.ColumnHeaderStyle>
+            </DataGrid.CellStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date"
-                                    Binding="{Binding OpenTime, StringFormat=dd-MM-yy}" Width="60" />
+                                    Binding="{Binding OpenTime, StringFormat=dd-MM-yy}" Width="*" />
 
                 <DataGridTextColumn Header="Direction"
-                                    Binding="{Binding Direction}" Width="60" />
-          
+                                    Binding="{Binding Direction}" Width="*" />
+
                 <DataGridTextColumn Header="Open Level"
-                                    Binding="{Binding OpenLevel, StringFormat=N1}" Width="70" />
+                                    Binding="{Binding OpenLevel, StringFormat=N1}" Width="*" />
 
                 <DataGridTextColumn Header="Slippage"
-                                    Binding="{Binding EntrySlippage, StringFormat=N1}" Width="60" />
-          
+                                    Binding="{Binding EntrySlippage, StringFormat=N1}" Width="*" />
+
                 <DataGridTextColumn Header="Open Time"
-                                    Binding="{Binding OpenTime, StringFormat=HH:mm}" Width="70" />
-           
+                                    Binding="{Binding OpenTime, StringFormat=HH:mm}" Width="*" />
+
                 <DataGridTextColumn Header="Stop"
-                                    Binding="{Binding StopLevel, StringFormat=N1}" Width="60" />
+                                    Binding="{Binding StopLevel, StringFormat=N1}" Width="*" />
 
                 <DataGridTextColumn Header="Target"
-                                    Binding="{Binding Target, StringFormat=N1}" Width="60" />
+                                    Binding="{Binding Target, StringFormat=N1}" Width="*" />
 
-                <DataGridTextColumn Header="Close Level"
-                                    Binding="{Binding CloseLevel, Converter={converters:OptionalDoubleToStringConverter}, StringFormat=N1}" Width="70" />
+                <DataGridTextColumn Header="Close Level" x:Name="CloseLevelColumn"
+                                    Binding="{Binding CloseLevel, Converter={converters:OptionalDoubleToStringConverter}, StringFormat=N1}" Width="*" />
 
-                <DataGridTextColumn Header="Close Time"
-                                    Binding="{Binding CloseTime, Converter={converters:OptionalDateTimeToDateTimeConverter}, StringFormat=HH:mm}" Width="70" />
+                <DataGridTextColumn Header="Close Time" x:Name="CloseTimeColumn"
+                                    Binding="{Binding CloseTime, Converter={converters:OptionalDateTimeToDateTimeConverter}, StringFormat=HH:mm}" Width="*" />
 
-                <DataGridTextColumn Header="Total Points"
-                                Binding="{Binding PointsProfit, Converter={converters:OptionalDoubleToStringConverter}, StringFormat=N1}" Width="70" />
+                <DataGridTextColumn Header="Total Points" x:Name="TotalPointsColumn"
+                                Binding="{Binding PointsProfit, Converter={converters:OptionalDoubleToStringConverter}, StringFormat=N1}" Width="*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Foreground" Value="{Binding PointsProfit, Converter={converters:OptionalDoubleToBrushConverter}}"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
 
-                <DataGridTextColumn Header="Profit/Loss"
-                                    Binding="{Binding CashProfit, StringFormat=N1}" Width="70" />
-                </DataGrid.Columns>
+                <DataGridTextColumn Header="Profit/Loss" x:Name="ProfitColumn"
+                                    Binding="{Binding CashProfit, Converter={converters:OptionalDoubleToStringConverter}, StringFormat=N1}" Width="*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Foreground" Value="{Binding CashProfit, Converter={converters:OptionalDoubleToBrushConverter}}"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="Maximum Adverse Excursion Points" x:Name="MaeColumn"
+                                    Binding="{Binding MaximumAdverseExcursionPoints, Converter={converters:OptionalDoubleToStringConverter}, StringFormat=N1}" MinWidth="70"  Width="*" />
+
+                <DataGridTextColumn Header="Drawdown (% of stop)" x:Name="DrawdownColumn"
+                                    Binding="{Binding MaximumAdverseExcursionPercentageOfStop, Converter={converters:OptionalDoubleToStringConverter}, StringFormat=P}" MinWidth="70"  Width="*">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                            <Setter Property="ToolTip" Value="Drawdown or 'Heat'. &#x0a;&#x0a;Measured as percentage of stop/risk."/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="Maximum Favourable Excursion Points"  x:Name="MfaColumn"
+                                    Binding="{Binding MaximumFavourableExcursionPoints, Converter={converters:OptionalDoubleToStringConverter}, StringFormat=N1}" MinWidth="70"  Width="*"/>
+
+                <DataGridTextColumn Header="Realised Profit % (of MFA)" x:Name="RealisedProfitColumn"
+                                    Binding="{Binding PointsProfitPercentageOfMaximumFavourableExcursion, Converter={converters:OptionalDoubleToStringConverter}, StringFormat=P}" MinWidth="70"  Width="*">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                            <Setter Property="ToolTip" Value="Realised Profit Percentage. &#x0a;&#x0a;Measure of trade efficiency in relation &#x0a;to its Maximum Favourable Excursion. "/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="Unrealised Profit (points)" x:Name="UnrealisedProfitPointsColumn"
+                                    Binding="{Binding UnrealisedProfitPoints, Converter={converters:OptionalDoubleToStringConverter}, StringFormat=N1}" MinWidth="70"  Width="*">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                            <Setter Property="ToolTip" Value="Unrealised Profit (points)"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="Unrealised Profit (£)" x:Name="UnrealisedProfitCashColumn"
+                                    Binding="{Binding UnrealisedProfitCash, Converter={converters:OptionalDoubleToStringConverter}, StringFormat=N1}" MinWidth="70"  Width="*">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                            <Setter Property="ToolTip" Value="Unrealised Profit (£)"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
         </DataGrid>
     </Grid>
 </Window>

@@ -46,9 +46,12 @@ namespace GapTraderCore.ViewModelAdapters
             foreach (var trade in trades)
             {
                 trade.CloseTime.IfExistsThen(x =>
-                {
-                    tradeList.Add(new SortableTrade(x, trade.CashProfit));
-                });
+                    {
+                        trade.CashProfit.IfExistsThen(y =>
+                        {
+                            tradeList.Add(new SortableTrade(x, y));
+                        });
+                    });
             }
 
             tradeList.Sort((x, y) => DateTime.Compare(x.CloseTime, y.CloseTime));

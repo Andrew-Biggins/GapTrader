@@ -22,5 +22,11 @@ namespace GapTraderWPF.UserControls
             var vm = (StaticStrategyFinderViewModel)DataContext;
             vm.ViewGraphCommand.Execute(null);
         }
+
+        private void OnRowClicked(object sender, MouseButtonEventArgs e)
+        {
+            var vm = (StaticStrategyFinderViewModel)DataContext;
+            vm.MoreDetailsCommand.Execute(null);
+        }
     }
 }

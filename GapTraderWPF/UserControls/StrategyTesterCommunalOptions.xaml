@@ -34,7 +34,8 @@
             <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Text="Communal Controls" FontWeight="Bold" HorizontalAlignment="Center"/>
             <RadioButton Content="Trade into gap" Grid.Column="0" 
                      Grid.Row="1" Foreground="White"
-                     HorizontalAlignment="Center" 
+                     HorizontalAlignment="Center"
+                     ToolTipService.ShowDuration="60000"
                      IsChecked="{Binding TradeIntoGap}">
                 <RadioButton.ToolTip>
                     <Image Source="/Images/TradeIntoGapExample.PNG" />
@@ -43,6 +44,7 @@
             <RadioButton Content="Trade out of gap" Grid.Column="1" 
                      Grid.Row="1" Foreground="White"
                      HorizontalAlignment="Center"
+                     ToolTipService.ShowDuration="60000"
                      IsChecked="{Binding TradeIntoGap, Converter={converters:BoolToInverseNullableBoolConverter}}">
                 <RadioButton.ToolTip>
                     <Image Source="/Images/TradeOutOfGapExample.PNG" />

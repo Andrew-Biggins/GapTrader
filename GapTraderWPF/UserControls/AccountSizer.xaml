@@ -5,10 +5,31 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GapTraderWPF.UserControls"
              xmlns:viewModels="clr-namespace:GapTraderCore.ViewModels;assembly=GapTraderCore"
+             xmlns:helpers="clr-namespace:GapTraderWPF.Helpers"
+             xmlns:validationRules="clr-namespace:GapTraderWPF.ValidationRules"
+             xmlns:converters="clr-namespace:GapTraderWPF.Converters"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance {x:Type viewModels:AccountSizerViewModel}}"
              d:DesignHeight="85" d:DesignWidth="152">
-    <Border  BorderThickness="1">
+    <UserControl.Resources>
+        <ControlTemplate x:Key="ValidationErrorTemplate">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Center" Margin="2,1,0,0">
+                    <Grid Width="12" Height="12">
+                        <Ellipse Width="12" Height="12" Fill="Red" HorizontalAlignment="Center" 
+                                 VerticalAlignment="Center" />
+                        <TextBlock Foreground="White" FontWeight="Heavy" 
+                                   FontSize="8" HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center" TextAlignment="Center"
+                                   ToolTip="{Binding ElementName=ErrorAdorner, Path=AdornedElement.(Validation.Errors)/ErrorContent}">X</TextBlock>
+                    </Grid>
+                </StackPanel>
+                <AdornedElementPlaceholder x:Name="ErrorAdorner" />
+            </DockPanel>
+        </ControlTemplate>
+    </UserControl.Resources>
+
+    <Border BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="18" />
@@ -32,11 +53,38 @@
             <TextBlock Text="%" HorizontalAlignment="Right"
                        Grid.Column="1" FontSize="11" VerticalAlignment="Center"
                        Grid.Row="2" Margin="0,0,38,0"/>
-            <TextBox Grid.Column="1" Width="60" HorizontalAlignment="Left" Height="20"
-                 Grid.Row="1" Text="{Binding AccountStartSize}"  VerticalContentAlignment="Center"/>
-            <TextBox Grid.Column="1" HorizontalAlignment="Left" Width="25" Height="20"
-                 Grid.Row="2" Text="{Binding RiskPercentage}" VerticalContentAlignment="Center"
-                 HorizontalContentAlignment="Right"/>
+            <TextBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1"
+                     Height="20" Width="60" 
+                     VerticalContentAlignment="Center"
+                     Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
+                     helpers:HasErrorUtility.MvvmHasError="{Binding Path=AccountStartSizeHasError}">
+                <TextBox.Text>
+                    <Binding Path="AccountStartSize"
+                             Mode="TwoWay"
+                             UpdateSourceTrigger="LostFocus"
+                             Converter="{converters:EmptyDoubleToStringConverter}">
+                        <Binding.ValidationRules>
+                            <validationRules:MinimumGapSizeValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2"
+                     Height="20" Width="25" 
+                     VerticalContentAlignment="Center"
+                     Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
+                     helpers:HasErrorUtility.MvvmHasError="{Binding Path=RiskPercentageHasError}">
+                <TextBox.Text>
+                    <Binding Path="RiskPercentage"
+                             Mode="TwoWay"
+                             UpdateSourceTrigger="LostFocus"
+                             Converter="{converters:EmptyDoubleToStringConverter}">
+                        <Binding.ValidationRules>
+                            <validationRules:MinimumGapSizeValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <RadioButton Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0"
                      VerticalAlignment="Center" IsChecked="{Binding Compound}"
                      ToolTip="Applies the date and time filters from the above tester"

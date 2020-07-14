@@ -7,6 +7,7 @@
              xmlns:viewModels="clr-namespace:GapTraderCore.ViewModels;assembly=GapTraderCore"
              xmlns:converters="clr-namespace:GapTraderWPF.Converters"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:validationRules="clr-namespace:GapTraderWPF.ValidationRules"
              d:DataContext="{d:DesignInstance {x:Type viewModels:TradeFilterSelectorViewModel}}"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="1200">
@@ -23,6 +24,21 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <ControlTemplate x:Key="ValidationErrorTemplate">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Right" Margin="0,1,-5,2">
+                    <Grid Width="12" Height="12">
+                        <Ellipse Width="12" Height="12" Fill="Red" HorizontalAlignment="Center" 
+                                 VerticalAlignment="Center" />
+                        <TextBlock Foreground="White" FontWeight="Heavy" 
+                                   FontSize="8" HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center" TextAlignment="Center"
+                                   ToolTip="{Binding ElementName=ErrorAdorner, Path=AdornedElement.(Validation.Errors)/ErrorContent}">X</TextBlock>
+                    </Grid>
+                </StackPanel>
+                <AdornedElementPlaceholder x:Name="ErrorAdorner" />
+            </DockPanel>
+        </ControlTemplate>
     </UserControl.Resources>
     <Border BorderBrush="White" BorderThickness="1" MaxHeight="170">
         <Grid>
@@ -37,6 +53,7 @@
                 <ColumnDefinition Width="193"/>
                 <ColumnDefinition Width="162"/>
                 <ColumnDefinition Width="122"/>
+                <ColumnDefinition Width="90"/>
                 <ColumnDefinition Width="90"/>
                 <ColumnDefinition Width="65"/>
             </Grid.ColumnDefinitions>
@@ -141,8 +158,34 @@
                     <TextBlock Text="Min" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center"/>
                     <TextBlock Text="Max" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center"/>
 
-                    <TextBox Grid.Row="2" Grid.Column="0" Margin="8,1,8,5" Text="{Binding MinRiskRewardRatio}"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Margin="8,1,8,5" Text="{Binding MaxRiskRewardRatio}"/>
+                    <TextBox Grid.Column="0" Grid.Row="2"  x:Name="MinRiskRewardRatioTextBox"
+                             VerticalContentAlignment="Center" Margin="8,1,8,5" 
+                             Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}">
+                        <TextBox.Text>
+                            <Binding Path="MinRiskRewardRatio"
+                                     Mode="TwoWay"
+                                     UpdateSourceTrigger="LostFocus"
+                                     Converter="{converters:EmptyDoubleToStringConverter}">
+                                <Binding.ValidationRules>
+                                    <validationRules:MinimumGapSizeValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBox Grid.Column="1" Grid.Row="2"  x:Name="MaxRiskRewardRatioTextBox"
+                             VerticalContentAlignment="Center" Margin="8,1,8,5" 
+                             Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}">
+                        <TextBox.Text>
+                            <Binding Path="MaxRiskRewardRatio"
+                                     Mode="TwoWay"
+                                     UpdateSourceTrigger="LostFocus"
+                                     Converter="{converters:EmptyDoubleToStringConverter}">
+                                <Binding.ValidationRules>
+                                    <validationRules:MinimumGapSizeValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                 </Grid>
             </Border>
 
@@ -160,11 +203,37 @@
                 </StackPanel>
             </Border>
 
-            <Button Grid.Column="7" Grid.Row="0" Height="60" Command="{Binding ApplyTradeFiltersCommand}" Margin="0,5,5,5">
+            <Border BorderThickness="1" Grid.Column="7" Grid.Row="0" Margin="0,5,5,5">
+                <StackPanel>
+                    <TextBlock Text="Long/Short"  HorizontalAlignment="Center" Margin="0,5,0,8"/>
+                    <ComboBox  Width="70" Height="22" ItemsSource="{Binding TradeDirections}"
+                               SelectedItem="{Binding SelectedTradeDirection}">
+                        <ComboBox.Resources>
+                            <Style TargetType="TextBlock" BasedOn="{x:Null}">
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Style>
+                        </ComboBox.Resources>
+                    </ComboBox>
+                </StackPanel>
+            </Border>
+
+            <Button Grid.Column="8" Grid.Row="0" Height="60" Command="{Binding ApplyTradeFiltersCommand}" Margin="0,5,5,5">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="IsEnabled" Value="False"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=MinRiskRewardRatioTextBox}" Value="False"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=MaxRiskRewardRatioTextBox}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
                 <TextBlock Foreground="Black">Apply<LineBreak/>Filters</TextBlock>
             </Button>
-
-
         </Grid>
     </Border>
 </UserControl>

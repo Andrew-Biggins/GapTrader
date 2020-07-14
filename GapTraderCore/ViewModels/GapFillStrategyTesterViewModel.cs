@@ -29,14 +29,15 @@ namespace GapTraderCore.ViewModels
                 {
                     _tradeIntoGap = value;
                     SwitchStrategyTester();
-                    StrategyTester.PropertyChanged += OnStrategyTesterDataChanged;
+                    StrategyTester.PropertyChanged += OnInputsChanged;
                 }
             }
         }
 
         public GapFillStrategyTesterViewModel(IMarket market, IRunner runner) : base(market, runner)
         {
-            StrategyTester.PropertyChanged += OnStrategyTesterDataChanged;
+            StrategyTester.PropertyChanged += OnInputsChanged;
+            AccountSizer.PropertyChanged += OnInputsChanged;
             Market.PropertyChanged += OnMarketDataChanged;
             VerifyInputs();
         }
@@ -58,13 +59,16 @@ namespace GapTraderCore.ViewModels
             UpdateFilters();
         }
 
-        private void OnStrategyTesterDataChanged(object sender, PropertyChangedEventArgs e)
+        private void OnInputsChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
                 case nameof(StrategyTester.EntryHasError):
                 case nameof(StrategyTester.TargetHasError):
-                case nameof(StrategyTester.StopHasError):
+                case nameof(StrategyTester.StopSizeHasError):
+                case nameof(StrategyTester.StopTrailHasError):
+                case nameof(AccountSizer.AccountStartSizeHasError):
+                case nameof(AccountSizer.RiskPercentageHasError):
                     VerifyInputs();
                     break;
             }
@@ -74,8 +78,9 @@ namespace GapTraderCore.ViewModels
         {
             var hasData = Market.DailyCandles.Count > 0;
 
-            if (MinimumGapHasError || StrategyTester.EntryHasError || StrategyTester.StopHasError ||
-                StrategyTester.TargetHasError || !hasData)
+            if (MinimumGapHasError || StrategyTester.EntryHasError || StrategyTester.StopSizeHasError ||
+                StrategyTester.TargetHasError || StrategyTester.StopTrailHasError || AccountSizer.AccountStartSizeHasError ||
+                AccountSizer.RiskPercentageHasError || !hasData)
             {
                 CanCalculate = false;
             }

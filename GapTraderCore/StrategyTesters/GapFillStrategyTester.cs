@@ -66,10 +66,16 @@ namespace GapTraderCore.StrategyTesters
             set => SetProperty(ref _targetHasError, value, nameof(TargetHasError));
         }
 
-        public bool StopHasError
+        public bool StopSizeHasError
         {
-            get => _stopHasError;
-            set => SetProperty(ref _stopHasError, value, nameof(StopHasError));
+            get => _stopSizeHasError;
+            set => SetProperty(ref _stopSizeHasError, value, nameof(StopSizeHasError));
+        }
+
+        public bool StopTrailHasError
+        {
+            get => _stopTrailHasError;
+            set => SetProperty(ref _stopTrailHasError, value, nameof(StopTrailHasError));
         }
 
         public bool EntryHasError
@@ -165,7 +171,8 @@ namespace GapTraderCore.StrategyTesters
         private bool _isFibEntry = true;
         private bool _isFibTarget = true;
         private bool _targetHasError;
-        private bool _stopHasError;
+        private bool _stopSizeHasError;
         private bool _entryHasError;
+        private bool _stopTrailHasError;
     }
 }

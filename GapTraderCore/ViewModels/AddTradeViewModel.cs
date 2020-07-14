@@ -59,17 +59,86 @@ namespace GapTraderCore.ViewModels
             }
         }
 
-        public double OpenLevel { get; set; } = 6000;
+        public double OpenLevel
+        {
+            get => _openLevel;
+            set
+            {
+                _openLevel = value;
+                MaximumFavourableExcursion = _maximumFavourableExcursion;
+            }
+        }
 
-        public Optional<double> CloseLevel { get; set; } = Option.Some<double>(6200);
+        public Optional<double> CloseLevel
+        {
+            get => _closeLevel;
+            set
+            {
+                _closeLevel = value;
+                MaximumFavourableExcursion = _maximumFavourableExcursion;
+            }
+        }
+
+        public Optional<double> MaximumAdverseExcursion
+        {
+            get => _maximumAdverseExcursion;
+            set
+            {
+                _maximumAdverseExcursion = value;
+                _maximumAdverseExcursion.IfExistsThen(x => { MaeHasError = x > MaximumMae; });
+            }
+        }
+
+        public Optional<double> MaximumFavourableExcursion
+        {
+            get => _maximumFavourableExcursion;
+            set
+            {
+                _maximumFavourableExcursion = value;
+                _maximumFavourableExcursion.IfExistsThen(x =>
+                {
+                    CloseLevel.IfExistsThen(y => { MfeHasError = x < MinimumMfe; })
+                        .IfEmpty(() => { MfeHasError = false; });
+                });
+            }
+        }
 
         public double Size { get; set; } = 1;
 
-        public double Entry { get; set; } = 6000;
+        public double Entry
+        {
+            get => _entry;
+            set
+            {
+                _entry = value;
+                OpenLevel = _entry;
+                RaisePropertyChanged(nameof(OpenLevel));
+            }
+        }
 
-        public double Stop { get; set; } = 5900;
+        public double Stop
+        {
+            get => _stop;
+            set
+            {
+                _stop = value;
+                VerifyStrategyLevels();
+            }
+        }
 
-        public double Target { get; set; } = 6200;
+        public double Target
+        {
+            get => _target;
+            set
+            {
+                _target = value;
+                VerifyStrategyLevels();
+            }
+        }
+
+        public double MaximumMae => Math.Abs(OpenLevel - Stop);
+
+        public double MinimumMfe => GetMinimumMfe();
 
         public ISelectable SelectedMarket { get; set; }
 
@@ -94,7 +163,7 @@ namespace GapTraderCore.ViewModels
             get => _targetHasError;
             set
             {
-                SetProperty(ref _targetHasError, value, nameof(TargetHasError)); 
+                SetProperty(ref _targetHasError, value, nameof(TargetHasError));
                 VerifyInputs();
             }
         }
@@ -149,6 +218,26 @@ namespace GapTraderCore.ViewModels
             }
         }
 
+        public bool MaeHasError
+        {
+            get => _maeHasError;
+            set
+            {
+                SetProperty(ref _maeHasError, value, nameof(MaeHasError));
+                VerifyInputs();
+            }
+        }
+
+        public bool MfeHasError
+        {
+            get => _mfeHasError;
+            set
+            {
+                SetProperty(ref _mfeHasError, value, nameof(MfeHasError));
+                VerifyInputs();
+            }
+        }
+
         public bool IsAddEnabled
         {
             get => _isAddEnabled;
@@ -156,6 +245,8 @@ namespace GapTraderCore.ViewModels
         }
 
         public string NewName { get; set; }
+
+        public bool IsEditing { get; }
 
         public AddTradeViewModel(IRunner runner, ObservableCollection<ISelectable> markets,
             ObservableCollection<ISelectableStrategy> strategies)
@@ -176,6 +267,17 @@ namespace GapTraderCore.ViewModels
             OpenTime = trade.OpenTime;
             OpenLevel = trade.OpenLevel;
             CloseLevel = trade.CloseLevel;
+
+            trade.CloseTime.IfExistsThen(x =>
+            {
+                CloseDate = x.Date;
+                CloseTime = new DateTime(1,1,1, x.Hour, x.Minute, 0);
+            });
+
+            MaximumAdverseExcursion = trade.MaximumAdverseExcursionPoints;
+            MaximumFavourableExcursion = trade.MaximumFavourableExcursionPoints;
+
+            IsEditing = true;
 
             VerifyInputs();
         }
@@ -235,7 +337,7 @@ namespace GapTraderCore.ViewModels
                 }
             }
 
-            var newMarket = new Market(NewName) {IsSelected = true};
+            var newMarket = new Market(NewName) { IsSelected = true };
             Markets.Add(newMarket);
             SelectedMarket = newMarket;
             RaisePropertyChanged(nameof(SelectedMarket));
@@ -247,7 +349,8 @@ namespace GapTraderCore.ViewModels
         {
             if (EntryHasError || TargetHasError || StopHasError ||
                 OpenLevelHasError || CloseLevelHasError || SizeHasError
-                || DatesHaveError || Markets.Count == 0 || Strategies.Count == 0)
+                || DatesHaveError || Markets.Count == 0 || Strategies.Count == 0
+                || MaeHasError || MfeHasError)
             {
                 IsAddEnabled = false;
             }
@@ -271,6 +374,39 @@ namespace GapTraderCore.ViewModels
             VerifyInputs();
         }
 
+        private void VerifyStrategyLevels()
+        {
+            if (Stop > Entry && Target < Entry || Stop < Entry && Target > Entry)
+            {
+                StopHasError = false;
+                TargetHasError = false;
+            }
+            else
+            {
+                StopHasError = true;
+                TargetHasError = true;
+            }
+        }
+
+        private double GetMinimumMfe()
+        {
+            var min = 0.0;
+
+            CloseLevel.IfExistsThen(x =>
+            {
+                if (Target > OpenLevel)
+                {
+                    min = x - OpenLevel;
+                }
+                else
+                {
+                    min = OpenLevel - x;
+                }
+            });
+
+            return min;
+        }
+
         private IRunner _runner;
         private AddStrategyViewModel _addStrategyViewModel;
         private bool _entryHasError;
@@ -281,9 +417,18 @@ namespace GapTraderCore.ViewModels
         private bool _sizeHasError;
         private bool _isAddEnabled;
         private DateTime _openDate = DateTime.Today;
-        private DateTime _openTime = new DateTime(2000,1,1,8,0,0);
+        private DateTime _openTime = new DateTime(2000, 1, 1, 8, 0, 0);
         private DateTime _closeDate = DateTime.Today;
-        private DateTime _closeTime = new DateTime(2000, 1, 1, 16, 30, 0);
+        private DateTime _closeTime = DateTime.Now;
         private bool _datesHaveError;
+        private Optional<double> _maximumAdverseExcursion = Option.None<double>();
+        private Optional<double> _maximumFavourableExcursion = Option.None<double>();
+        private bool _maeHasError;
+        private bool _mfeHasError;
+        private double _stop = 5900;
+        private double _target = 6200;
+        private double _openLevel = 6000;
+        private Optional<double> _closeLevel = Option.Some<double>(6200);
+        private double _entry = 6000;
     }
 }

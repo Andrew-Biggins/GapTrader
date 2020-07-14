@@ -29,7 +29,7 @@ namespace GapTraderCore.Trades
 
         public Optional<double> PointsProfit { get; private set; } = Option.None<double>();
 
-        public double CashProfit { get; private set; }
+        public Optional<double> CashProfit { get; private set; } = Option.None<double>();
 
         public TradeDirection Direction { get; }
 
@@ -41,8 +41,21 @@ namespace GapTraderCore.Trades
 
         public Optional<double> ResultInR { get; private set; } = Option.None<double>();
 
+        public Optional<double> MaximumAdverseExcursionPoints { get; } = Option.None<double>();
+
+        public Optional<double> MaximumAdverseExcursionPercentageOfStop { get; private set; } = Option.None<double>();
+
+        public Optional<double> MaximumFavourableExcursionPoints { get; } = Option.None<double>();
+
+        public Optional<double>PointsProfitPercentageOfMaximumFavourableExcursion { get; private set; } = Option.None<double>();
+
+        public Optional<double> UnrealisedProfitPoints { get; private set; } = Option.None<double>();
+
+        public Optional<double> UnrealisedProfitCash { get; private set; } = Option.None<double>();
+
         public Trade(double strategyEntry, double stop, double target, double openLevel, Optional<double> closeLevel,
-            DateTime openTime, Optional<DateTime> closeTime, double size)
+            DateTime openTime, Optional<DateTime> closeTime, double size, Optional<double> maximumAdverseExcursion,
+            Optional<double> maximumFavourableExcursion)
         {
             Direction = target > stop 
                 ? TradeDirection.Long 
@@ -60,9 +73,10 @@ namespace GapTraderCore.Trades
                 ? strategyEntry - openLevel
                 : openLevel - strategyEntry;
 
+            MaximumAdverseExcursionPoints = maximumAdverseExcursion;
+            MaximumFavourableExcursionPoints = maximumFavourableExcursion;
+
             CalculateResult();
-            //  OpenFibLevel = FibonacciLevel.FivePointNine;
-          // //  TargetFibLevel = FibonacciLevel.OneHundredAndTwentySevenPointOne;
         }
 
         public Trade(SavedTrade savedTrade)
@@ -84,6 +98,14 @@ namespace GapTraderCore.Trades
 
             Size = savedTrade.Size;
 
+            MaximumAdverseExcursionPoints = savedTrade.MaximumAdverseExcursion == -1
+                ? Option.None<double>()
+                : Option.Some(savedTrade.MaximumAdverseExcursion);
+
+            MaximumFavourableExcursionPoints = savedTrade.MaximumFavourableExcursion == -1
+                ? Option.None<double>()
+                : Option.Some(savedTrade.MaximumFavourableExcursion);
+
             CalculateResult();
         }
 
@@ -100,7 +122,34 @@ namespace GapTraderCore.Trades
                     : Option.Some(OpenLevel - x);
             });
 
-            PointsProfit.IfExistsThen(x => { CashProfit = Size * x; });
+            MaximumAdverseExcursionPoints.IfExistsThen(x =>
+                {
+                    MaximumAdverseExcursionPercentageOfStop = Option.Some(x / StopSize);
+                });
+
+            MaximumFavourableExcursionPoints.IfExistsThen(x =>
+            {
+                PointsProfit.IfExistsThen(y =>
+                {
+                    if (y > 0)
+                    {
+                        PointsProfitPercentageOfMaximumFavourableExcursion = Option.Some(y / x);
+                        UnrealisedProfitPoints = Option.Some(x - y);
+                    }
+                    else
+                    {
+                        UnrealisedProfitPoints = Option.Some(x);
+                    }
+
+                    UnrealisedProfitPoints.IfExistsThen(z =>
+                    {
+                        UnrealisedProfitCash = Option.Some(z * Size);
+                    });
+
+                });
+            });
+
+            PointsProfit.IfExistsThen(x => { CashProfit = Option.Some(Size * x); });
         }
     }
 }

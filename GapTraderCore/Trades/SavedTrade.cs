@@ -22,6 +22,10 @@ namespace GapTraderCore.Trades
 
         public double CloseLevel { get; private set; } = -1;
 
+        public double MaximumAdverseExcursion { get; private set; } = -1;
+
+        public double MaximumFavourableExcursion { get; private set; } = -1;
+
         public DateTime OpenTime { get; }
 
         public DateTime CloseTime { get; private set; } = DateTime.MinValue;
@@ -47,6 +51,9 @@ namespace GapTraderCore.Trades
                     CloseTime = y;
                 });
             });
+
+            trade.MaximumAdverseExcursionPoints.IfExistsThen(x => { MaximumAdverseExcursion = x; });
+            trade.MaximumFavourableExcursionPoints.IfExistsThen(x => { MaximumFavourableExcursion = x; });
 
             Size = trade.Size;
         }

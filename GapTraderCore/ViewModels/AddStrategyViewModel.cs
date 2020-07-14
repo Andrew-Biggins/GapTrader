@@ -59,8 +59,10 @@ namespace GapTraderCore.ViewModels
                     break;
                 case StrategyType.Triangle:
                 case StrategyType.FailedTriangle:
-                case StrategyType.Other:
                     StrategyDetails = new StrategyDetailsViewModel(SelectedStrategyType);
+                    break;
+                case StrategyType.Other:
+                    StrategyDetails = new OtherStrategyDetailsViewModel(SelectedStrategyType);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

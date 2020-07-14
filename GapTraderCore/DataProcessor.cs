@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 using Foundations.Optional;
 using GapTraderCore.Candles;
 using GapTraderCore.Interfaces;
@@ -84,12 +86,14 @@ namespace GapTraderCore
             return Option.None<(double, double, double)>();
         }
 
-        public static StrategyStats GetStrategyStats(IEnumerable<ITrade> trades)
+        public static StrategyStats GetStrategyStats(List<ITrade> trades, double startBalance)
         {
             double pointsTotal = 0;
             double cashProfit = 0;
             double biggestPointsWin = 0;
             double biggestCashWin = 0;
+            double biggestPointsLoss = 0;
+            double biggestCashLoss = 0;
             var longestLosingStreak = 0;
             var longestWinningStreak = 0;
             var loseStreak = 0;
@@ -102,21 +106,47 @@ namespace GapTraderCore
             double cashLossTotal = 0;
             var previousTradeWon = false;
 
+            double drawdownTotal = 0;
+            var maeTotal = 0.0;
+            var maeCount = 0;
+            var mfeTotal = 0.0;
+            var mfeCount = 0;
+            var realisedProfitTotal = 0.0;
+            var unrealisedProfitPointsTotal = 0.0;
+            var unrealisedProfitCashTotal = 0.0;
+            var resultInRTotal = 0.0;
+            var riskRewardRatioTotal = 0.0;
+
             foreach (var trade in trades)
             {
+                riskRewardRatioTotal += trade.RiskRewardRatio;
+
                 trade.PointsProfit.IfExistsThen(x =>
                 {
                     pointsTotal += x;
-                    cashProfit += trade.CashProfit;
+
+                    trade.CashProfit.IfExistsThen(y =>
+                    {
+                        cashProfit += y;
+                        if (y > biggestCashWin)
+                        {
+                            biggestCashWin = y;
+                        }
+
+                        if (y < biggestCashLoss)
+                        {
+                            biggestCashLoss = y;
+                        }
+                    });
 
                     if (x > biggestPointsWin)
                     {
                         biggestPointsWin = x;
                     }
 
-                    if (trade.CashProfit > biggestCashWin)
+                    if (x < biggestPointsLoss)
                     {
-                        biggestCashWin = trade.CashProfit;
+                        biggestPointsLoss = x;
                     }
 
                     if (x > 0)
@@ -129,7 +159,12 @@ namespace GapTraderCore
 
                         wins++;
                         pointsWinTotal += x;
-                        cashWinTotal += trade.CashProfit;
+
+                        trade.CashProfit.IfExistsThen(y =>
+                        {
+                            cashWinTotal += y;
+                        });
+
                         winStreak++;
                         previousTradeWon = true;
                     }
@@ -143,10 +178,27 @@ namespace GapTraderCore
 
                         loses++;
                         pointsLossTotal += x;
-                        cashLossTotal += trade.CashProfit;
+
+                        trade.CashProfit.IfExistsThen(y =>
+                        {
+                            cashLossTotal += y;
+                        });
+
                         loseStreak++;
                         previousTradeWon = false;
                     }
+
+                    trade.MaximumAdverseExcursionPoints.IfExistsThen(y => { maeTotal += y; maeCount++; });
+                    trade.MaximumAdverseExcursionPercentageOfStop.IfExistsThen(y => { drawdownTotal += y; });
+
+                    trade.MaximumFavourableExcursionPoints.IfExistsThen(y => { mfeTotal += y; mfeCount++; });
+                    trade.PointsProfitPercentageOfMaximumFavourableExcursion.IfExistsThen(
+                        y => { realisedProfitTotal += y; });
+
+                    trade.UnrealisedProfitPoints.IfExistsThen(y => { unrealisedProfitPointsTotal += y; });
+                    trade.UnrealisedProfitCash.IfExistsThen(y => { unrealisedProfitCashTotal += y; });
+
+                    trade.ResultInR.IfExistsThen(y => { resultInRTotal += y; });
                 });
             }
 
@@ -156,12 +208,22 @@ namespace GapTraderCore
             var averagePointsLoss = pointsLossTotal / loses;
             var averageCashWin = cashWinTotal / wins;
             var averageCashLoss = cashLossTotal / loses;
+            var averageMae = maeTotal / maeCount;
+            var averageDrawdown = drawdownTotal / maeCount;
+            var averageMfe = mfeTotal / mfeCount;
+            var averageRealisedProfitPercentage = realisedProfitTotal / mfeCount;
+            var averageUnrealisedProfitPoints = unrealisedProfitPointsTotal / mfeCount;
+            var averageUnrealisedProfitCash = unrealisedProfitCashTotal / mfeCount;
+            var averageResultInR = resultInRTotal / (wins + loses);
+            var averageRiskRewardRatio = riskRewardRatioTotal / trades.Count;
 
             var profitFactor = cashWinTotal / -cashLossTotal;
 
             return new StrategyStats(wins, loses, longestWinningStreak, longestLosingStreak, pointsTotal, cashProfit,
                 biggestPointsWin, biggestCashWin, averagePointsWin, averagePointsLoss, averageCashWin, averageCashLoss,
-                profitFactor);
+                profitFactor, averageMae, averageDrawdown, averageMfe, averageRealisedProfitPercentage, 
+                averageUnrealisedProfitPoints, averageUnrealisedProfitCash, averageResultInR, averageRiskRewardRatio, 
+                biggestCashLoss, biggestPointsLoss, startBalance);
 
             void CheckWinStreak()
             {
@@ -179,6 +241,5 @@ namespace GapTraderCore
                 }
             }
         }
-
     }
 }

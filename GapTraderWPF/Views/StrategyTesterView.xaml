@@ -32,7 +32,7 @@
             <Grid Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="25" />
-                    <RowDefinition Height="235" />
+                    <RowDefinition Height="228" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -44,7 +44,7 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="150" />
-                            <RowDefinition Height="70" />
+                            <RowDefinition Height="73" />
                         </Grid.RowDefinitions>
                         <Button Content="Test" HorizontalAlignment="Right" Width="50" Grid.Row="0"
                                 Margin="5,5,8,5" VerticalAlignment="Bottom" Command="{Binding TestStrategyCommand}">
@@ -61,7 +61,7 @@
                                                                 IsEnabled="{Binding StrategyTester.IsSearching, Converter={converters:InverseBoolConverter}}" />
 
                         <userControls:StrategyResultsStats Grid.Row="1" Grid.Column="0"
-                                                           HorizontalAlignment="Stretch" Margin="10,3"
+                                                           HorizontalAlignment="Stretch" Margin="5,3"
                                                            DataContext="{Binding StrategyResultsStatsViewModel}"/>
                     </Grid>
                 </Border>

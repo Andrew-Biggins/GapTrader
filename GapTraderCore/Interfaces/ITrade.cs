@@ -17,13 +17,17 @@ namespace GapTraderCore.Interfaces
 
         Optional<double> CloseLevel { get; }
 
+        Optional<double> MaximumAdverseExcursionPoints { get; }
+
+        Optional<double> MaximumAdverseExcursionPercentageOfStop { get; }
+
         DateTime OpenTime { get; }
 
         Optional<DateTime> CloseTime { get; }
 
         Optional<double> PointsProfit { get; }
 
-        double CashProfit { get; }
+        Optional<double> CashProfit { get; }
 
         FibonacciLevel TargetFibLevel { get; set; }
 
@@ -33,6 +37,18 @@ namespace GapTraderCore.Interfaces
 
         double EntrySlippage { get; }
 
+        double RiskRewardRatio { get; }
+
+        Optional<double> ResultInR { get; }
+
         double Size { get; }
+
+        Optional<double> MaximumFavourableExcursionPoints { get; }
+
+        Optional<double> PointsProfitPercentageOfMaximumFavourableExcursion { get; }
+
+        Optional<double> UnrealisedProfitPoints { get; }
+
+        Optional<double> UnrealisedProfitCash { get; }
     }
 }

@@ -12,8 +12,9 @@ namespace GapTraderCore.Trades
         public ISelectable Market { get; }
 
         public JournalTrade(double strategyEntry, double stop, double target, double openLevel, Optional<double> closeLevel,
-            DateTime openTime, Optional<DateTime> closeTime, ISelectable market, ISelectableStrategy strategy, double size) : base(
-            strategyEntry, stop, target, openLevel, closeLevel, openTime, closeTime, size)
+            DateTime openTime, Optional<DateTime> closeTime, ISelectable market, ISelectableStrategy strategy,
+            double size, Optional<double> maximumAdverseExcursion, Optional<double> maximumFavourableExcursion) : base(strategyEntry, stop, target, openLevel,
+            closeLevel, openTime, closeTime, size, maximumAdverseExcursion, maximumFavourableExcursion)
         {
             Strategy = strategy;
             Market = market;

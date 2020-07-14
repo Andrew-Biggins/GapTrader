@@ -29,6 +29,10 @@ namespace GapTraderCore.ViewModels
 
         public TradeStatus SelectedTradeStatus { get; set; } = TradeStatus.Both;
 
+        public List<TradeDirection> TradeDirections { get; } = new List<TradeDirection>();
+
+        public TradeDirection SelectedTradeDirection { get; set; } = TradeDirection.Both;
+
         public DateTime TradesStartDate
         {
             get => _tradesStartDate;
@@ -66,7 +70,7 @@ namespace GapTraderCore.ViewModels
         }
 
         public double MinRiskRewardRatio { get; set; } = 0;
-        public double MaxRiskRewardRatio { get; set; } = 1000;
+        public double MaxRiskRewardRatio { get; set; } = 9999;
 
         public ICommand ApplyTradeFiltersCommand => new BasicCommand(() => FiltersChanged.Raise(this));
 
@@ -75,6 +79,7 @@ namespace GapTraderCore.ViewModels
             Strategies = strategies;
             Markets = markets;
             GetTradeStatuses();
+            GetTradeDirections();
             SelectAllMarkets();
             SelectAllStrategies();
 
@@ -88,6 +93,16 @@ namespace GapTraderCore.ViewModels
             foreach (var status in statuses)
             {
                 TradeStatuses.Add(status);
+            }
+        }
+
+        private void GetTradeDirections()
+        {
+            var directions = (TradeDirection[])Enum.GetValues(typeof(TradeDirection));
+
+            foreach (var direction in directions)
+            {
+                TradeDirections.Add(direction);
             }
         }
 

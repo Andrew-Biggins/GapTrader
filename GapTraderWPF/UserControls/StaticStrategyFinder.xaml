@@ -10,7 +10,7 @@
              xmlns:converters="clr-namespace:GapTraderWPF.Converters"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance {x:Type viewModels:StaticStrategyFinderViewModel}}"
-             d:DesignHeight="350" d:DesignWidth="800">
+             d:DesignHeight="350" d:DesignWidth="800" Language="en-GB">
     <UserControl.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -36,7 +36,7 @@
                 <Setter.Value>
                     <DataTemplate>
                         <TextBlock TextWrapping="Wrap" Text="{Binding}" 
-                                   TextAlignment="Center" Background="BurlyWood"></TextBlock>
+                                   TextAlignment="Center" Background="BurlyWood" />
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
@@ -68,12 +68,13 @@
                 </ContentControl>
 
                 <Button Content="Search" HorizontalAlignment="Right" VerticalAlignment="Bottom" Command="{Binding FindStrategiesCommand}"
-                    Grid.Row="0" Grid.Column="0" Height="25" Width="50" Margin="0,0,5,0" IsEnabled="{Binding SearchEnabled}" />
+                    Grid.Row="0" Grid.Column="0" Height="25" Width="50" Margin="0,0,5,0" IsEnabled="{Binding SearchEnabled}" 
+                    Visibility="{Binding IsSearching, Converter={converters:InverseBoolToHiddenVisibilityConverter}}"/>
             </Grid>
 
             <DataGrid Grid.Column="0" Grid.Row="1" CanUserResizeRows="False"
                       AutoGenerateColumns="False" Margin="5" HorizontalContentAlignment="Center" 
-                      ItemsSource="{Binding Strategies, Mode=OneWay}"
+                      ItemsSource="{Binding Strategies, Mode=OneWay}" RowHeaderWidth="0"
                       SelectedItem="{Binding SelectedStrategy}"
                       IsReadOnly="True" HorizontalAlignment="Stretch">
                 <DataGrid.Resources>
@@ -83,29 +84,33 @@
                         <Setter Property="BorderBrush" Value="Black"/>
                         <Setter Property="BorderThickness" Value="0,0,1,0"/>
                     </Style>
-                    <Style BasedOn="{StaticResource DataGridCellStyle}" TargetType="DataGridCell" />
+                    <Style BasedOn="{StaticResource DataGridCellStyle}" TargetType="DataGridCell">
+                        <EventSetter Event="MouseDoubleClick"
+                                     Handler="OnRowClicked"/>
+                        <Setter Property="ToolTip" Value="Double-Click For More Details" />
+                    </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Entry"
-                                        Binding="{Binding Entry, Converter={converters:FibLevelToNumericStringConverter}}" Width="*" >
+                                        Binding="{Binding Entry, Converter={converters:FibLevelToNumericStringConverter}}" Width="0.75*" >
                     </DataGridTextColumn>
-                    
+
                     <DataGridTextColumn Header="Initial Stop Size"
-                                        Binding="{Binding Stop}" Width="*" >
+                                        Binding="{Binding Stop}" Width="0.75*" >
                         <DataGridTextColumn.HeaderStyle>
                             <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource WrappedColumnHeaderStyle}" />
                         </DataGridTextColumn.HeaderStyle>
                     </DataGridTextColumn>
 
                     <DataGridTextColumn Header="Stop Trailed By"
-                                        Binding="{Binding TrailedStopSize, Converter={converters:OptionalDoubleToNaStringConverter}}" Width="*" >
+                                        Binding="{Binding TrailedStopSize, Converter={converters:OptionalDoubleToNaStringConverter}}" Width="0.75*" >
                         <DataGridTextColumn.HeaderStyle>
                             <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource WrappedColumnHeaderStyle}" />
                         </DataGridTextColumn.HeaderStyle>
                     </DataGridTextColumn>
 
                     <DataGridTextColumn Header="Target"
-                                        Binding="{Binding Target, Converter={converters:FibLevelToNumericStringConverter}}" Width="*" >
+                                        Binding="{Binding Target, Converter={converters:FibLevelToNumericStringConverter}}" Width="0.75*" >
                     </DataGridTextColumn>
 
                     <DataGridTextColumn Header="Minimum Gap Size"
@@ -117,13 +122,23 @@
                         </DataGridTextColumn.HeaderStyle>
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="Trades" 
-                                        Binding="{Binding Stats.TradeCount}" Width="*" />
+                                        Binding="{Binding Stats.TradeCount}" Width=".75*" />
+                    <DataGridTextColumn Header="Wins"
+                                        Binding="{Binding Stats.Wins}" Width="0.5*" />
+                    <DataGridTextColumn Header="Loses"
+                                        Binding="{Binding Stats.Loses}" Width="0.5*" />
+                    <DataGridTextColumn Header="Win Probability" 
+                                        Binding="{Binding Stats.WinProbability, Converter={converters:InvalidDoubleToStringConverter}, StringFormat=P}" Width="*">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource WrappedColumnHeaderStyle}">
+                                <Setter Property="ToolTip" Value="Win Probability"/>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
                     <DataGridTextColumn Header="Total Points"
                                         Binding="{Binding Stats.PointsTotal, StringFormat=N1}" Width="*" />
-                    <DataGridTextColumn Header="Wins"
-                                        Binding="{Binding Stats.Wins}" Width="*" />
-                    <DataGridTextColumn Header="Loses"
-                                        Binding="{Binding Stats.Loses}" Width="*" />
+                    <DataGridTextColumn Header="Profit / Loss"
+                                        Binding="{Binding Stats.CashProfit, StringFormat=C}" Width="*" />
                     <DataGridTextColumn Header="Longest Win Streak" 
                                         Binding="{Binding Stats.LongestWinningStreak}" Width="*">
                         <DataGridTextColumn.HeaderStyle>
@@ -140,14 +155,7 @@
                             </Style>
                         </DataGridTextColumn.HeaderStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Win Probability" 
-                                        Binding="{Binding Stats.WinProbability, Converter={converters:InvalidDoubleToStringConverter}, StringFormat=P}" Width="*">
-                        <DataGridTextColumn.HeaderStyle>
-                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource WrappedColumnHeaderStyle}">
-                                <Setter Property="ToolTip" Value="Win Probability"/>
-                            </Style>
-                        </DataGridTextColumn.HeaderStyle>
-                    </DataGridTextColumn>
+                    
                     <DataGridTextColumn Header="Profit Factor" 
                                         Binding="{Binding Stats.ProfitFactor, Converter={converters:InvalidDoubleToStringConverter}, StringFormat=N1}" Width="*">
                         <DataGridTextColumn.HeaderStyle>
@@ -158,16 +166,13 @@
                     </DataGridTextColumn>
 
                     <DataGridTextColumn Header="Expectancy" 
-                                        Binding="{Binding Stats.Expectancy, Converter={converters:InvalidDoubleToStringConverter}, StringFormat=N1}" Width="*" >
+                                        Binding="{Binding Stats.Expectancy}" Width="1.7*" >
                         <DataGridTextColumn.HeaderStyle>
                             <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
                                 <Setter Property="ToolTip" Value="Expectancy"/>
                             </Style>
                         </DataGridTextColumn.HeaderStyle>
                     </DataGridTextColumn>
-
-                    <DataGridTextColumn Header="Profit / Loss"
-                                        Binding="{Binding Stats.CashProfit, StringFormat=N1}" Width="*" />
 
                     <DataGridTemplateColumn Header="Trades" MinWidth="40" MaxWidth="40">
                         <DataGridTemplateColumn.HeaderStyle>

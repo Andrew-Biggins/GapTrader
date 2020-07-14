@@ -20,21 +20,6 @@ namespace GapTraderCore.StrategyTesters
             set => SetProperty(ref _isFixedStop, value);
         }
 
-        //public bool IsStopTrailedForwarder
-        //{
-        //    get => _isStopTrailedForwarder;
-        //    set
-        //    {
-        //        value = !_isStopTrailedForwarder;
-        //        SetProperty(ref _isStopTrailedForwarder, value);
-        //        IsStopTrailed = _isStopTrailedForwarder;
-        //    }
-        //}
-
-        //public bool IsStopTrailed { get; set; }
-
-        //public double TrailedStopSize { get; set; } = 20;
-
         public bool IsSearching
         {
             get => _isSearching;
@@ -75,7 +60,10 @@ namespace GapTraderCore.StrategyTesters
                     {
                         t.PointsProfit.IfExistsThen(x =>
                         {
-                            _balance += t.CashProfit;
+                            t.CashProfit.IfExistsThen(y =>
+                            {
+                                _balance += y;
+                            });
                         });
 
                         Trades.Add(t);
@@ -83,7 +71,7 @@ namespace GapTraderCore.StrategyTesters
                 }
             }
 
-            Stats = GetStrategyStats(Trades);
+            Stats = GetStrategyStats(Trades, _startBalance);
         }
 
         protected abstract (double, double, double) CalculateTradeLevels(DailyCandle candle);

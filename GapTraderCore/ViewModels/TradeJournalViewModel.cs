@@ -3,7 +3,7 @@ using Foundations.Optional;
 using GapTraderCore.Interfaces;
 using GapTraderCore.Strategies;
 using GapTraderCore.Trades;
-using OxyPlot;
+using GapTraderCore.ViewModelAdapters;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,8 +13,6 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Input;
-using GapTraderCore.ViewModelAdapters;
-using OxyPlot.Axes;
 using static GapTraderCore.DataProcessor;
 using static System.IO.Directory;
 
@@ -30,7 +28,7 @@ namespace GapTraderCore.ViewModels
 
         public ObservableCollection<ISelectableStrategy> Strategies { get; } = new ObservableCollection<ISelectableStrategy>();
 
-        public ICommand AddNewTradeCommand => new BasicCommand(() => _runner.GetTradeDetails(_addTradeViewModel));
+        public ICommand AddNewTradeCommand => new BasicCommand(AddNewTrade);
 
         public ICommand EditTradeCommand => new BasicCommand(EditTrade);
 
@@ -49,6 +47,7 @@ namespace GapTraderCore.ViewModels
             {
                 _accountStartSize = value;
                 UpdateGraph();
+                StrategyResultsStatsViewModel.UpdateAccountStartSize(_accountStartSize);
             }
         }
 
@@ -65,15 +64,20 @@ namespace GapTraderCore.ViewModels
 
             _unfilteredTrades = Trades;
             _runner = runner;
-            _addTradeViewModel = new AddTradeViewModel(_runner, Markets, Strategies);
-            _addTradeViewModel.TradeAdded += AddTrade;
 
             FilterSelector = new TradeFilterSelectorViewModel(Strategies, Markets);
             FilterSelector.FiltersChanged += OnTradeFiltersChanged;
 
             UpdateDateFilters();
-            StrategyResultsStatsViewModel = new StrategyResultsStatsViewModel(GetStrategyStats(Trades));
+            StrategyResultsStatsViewModel = new StrategyResultsStatsViewModel(GetStrategyStats(Trades.ToList<ITrade>(), AccountStartSize), _runner);
             UpdateGraph();
+        }
+
+        private void AddNewTrade()
+        {
+            _addTradeViewModel = new AddTradeViewModel(_runner, Markets, Strategies);
+            _addTradeViewModel.TradeAdded += AddTrade;
+            _runner.GetTradeDetails(_addTradeViewModel);
         }
 
         private void OnTradeFiltersChanged(object sender, EventArgs e)
@@ -83,22 +87,23 @@ namespace GapTraderCore.ViewModels
 
         private void FilterTrades()
         {
-            var x = RemoveUnselectedMarkets(_unfilteredTrades);
-            var y = RemoveUnselectedStrategies(x);
-            var z = RemoveTradesOutsideDateRange(y);
-            var q = RemoveTradesOutsideTimeRange(z);
-            var p = RemoveTradesOutsideRiskRewardRatioRange(q);
-            var r = RemoveStatusSelectedTrades(p);
-            var d = RemoveFilteredDays(r);
+            var marketFilteredTrades = RemoveUnselectedMarkets(_unfilteredTrades);
+            var strategyFilteredTrades = RemoveUnselectedStrategies(marketFilteredTrades);
+            var dateFilteredTrades = RemoveTradesOutsideDateRange(strategyFilteredTrades);
+            var timeFilteredTrades = RemoveTradesOutsideTimeRange(dateFilteredTrades);
+            var riskRewardRatioFilteredTrades = RemoveTradesOutsideRiskRewardRatioRange(timeFilteredTrades);
+            var statusFilteredTrades = RemoveStatusSelectedTrades(riskRewardRatioFilteredTrades);
+            var directionFilteredTrades = RemoveUnselectedTradeDirections(statusFilteredTrades);
+            var dayFilteredTrades = RemoveFilteredDays(directionFilteredTrades);
 
-            Trades = d;
+            Trades = dayFilteredTrades;
             RaisePropertyChanged(nameof(Trades));
             UpdateDateFilters();
-            StrategyResultsStatsViewModel = new StrategyResultsStatsViewModel(GetStrategyStats(Trades));
+            StrategyResultsStatsViewModel = new StrategyResultsStatsViewModel(GetStrategyStats(Trades.ToList<ITrade>(), AccountStartSize), _runner);
             UpdateGraph();
         }
 
-        private ObservableCollection<IJournalTrade> RemoveUnselectedMarkets(ObservableCollection<IJournalTrade> trades)
+        private IEnumerable<IJournalTrade> RemoveUnselectedMarkets(IEnumerable<IJournalTrade> trades)
         {
             var newList = new ObservableCollection<IJournalTrade>();
 
@@ -111,12 +116,13 @@ namespace GapTraderCore.ViewModels
                         newList.Add(trade);
                     }
                 }
+
             }
 
             return newList;
         }
 
-        private ObservableCollection<IJournalTrade> RemoveUnselectedStrategies(ObservableCollection<IJournalTrade> trades)
+        private IEnumerable<IJournalTrade> RemoveUnselectedStrategies(IEnumerable<IJournalTrade> trades)
         {
             var newList = new ObservableCollection<IJournalTrade>();
 
@@ -137,7 +143,7 @@ namespace GapTraderCore.ViewModels
             return newList;
         }
 
-        private ObservableCollection<IJournalTrade> RemoveTradesOutsideDateRange(ObservableCollection<IJournalTrade> trades)
+        private IEnumerable<IJournalTrade> RemoveTradesOutsideDateRange(IEnumerable<IJournalTrade> trades)
         {
             var newList = new ObservableCollection<IJournalTrade>();
 
@@ -152,7 +158,7 @@ namespace GapTraderCore.ViewModels
             return newList;
         }
 
-        private ObservableCollection<IJournalTrade> RemoveTradesOutsideTimeRange(ObservableCollection<IJournalTrade> trades)
+        private IEnumerable<IJournalTrade> RemoveTradesOutsideTimeRange(IEnumerable<IJournalTrade> trades)
         {
             var newList = new ObservableCollection<IJournalTrade>();
 
@@ -168,7 +174,7 @@ namespace GapTraderCore.ViewModels
             return newList;
         }
 
-        private ObservableCollection<IJournalTrade> RemoveTradesOutsideRiskRewardRatioRange(ObservableCollection<IJournalTrade> trades)
+        private IEnumerable<IJournalTrade> RemoveTradesOutsideRiskRewardRatioRange(IEnumerable<IJournalTrade> trades)
         {
             var newList = new ObservableCollection<IJournalTrade>();
 
@@ -184,7 +190,7 @@ namespace GapTraderCore.ViewModels
             return newList;
         }
 
-        private ObservableCollection<IJournalTrade> RemoveStatusSelectedTrades(ObservableCollection<IJournalTrade> trades)
+        private IEnumerable<IJournalTrade> RemoveStatusSelectedTrades(IEnumerable<IJournalTrade> trades)
         {
             var newList = new ObservableCollection<IJournalTrade>();
 
@@ -204,7 +210,22 @@ namespace GapTraderCore.ViewModels
             return newList;
         }
 
-        private ObservableCollection<IJournalTrade> RemoveFilteredDays(ObservableCollection<IJournalTrade> trades)
+        private IEnumerable<IJournalTrade> RemoveUnselectedTradeDirections(IEnumerable<IJournalTrade> trades)
+        {
+            var newList = new ObservableCollection<IJournalTrade>();
+
+            foreach (var trade in trades)
+            {
+                if (FilterSelector.SelectedTradeDirection == TradeDirection.Both || FilterSelector.SelectedTradeDirection == trade.Direction)
+                {
+                    newList.Add(trade);
+                }
+            }
+
+            return newList;
+        }
+
+        private ObservableCollection<IJournalTrade> RemoveFilteredDays(IEnumerable<IJournalTrade> trades)
         {
             var newList = new ObservableCollection<IJournalTrade>();
 
@@ -268,7 +289,13 @@ namespace GapTraderCore.ViewModels
 
             var trade = new JournalTrade(_addTradeViewModel.Entry, _addTradeViewModel.Stop, _addTradeViewModel.Target,
                 _addTradeViewModel.OpenLevel, _addTradeViewModel.CloseLevel, openTime, closeTime,
-                _addTradeViewModel.SelectedMarket, _addTradeViewModel.SelectedStrategy, _addTradeViewModel.Size);
+                _addTradeViewModel.SelectedMarket, _addTradeViewModel.SelectedStrategy, _addTradeViewModel.Size,
+                _addTradeViewModel.MaximumAdverseExcursion, _addTradeViewModel.MaximumFavourableExcursion);
+
+            if (_addTradeViewModel.IsEditing)
+            {
+                _unfilteredTrades.Remove(SelectedTrade);
+            }
 
             _unfilteredTrades.Add(trade);
             UpdateDateFilters();
@@ -281,7 +308,6 @@ namespace GapTraderCore.ViewModels
             if (SelectedTrade != null)
             {
                 var trade = SelectedTrade;
-                _unfilteredTrades.Remove(SelectedTrade);
                 _addTradeViewModel = new AddTradeViewModel(_runner, Markets, Strategies, trade);
                 _addTradeViewModel.TradeAdded += AddTrade;
                 _runner.GetTradeDetails(_addTradeViewModel);

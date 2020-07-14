@@ -19,7 +19,10 @@ namespace GapTraderCore.ViewModels
         public ICommand ViewTradesCommand => new BasicCommand(() => Runner.ShowTrades(this, SelectedStrategy));
 
         public ICommand ViewGraphCommand => new BasicCommand(() =>
-            Runner.ShowGraphWindow(new GraphWindowViewModel(AccountSizer.AccountStartSize, SelectedStrategy.Trades)));
+            Runner.ShowGraphWindow(new GraphWindowViewModel(SelectedStrategy.Stats.StartBalance, SelectedStrategy.Trades)));
+
+        public ICommand MoreDetailsCommand => new BasicCommand(() =>
+            Runner?.ShowStrategyStatsWindow(new StrategyResultsStatsViewModel(SelectedStrategy.Stats, SelectedStrategy.Name)));
 
         public StaticStrategyFinderViewModel(GapFillStrategyTester strategyTester, IMarket market, IRunner runner,
             AccountSizerViewModel accountSizer) : base(strategyTester, market, runner, accountSizer)

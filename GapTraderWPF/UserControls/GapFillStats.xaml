@@ -23,7 +23,6 @@
                 <RowDefinition Height="330" />
             </Grid.RowDefinitions>
 
-
             <TextBlock Text="Gap Fibonacci Level Statistics" FontWeight="Bold" Grid.Row="0" FontSize="15" />
 
             <Grid Grid.Row="1">
@@ -34,7 +33,7 @@
                 </Grid.ColumnDefinitions>
                 <Border BorderBrush="White" BorderThickness="1" Margin="-1,0,-1,0" />
                 <Border BorderBrush="White" BorderThickness="1" Margin="-0.5,0,-0.5,0"
-                        Grid.Column="1"
+                        Grid.Column="1" ToolTipService.ShowDuration="60000"
                         Grid.Row="0" >
                     <Border.ToolTip>
                         <Image Source="/Images/GapFibRetraceExample.PNG"/>
@@ -43,7 +42,7 @@
                 </Border>
                 <Border BorderBrush="White" BorderThickness="1" Margin="-0.5,0,-1,0"
                         Grid.Column="2"
-                        Grid.Row="0">
+                        Grid.Row="0" ToolTipService.ShowDuration="60000">
                     <Border.ToolTip>
                         <Image Source="/Images/GapFibExtensionExample.PNG"/>
                     </Border.ToolTip>
@@ -97,7 +96,7 @@
                     </Grid>
                 </Border>
                         <Border Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="10" Background="BurlyWood"
-                        BorderBrush="White" BorderThickness="1" Margin="0,-1,-1,0">
+                        BorderBrush="White" BorderThickness="1" Margin="0,-1,-1,0" ToolTipService.ShowDuration="60000">
                     <Border.ToolTip>
                         <Image Source="/Images/GapFibRetraceExample.PNG"/>
                     </Border.ToolTip>
@@ -116,10 +115,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
-                           
-                            
                         </Grid.ColumnDefinitions>
-                        
 
                         <TextBlock Text="5.9%" 
                                Grid.Column="0"
@@ -165,7 +161,7 @@
                 </Border>
 
                 <Border Grid.Column="11" Grid.Row="0" Grid.ColumnSpan="9" Background="BurlyWood"
-                        BorderBrush="White" BorderThickness="1" Margin="-0.5,-1,-1,0">
+                        BorderBrush="White" BorderThickness="1" Margin="-0.5,-1,-1,0" ToolTipService.ShowDuration="60000">
                     <Border.ToolTip>
                         <Image Source="/Images/GapFibExtensionExample.PNG"/>
                     </Border.ToolTip>

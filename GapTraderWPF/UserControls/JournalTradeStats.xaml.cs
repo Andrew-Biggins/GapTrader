@@ -1,26 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+﻿using GapTraderCore.ViewModels;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace GapTraderWPF.UserControls
 {
-    /// <summary>
-    /// Interaction logic for JournalTradeStats.xaml
-    /// </summary>
     public partial class JournalTradeStats : UserControl
     {
         public JournalTradeStats()
         {
             InitializeComponent();
+        }
+
+        private void OnMouseLeftButtonUpOnStrategyResults(object sender, MouseButtonEventArgs e)
+        {
+            var vm = (StrategyResultsStatsViewModel)DataContext;
+            vm.MoreDetailsCommand.Execute(null);
         }
     }
 }
