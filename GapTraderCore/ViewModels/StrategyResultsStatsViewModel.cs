@@ -151,7 +151,10 @@ namespace GapTraderCore.ViewModels
                 ? "---"
                 : $"{stats.AveragePointsLoss:N1} Points / {stats.AverageCashLoss:C}";
 
-            AverageUnrealisedProfit = $"{stats.AverageUnrealisedProfitPoints:N1} Points / {stats.AverageUnrealisedProfitCash:C}";
+            AverageUnrealisedProfit = double.IsNaN(stats.AverageUnrealisedProfitPoints) ||
+                                      double.IsNaN(stats.AverageUnrealisedProfitCash)
+                ? "---"
+                : $"{stats.AverageUnrealisedProfitPoints:N1} Points / {stats.AverageUnrealisedProfitCash:C}";
 
             WinProbability = double.IsNaN(stats.WinProbability)
                 ? "---"

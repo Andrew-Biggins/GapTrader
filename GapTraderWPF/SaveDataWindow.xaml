@@ -26,7 +26,7 @@
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
                 <DataGrid CanUserResizeRows="False" IsReadOnly="True" Width="auto" VerticalAlignment="Stretch"
-                  AutoGenerateColumns="False" Margin="5" HorizontalContentAlignment="Center" 
+                  AutoGenerateColumns="False" Margin="5" HorizontalContentAlignment="Center" Background="Black"
                   ItemsSource="{Binding SavedMarkets, Mode=OneWay}"
                   SelectedItem="{Binding SelectedSerializableMarket}">
             <DataGrid.Resources>
@@ -39,7 +39,13 @@
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name"
-                                    Binding="{Binding SaveName, StringFormat=dd-MM-yy}" Width="*" />
+                                    Binding="{Binding SaveName, StringFormat=dd-MM-yy}" Width="*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style>
+                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
 
                 <DataGridTextColumn Header="Data Start Date"
                                     Binding="{Binding StartDate, StringFormat=dd-MM-yy}" Width="*" />

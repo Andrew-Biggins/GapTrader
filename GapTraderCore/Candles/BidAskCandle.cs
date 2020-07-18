@@ -35,21 +35,20 @@ namespace GapTraderCore.Candles
             BidClose = bidClose;
             Volume = volume;
             _timezone = timezone;
+            CheckTime();
         }
 
-        public void AddAskPrices(double open, double high, double low, double close, bool dayLightSavingAdjust)
+        public void AddAskPrices(double open, double high, double low, double close)
         {
             AskOpen = open;
             AskHigh = high;
             AskLow = low;
             AskClose = close;
-
-            CheckTime(dayLightSavingAdjust);
         }
 
-        private void CheckTime(bool dayLightSavingAdjust)
+        private void CheckTime()
         {
-            if (_timezone == Timezone.Us && dayLightSavingAdjust)
+            if (_timezone == Timezone.Us)
             {
                 AdjustTimeForDayLightSavingsDifference();
             }

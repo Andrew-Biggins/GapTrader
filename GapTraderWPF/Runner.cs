@@ -2,8 +2,11 @@
 using System.Windows;
 using System.Windows.Media;
 using Foundations.Interfaces;
+using Foundations.Optional;
 using GapTraderCore;
 using GapTraderCore.Interfaces;
+using Microsoft.Win32;
+using Xceed.Wpf.AvalonDock.Properties;
 
 namespace GapTraderWPF
 {
@@ -200,6 +203,28 @@ namespace GapTraderWPF
 
             var owner = SearchWindows();
             return owner;
+        }
+
+        public Optional<string> OpenSaveDialog(object sender, string fileName, string filter)
+        {
+            var result = Option.None<string>();
+
+            _context.Send(_ =>
+            {
+                var saveFileDialog = new SaveFileDialog
+                {
+                    Filter = filter,
+                    Title = "Save Data",
+                    FileName = fileName
+                };
+
+                if (saveFileDialog.ShowDialog() != false)
+                {
+                    result = Option.Some(saveFileDialog.FileName);
+                }
+            });
+
+            return result;
         }
 
         private readonly IContext _context;

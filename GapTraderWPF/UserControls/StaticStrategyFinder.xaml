@@ -49,10 +49,14 @@
     <Border>
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
                 <RowDefinition Height="115" />
-                <RowDefinition Height="250" />
+                <RowDefinition Height="370" />
             </Grid.RowDefinitions>
-            <Grid HorizontalAlignment="Stretch">
+
+            <TextBlock Grid.Column="0" Text="Strategy Finder" FontWeight="Bold" HorizontalAlignment="Center" Foreground="White"/>
+
+            <Grid HorizontalAlignment="Stretch" Grid.Row="1">
 
                 <ContentControl Content="{Binding VariableSelector}">
                     <ContentControl.Resources>
@@ -72,7 +76,7 @@
                     Visibility="{Binding IsSearching, Converter={converters:InverseBoolToHiddenVisibilityConverter}}"/>
             </Grid>
 
-            <DataGrid Grid.Column="0" Grid.Row="1" CanUserResizeRows="False"
+            <DataGrid Grid.Column="0" Grid.Row="2" CanUserResizeRows="False" Background="Black"
                       AutoGenerateColumns="False" Margin="5" HorizontalContentAlignment="Center" 
                       ItemsSource="{Binding Strategies, Mode=OneWay}" RowHeaderWidth="0"
                       SelectedItem="{Binding SelectedStrategy}"
@@ -155,7 +159,7 @@
                             </Style>
                         </DataGridTextColumn.HeaderStyle>
                     </DataGridTextColumn>
-                    
+
                     <DataGridTextColumn Header="Profit Factor" 
                                         Binding="{Binding Stats.ProfitFactor, Converter={converters:InvalidDoubleToStringConverter}, StringFormat=N1}" Width="*">
                         <DataGridTextColumn.HeaderStyle>
@@ -177,7 +181,7 @@
                     <DataGridTemplateColumn Header="Trades" MinWidth="40" MaxWidth="40">
                         <DataGridTemplateColumn.HeaderStyle>
                             <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
-                                <Setter  Property="BorderThickness" Value="2,0,1,0"/>
+                                <Setter Property="BorderThickness" Value="2,0,1,0"/>
                             </Style>
                         </DataGridTemplateColumn.HeaderStyle>
                         <DataGridTemplateColumn.CellStyle>

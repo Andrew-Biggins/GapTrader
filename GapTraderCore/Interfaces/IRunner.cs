@@ -1,4 +1,6 @@
-﻿namespace GapTraderCore.Interfaces
+﻿using Foundations.Optional;
+
+namespace GapTraderCore.Interfaces
 {
     public interface IRunner
     {
@@ -27,5 +29,7 @@
         void GetStrategyDetails(object sender);
 
         void ShowStrategyStatsWindow(object sender);
+
+        Optional<string> OpenSaveDialog(object sender, string fileName, string filter);
     }
 }

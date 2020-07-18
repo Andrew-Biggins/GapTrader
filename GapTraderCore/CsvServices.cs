@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using GapTraderCore.Candles;
+using GapTraderCore.Interfaces;
 using GapTraderCore.ViewModels;
 using Microsoft.VisualBasic.FileIO;
 
@@ -16,7 +18,7 @@ namespace GapTraderCore
             var data = new Dictionary<DateTime, List<BidAskCandle>>();
             data = ReadMinuteDataFile(data, bidFilePath, timezone, progressCounter);
 
-            return AddAskData(data, askFilePath, progressCounter);
+            return AddAskData(data, askFilePath, progressCounter, timezone);
         }
 
         public static Dictionary<DateTime, List<BidAskCandle>> ReadInSavedMinuteData(SerializableMarketData marketData, Del progressCounter)
@@ -34,7 +36,7 @@ namespace GapTraderCore
 
                 var candle = ParseBidCandle(values, timezone);
                 candle.AddAskPrices(double.Parse(values[6]), double.Parse(values[7]), double.Parse(values[8]),
-                    double.Parse(values[9]), false);
+                    double.Parse(values[9]));
 
                 progressCounter();
 
@@ -122,6 +124,48 @@ namespace GapTraderCore
             File.WriteAllText(filePath, csv.ToString());
         }
 
+        public static void WriteTradeDataCsv(IEnumerable<IJournalTrade> trades, string filePath)
+        {
+            var csv = new StringBuilder();
+
+            csv.AppendLine(
+                "Market, Strategy, Strategy Entry, Stop, Target, Long/Short, Risk Reward Ratio, Open Date/Time, Open Level, Size, Close Date/Time, Close Level, Total Points, Profit/Loss, Result in R, MAE, MFA, Drawdown, Realised Profit %, Unrealised Profit Points, Unrealised Profit Cash"); 
+
+            foreach (var trade in trades)
+            {
+                var closeLevel = string.Empty;
+                var closeDateTime = string.Empty;
+                var totalPoints = string.Empty;
+                var profit = string.Empty;
+                var resultInR = string.Empty;
+                var mae = string.Empty;
+                var mfe = string.Empty;
+                var drawdown = string.Empty;
+                var realisedProfitPercentage = string.Empty;
+                var unrealisedProfitPoints = string.Empty;
+                var unrealisedProfitCash = string.Empty;
+
+                trade.CloseLevel.IfExistsThen(x => { closeLevel = x.ToString(CultureInfo.CurrentCulture); });
+                trade.CloseTime.IfExistsThen(x => { closeDateTime = x.ToString(CultureInfo.CurrentCulture); });
+                trade.PointsProfit.IfExistsThen(x => { totalPoints = x.ToString(CultureInfo.CurrentCulture); });
+                trade.CashProfit.IfExistsThen(x => { profit = x.ToString(CultureInfo.CurrentCulture); });
+                trade.ResultInR.IfExistsThen(x => { resultInR = x.ToString(CultureInfo.CurrentCulture); });
+                trade.MaximumAdverseExcursionPoints.IfExistsThen(x => { mae = x.ToString(CultureInfo.CurrentCulture); });
+                trade.MaximumFavourableExcursionPoints.IfExistsThen(x => { mfe = x.ToString(CultureInfo.CurrentCulture); });
+                trade.MaximumAdverseExcursionPercentageOfStop.IfExistsThen(x => { drawdown = x.ToString(CultureInfo.CurrentCulture); });
+                trade.PointsProfitPercentageOfMaximumFavourableExcursion.IfExistsThen(x => { realisedProfitPercentage = x.ToString(CultureInfo.CurrentCulture); });
+                trade.UnrealisedProfitPoints.IfExistsThen(x => { unrealisedProfitPoints = x.ToString(CultureInfo.CurrentCulture); });
+                trade.UnrealisedProfitCash.IfExistsThen(x => { unrealisedProfitCash = x.ToString(CultureInfo.CurrentCulture); });
+
+
+                var newLine =
+                    $"{trade.Market},{trade.Strategy.Name},{trade.StrategyEntryLevel},{trade.StopLevel},{trade.Target},{trade.Direction},{trade.RiskRewardRatio},{trade.OpenTime},{trade.OpenLevel},{trade.Size},{closeDateTime},{closeLevel},{totalPoints},{profit},{resultInR},{mae},{mfe},{drawdown},{realisedProfitPercentage},{unrealisedProfitPoints},{unrealisedProfitCash}";
+                csv.AppendLine(newLine);
+            }
+
+            File.WriteAllText(filePath, csv.ToString());
+        }
+
         public static string[] WriteSafeReadAllLines(string path)
         {
             using var csv = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
@@ -175,7 +219,11 @@ namespace GapTraderCore
                     }
 
                     date = candle.DateTime.Date;
-                    minuteCandles.Add(candle);
+
+                    if (candle.IsCash)
+                    {
+                        minuteCandles.Add(candle);
+                    }
                 }
             }
 
@@ -188,14 +236,14 @@ namespace GapTraderCore
         }
 
         private static Dictionary<DateTime, List<BidAskCandle>> AddAskData(
-            Dictionary<DateTime, List<BidAskCandle>> data, string askFilePath, Del progressCounter)
+            Dictionary<DateTime, List<BidAskCandle>> data, string askFilePath, Del progressCounter, Timezone timezone)
         {
             using var askParser = SetUpParser(askFilePath);
             var askCandles = new List<AskCandle>();
 
             while (!askParser.EndOfData)
             {
-                var candle = ParseAskCandle(askParser.ReadFields());
+                var candle = ParseAskCandle(askParser.ReadFields(), timezone);
                 askCandles.Add(candle);
                 progressCounter();
             }
@@ -211,7 +259,7 @@ namespace GapTraderCore
                         if (bidCandles[i].DateTime == askCandle.DateTime)
                         {
                             bidCandles[i].AddAskPrices(askCandle.AskOpen, askCandle.AskHigh, askCandle.AskLow,
-                                askCandle.AskClose, true);
+                                askCandle.AskClose);
                             askCandles.Remove(askCandle);
                             candleDataComplete = true;
                             progressCounter();
@@ -243,10 +291,10 @@ namespace GapTraderCore
             return new BidAskCandle(dateTime, open, high, low, close, volume, timezone);
         }
 
-        private static AskCandle ParseAskCandle(IReadOnlyList<string> fields)
+        private static AskCandle ParseAskCandle(IReadOnlyList<string> fields, Timezone timezone)
         {
             var (dateTime, open, high, low, close, _) = Parse(fields);
-            return new AskCandle(dateTime, open, high, low, close);
+            return new AskCandle(dateTime, open, high, low, close, timezone);
         }
 
         private static (DateTime, double, double, double, double, double) Parse(IReadOnlyList<string> fields)
@@ -254,7 +302,7 @@ namespace GapTraderCore
             var dateTimeString = fields[0].Replace("GMT+0100", "+1").Replace("GMT-0000", "+0");
 
             DateTime.TryParseExact(dateTimeString, new[] { "yyyy-MM-dd", "dd.MM.yyyy HH:mm:ss.fff z", "dd/MM/yyyy HH:mm:ss", "dd/MM/yyyy" },
-                System.Globalization.CultureInfo.CurrentCulture, System.Globalization.DateTimeStyles.None, out var dt);
+                CultureInfo.CurrentCulture, DateTimeStyles.None, out var dt);
 
             var open = double.Parse(fields[1]);
             var high = double.Parse(fields[2]);

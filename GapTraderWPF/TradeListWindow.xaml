@@ -14,7 +14,7 @@
     <Grid>
         <DataGrid CanUserResizeRows="False" IsReadOnly="True" RowHeaderWidth="0" x:Name="TradeListDataGrid"
                   AutoGenerateColumns="False" Margin="5" HorizontalContentAlignment="Stretch" CanUserResizeColumns="False"
-                  ItemsSource="{Binding Trades, Mode=OneWay}">
+                  ItemsSource="{Binding Trades, Mode=OneWay}" Background="Black">
             <DataGrid.Resources>
                 <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
                     <Setter Property="ContentTemplate">

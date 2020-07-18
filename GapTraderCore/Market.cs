@@ -65,6 +65,9 @@ namespace GapTraderCore
                 double close = 0;
                 double previousClose = 0;
 
+                var length = minuteCandles.Count;
+                var i = 0;
+
                 foreach (var candle in minuteCandles)
                 {
                     if (!cash && candle.IsCash)
@@ -90,6 +93,13 @@ namespace GapTraderCore
                     }
 
                     previousClose = (candle.AskClose - candle.BidClose) / 2 + candle.BidClose;
+
+                    // Handle cash only list
+                    i++;
+                    if (i == length && candle.IsCash)
+                    {
+                        close = (candle.AskClose - candle.BidClose) / 2 + candle.BidClose;
+                    }
                 }
 
                 if (close != 0)
@@ -128,7 +138,7 @@ namespace GapTraderCore
         {
             double pc = 0;
 
-            previousClose.IfExistsThen( x =>
+            previousClose.IfExistsThen(x =>
             {
                 pc = x;
             }).IfEmpty(() =>

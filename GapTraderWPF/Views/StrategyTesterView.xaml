@@ -23,8 +23,8 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="260" />
-                <RowDefinition Height="28"/>
-                <RowDefinition Height="424" />
+                <!--<RowDefinition Height="28"/>-->
+                <RowDefinition Height="520" />
             </Grid.RowDefinitions>
             <Border Width="auto" MinWidth="100" HorizontalAlignment="Left" VerticalAlignment="Top" Background="BurlyWood" Grid.Row="0" Margin="10,3,0,0">
                 <TextBlock Text="{Binding Market.Name}" FontSize="12" Foreground="Black"/>
@@ -70,7 +70,7 @@
                                                             IsEnabled="{Binding StrategyTester.IsSearching, Converter={converters:InverseBoolConverter}}"/>
             </Grid>
 
-            <StackPanel Grid.Row="1" Grid.Column="0"
+            <!--<StackPanel Grid.Row="1" Grid.Column="0"
                         Orientation="Horizontal" 
                         HorizontalAlignment="Center">
                 <RadioButton Content="Find Static Strategies" Foreground="White"
@@ -79,9 +79,9 @@
                 <RadioButton Content="Test Dynamic Strategy" Foreground="White"
                          HorizontalAlignment="Center" 
                          VerticalAlignment="Center" IsChecked="{Binding IsDynamicTest}"/>
-            </StackPanel>
+            </StackPanel>-->
 
-            <ContentControl Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" Margin="10,0,10,10"
+            <ContentControl Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" Margin="10,0,10,10"
                         Content="{Binding StrategyFinderViewModel}">
                 <ContentControl.Resources>
                     <DataTemplate DataType="{x:Type viewModels:StaticStrategyFinderViewModel}">

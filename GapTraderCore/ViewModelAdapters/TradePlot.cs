@@ -14,6 +14,9 @@ namespace GapTraderCore.ViewModelAdapters
 
         public TradePlot()
         {
+            PlotAreaBorderColor = OxyColors.White;
+            Background = OxyColors.Black;
+
             var yAxis = new LinearAxis
             {
                 Position = AxisPosition.Left,
@@ -21,16 +24,28 @@ namespace GapTraderCore.ViewModelAdapters
                 AbsoluteMinimum = 0,
                 AxisTitleDistance = 10,
                 MaximumPadding = 0.1,
-                MinimumPadding = 0.1
+                MinimumPadding = 0.1,
+                TextColor = OxyColors.White,
+                TicklineColor = OxyColors.White,
+                MajorGridlineColor = OxyColors.White,
+                ExtraGridlineColor = OxyColors.White,
+                AxislineColor = OxyColors.White,
+                TitleColor = OxyColors.White
             };
             Axes.Add(yAxis);
 
             LinearAxis xAxis = new DateTimeAxis()
             {
                 Position = AxisPosition.Bottom,
-                StringFormat = "MM/dd",
+                StringFormat = "dd/MM HH:mm",
                 Title = "Date/Time",
-                AxisTitleDistance = 10
+                AxisTitleDistance = 10,
+                TextColor = OxyColors.White,
+                TicklineColor = OxyColors.White,
+                MajorGridlineColor = OxyColors.White,
+                ExtraGridlineColor = OxyColors.White,
+                AxislineColor = OxyColors.White,
+                TitleColor = OxyColors.White,
             };
             Axes.Add(xAxis);
 

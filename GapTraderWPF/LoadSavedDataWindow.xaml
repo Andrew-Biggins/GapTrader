@@ -10,6 +10,9 @@
         Background="Black"
         Title="Load Data" Height="300" MinHeight="300" Width="550">
     <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
         <Style TargetType="{x:Type DataGridCell}">
             <Setter Property="Foreground" Value="Black" />
             <Style.Triggers>
@@ -23,7 +26,7 @@
     <Grid>
         <DataGrid CanUserResizeRows="False" IsReadOnly="True" Width="auto"
                   AutoGenerateColumns="False" Margin="5" HorizontalContentAlignment="Center" 
-                  ItemsSource="{Binding SavedMarkets, Mode=OneWay}"
+                  ItemsSource="{Binding SavedMarkets, Mode=OneWay}" Background="Black"
                   SelectedItem="{Binding SelectedSerializableMarket}">
             <DataGrid.Resources>
                 <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
@@ -35,7 +38,13 @@
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name"
-                                    Binding="{Binding SaveName, StringFormat=dd-MM-yy}" Width="*" />
+                                    Binding="{Binding SaveName, StringFormat=dd-MM-yy}" Width="*" >
+                    <DataGridTextColumn.ElementStyle>
+                        <Style>
+                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
 
                 <DataGridTextColumn Header="Data Start Date"
                                     Binding="{Binding StartDate, StringFormat=dd-MM-yy}" Width="*" />

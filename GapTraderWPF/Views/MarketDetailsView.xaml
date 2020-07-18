@@ -169,7 +169,7 @@
             <TextBlock Grid.Row="2" Text="Unfilled Gaps" FontWeight="Bold"
                HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
 
-            <DataGrid Grid.Row="3" Margin="7,0,10,0" Height="120" CanUserResizeRows="False"
+            <DataGrid Grid.Row="3" Margin="7,0,10,0" Height="120" CanUserResizeRows="False" Background="Black"
               AutoGenerateColumns="False" VerticalAlignment="Top" IsReadOnly="True" HorizontalAlignment="Center" 
               ItemsSource="{Binding UnfilledGaps, Mode=OneWay}" RowHeaderWidth="0">
                 <DataGrid.Resources>

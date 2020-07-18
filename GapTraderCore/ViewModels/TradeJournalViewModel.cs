@@ -36,6 +36,10 @@ namespace GapTraderCore.ViewModels
 
         public ICommand PopOutGraphCommand => new BasicCommand(PopOutGraph);
 
+        public ICommand ClearCommand => new BasicCommand(ClearAllTrades);
+
+        public ICommand ExportDataCommand => new BasicCommand(ExportData);
+
         public TradeFilterSelectorViewModel FilterSelector { get; }
 
         public IJournalTrade SelectedTrade { get; set; }
@@ -48,6 +52,7 @@ namespace GapTraderCore.ViewModels
                 _accountStartSize = value;
                 UpdateGraph();
                 StrategyResultsStatsViewModel.UpdateAccountStartSize(_accountStartSize);
+                SaveAccountData();
             }
         }
 
@@ -68,6 +73,7 @@ namespace GapTraderCore.ViewModels
             FilterSelector = new TradeFilterSelectorViewModel(Strategies, Markets);
             FilterSelector.FiltersChanged += OnTradeFiltersChanged;
 
+            GetAccountData();
             UpdateDateFilters();
             StrategyResultsStatsViewModel = new StrategyResultsStatsViewModel(GetStrategyStats(Trades.ToList<ITrade>(), AccountStartSize), _runner);
             UpdateGraph();
@@ -326,6 +332,24 @@ namespace GapTraderCore.ViewModels
             }
         }
 
+        private void GetAccountData()
+        {
+            CreateDirectory($"{_savedDataPath}\\Account");
+
+            var path = $"{_savedDataPath}\\Account\\Data.txt";
+
+            if (File.Exists(path))
+            {
+                AccountStartSize = double.Parse(File.ReadAllLines(path)[0]);
+            }
+        }
+
+        private void SaveAccountData()
+        {
+            CreateDirectory($"{_savedDataPath}\\Account");
+            File.WriteAllText($"{_savedDataPath}\\Account\\Data.txt",AccountStartSize.ToString());
+        }
+
         private void SaveTradeData()
         {
             CreateDirectory($"{_savedDataPath}Trades");
@@ -413,12 +437,31 @@ namespace GapTraderCore.ViewModels
             _runner.ShowGraphWindow(vm);
         }
 
+        private void ExportData()
+        {
+            var path = _runner.OpenSaveDialog(this, $"JournalTrades-{DateTime.Now:yyyy-MM-dd HH.mm.ss}",
+                "CSV File|*.csv");
+
+            path.IfExistsThen(p => { CsvServices.WriteTradeDataCsv(Trades, p); });
+        }
+
+        private void ClearAllTrades()
+        {
+            if (_runner.RunForResult(this,
+                new Message("Confirm", "All trades will be deleted, are you sure?", Message.MessageType.Question)))
+            {
+                _unfilteredTrades.Clear();
+                FilterTrades();
+                SaveTradeData();
+            }
+        }
+
         private readonly string _savedDataPath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Saved Data\\";
 
         private readonly IRunner _runner;
         private AddTradeViewModel _addTradeViewModel;
         private readonly ObservableCollection<IJournalTrade> _unfilteredTrades;
-        private StrategyResultsStatsViewModel _strategyResultsStatsViewModel;
+        private StrategyResultsStatsViewModel _strategyResultsStatsViewModel = new StrategyResultsStatsViewModel();
         private double _accountStartSize = 10000;
     }
 }

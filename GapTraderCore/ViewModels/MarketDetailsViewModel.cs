@@ -178,15 +178,17 @@ namespace GapTraderCore.ViewModels
         private void AddDataToExisting(string minuteBidDataFilePath, string minuteAskDataFilePath,
             string dailyDataFilePath, bool deriveDailyFromMinute, bool isUkData)
         {
-            ClearExistingData();
-            MarketStats = _loadingBar;
-
+            MarketDataChanged.Raise(this);
+            UnfilledGaps = new List<Gap>();
+            GapFillStatsViewModel = new GapFillStatsViewModel(); MarketStats = _loadingBar;
+            var cashCandlesPerDayRatio = GetCandlePerDayRatio(isUkData);
             _loadingBar.Maximum = WriteSafeReadAllLines(minuteBidDataFilePath).Length +
-                                  WriteSafeReadAllLines(minuteAskDataFilePath).Length * 2;
+                                  WriteSafeReadAllLines(minuteAskDataFilePath).Length * (1 + cashCandlesPerDayRatio);
 
             if (deriveDailyFromMinute)
             {
-                _loadingBar.Maximum += (double)WriteSafeReadAllLines(minuteBidDataFilePath).Length / 1330;
+                var candlesPerDay = isUkData ? EuropeCashMinuteCandlesPerDay : UsCashMinuteCandlesPerDay;
+                _loadingBar.Maximum += (double)WriteSafeReadAllLines(minuteBidDataFilePath).Length / candlesPerDay;
             }
             else
             {
@@ -268,14 +270,16 @@ namespace GapTraderCore.ViewModels
         private void ProcessNewData(string minuteBidDataFilePath, string minuteAskDataFilePath,
             string dailyDataFilePath, bool deriveDailyFromMinute, bool isUkData)
         {
+            var cashCandlesPerDayRatio = GetCandlePerDayRatio(isUkData);
+
             ClearExistingData();
             MarketStats = _loadingBar;
             _loadingBar.Maximum = WriteSafeReadAllLines(minuteBidDataFilePath).Length +
-                                  WriteSafeReadAllLines(minuteAskDataFilePath).Length * 2;
+                                  WriteSafeReadAllLines(minuteAskDataFilePath).Length * (1 + cashCandlesPerDayRatio);
 
             if (deriveDailyFromMinute)
             {
-                _loadingBar.Maximum += (double)WriteSafeReadAllLines(minuteBidDataFilePath).Length / 1330;
+                     _loadingBar.Maximum += (double)WriteSafeReadAllLines(minuteBidDataFilePath).Length / MinuteCandlesPerDay;
             }
             else
             {
@@ -383,7 +387,19 @@ namespace GapTraderCore.ViewModels
             return markets;
         }
 
-        private readonly string _savedDataPath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Saved Data\\";
+        private static double GetCandlePerDayRatio(bool isUkData)
+        {
+            return isUkData
+                ? (double)EuropeCashMinuteCandlesPerDay / MinuteCandlesPerDay / DataLossBankHolidayAdjustment
+                : (double)UsCashMinuteCandlesPerDay / MinuteCandlesPerDay / DataLossBankHolidayAdjustment;
+        }
+
+        private const int MinuteCandlesPerDay = 1330;
+        private const int EuropeCashMinuteCandlesPerDay = 510;
+        private const int UsCashMinuteCandlesPerDay = 390;
+        private const double DataLossBankHolidayAdjustment = 0.98;
+
+        private readonly string _savedDataPath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Saved Data\\MarketData";
 
         private readonly IRunner _runner;
         private readonly LoadingBarViewModel _loadingBar = new LoadingBarViewModel();

@@ -11,14 +11,29 @@
         Title="Gap Trader" Height="850" Width="1450"
         MinWidth="1450" MinHeight="850" >
     <TabControl>
-        <TabItem Header="Market Details">
+        <TabItem>
+            <TabItem.HeaderTemplate>
+                <DataTemplate>
+                    <TextBlock Text="Trade Journal" ToolTip="Trade Journal"/>
+                </DataTemplate>
+            </TabItem.HeaderTemplate>
+            <views:TradeJournalView DataContext="{Binding TradeJournalViewModel}"/>
+        </TabItem>
+        <TabItem>
+            <TabItem.HeaderTemplate>
+                <DataTemplate>
+                    <TextBlock Text="Data Management" ToolTip="Load or Save Data For Use on the Strategy Tester"/>
+                </DataTemplate>
+            </TabItem.HeaderTemplate>
             <views:MarketDetailsView DataContext="{Binding MarketDetailsViewModel}"/>
         </TabItem>
-        <TabItem Header="Strategy Tester">
+        <TabItem >
+            <TabItem.HeaderTemplate>
+                <DataTemplate>
+                    <TextBlock Text="Strategy Tester" ToolTip="Test Gap-fill Strategies"/>
+                </DataTemplate>
+            </TabItem.HeaderTemplate>
             <views:StrategyTesterView DataContext="{Binding StrategyTesterViewModel}"/>
-        </TabItem>
-        <TabItem Header="Trade Journal">
-            <views:TradeJournalView DataContext="{Binding TradeJournalViewModel}"/>
         </TabItem>
     </TabControl>
 </Window>

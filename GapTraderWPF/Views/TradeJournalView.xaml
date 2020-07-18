@@ -101,7 +101,7 @@
                         <ColumnDefinition Width="{Binding ElementName=EditColumn, Path=ActualWidth}" MaxWidth="1000"/>
                         <ColumnDefinition Width="{Binding ElementName=DeleteColumn, Path=ActualWidth}" MaxWidth="1000"/>
                     </Grid.ColumnDefinitions>
-                    <Border Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="5" BorderBrush="Black" BorderThickness="0,0,0,0" Background="BurlyWood" Margin="1,0,-0.5,0">
+                    <Border Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="5" BorderBrush="Black" BorderThickness="0,0,0,0" Background="BurlyWood" Margin="1,0,-0.25,0">
                         <TextBlock  Text="Strategy Trade Details" FontWeight="Bold" HorizontalAlignment="Center" Background="BurlyWood" Foreground="Black"/>
                     </Border>
                     <Border Grid.Row="0" Grid.Column="7" Grid.ColumnSpan="3" BorderBrush="Black" BorderThickness="0" Background="BurlyWood" Margin="3,0,1.5,0">
@@ -116,7 +116,7 @@
                     <Border Grid.Row="0" Grid.Column="14" Grid.ColumnSpan="5" BorderBrush="Black" BorderThickness="1,0,0,0" Background="BurlyWood" Margin="1.5,0,-0.25,0">
                         <TextBlock Text="Trade Metrics" FontWeight="Bold" HorizontalAlignment="Center" Background="BurlyWood" Foreground="Black" FontSize="11.5" />
                     </Border>
-                    <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="1,0,0,3" Background="BurlyWood" Margin="0,0,2,-1">
+                    <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,3" Background="BurlyWood" Margin="0.5,0,2,-1">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                             <TextBlock Text="Account Start Size:" FontWeight="Bold" HorizontalAlignment="Right" Background="BurlyWood" Foreground="Black" FontSize="11.5" Margin="0,0,2,2"/>
                         <TextBox Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Width="70" Height="18" Margin="0,0,0,0.5" >
@@ -134,14 +134,24 @@
                             </StackPanel>
                     </Border>
                     
-
                     <Border Grid.Row="0" Grid.Column="19" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="0.5,0,0,0" Background="BurlyWood" Margin="2.5,0,0,0">
                         <TextBlock Text="Unrealised Profit" FontWeight="Bold" HorizontalAlignment="Center" Background="BurlyWood" Foreground="Black" FontSize="11.5"/>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="21" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="0.5,0,0,0" Background="BurlyWood" Margin="1.75,-0.25,0,0.75">
+                        <Button Command="{Binding ExportDataCommand}">
+                            <TextBlock Text="Export CSV" VerticalAlignment="Top" Margin="0,-2.5,0,-0.5" Foreground="Black"/>
+                        </Button>
+                    </Border>
+
+                    <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="0.5,0,0,0" Background="BurlyWood" Margin="1.75,-0.45,0.5,1.5">
+                        <Button Command="{Binding ClearCommand}">
+                            <TextBlock Text="Clear" VerticalAlignment="Top" Margin="0,-2.5,0,-0.5" Foreground="Black"/>
+                        </Button>
                     </Border>
                 </Grid>
 
                 <DataGrid Grid.Row="2"  ItemsSource="{Binding Trades, Mode=OneWay}" IsReadOnly="True" x:Name="JDataGrid"
-                      AutoGenerateColumns="False" CanUserResizeColumns="False" CanUserReorderColumns="False"
+                      AutoGenerateColumns="False" CanUserResizeColumns="False" CanUserReorderColumns="False" Background="Black"
                       SelectedItem="{Binding SelectedTrade}" RowHeaderWidth="0">
                     <DataGrid.Resources>
                         <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
@@ -442,7 +452,7 @@
             </Grid>
             <userControls:JournalTradeStats Grid.Row="1" DataContext="{Binding StrategyResultsStatsViewModel}"/>
             <oxy:PlotView Grid.Row="2" Model="{Binding Plot, Mode=OneTime}" MouseDoubleClick="OnGraphDoubleClick"
-                          ToolTip="Double Click to Pop-out"/>
+                          ToolTip="Double Click to Pop-out" Background="Black"/>
         </Grid>
     </Border>
 </UserControl>

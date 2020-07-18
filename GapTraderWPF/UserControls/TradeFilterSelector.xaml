@@ -10,7 +10,7 @@
              xmlns:validationRules="clr-namespace:GapTraderWPF.ValidationRules"
              d:DataContext="{d:DesignInstance {x:Type viewModels:TradeFilterSelectorViewModel}}"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="1200">
+             d:DesignHeight="100" d:DesignWidth="1400">
     <UserControl.Resources>
         <Style TargetType="{x:Type DatePickerTextBox}">
             <Setter Property="Template">
@@ -40,7 +40,7 @@
             </DockPanel>
         </ControlTemplate>
     </UserControl.Resources>
-    <Border BorderBrush="White" BorderThickness="1" MaxHeight="170">
+    <Border BorderBrush="White" BorderThickness="1" MaxHeight="170" HorizontalAlignment="Stretch" Width="auto">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="70" />
@@ -48,7 +48,7 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="90"/>
-                <ColumnDefinition Width="235"/>
+                <ColumnDefinition Width="400"/>
                 <ColumnDefinition Width="110"/>
                 <ColumnDefinition Width="193"/>
                 <ColumnDefinition Width="162"/>
