@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
-namespace Foundations
+namespace TradingSharedCore
 {
 #nullable enable
     public static class EventRaiser

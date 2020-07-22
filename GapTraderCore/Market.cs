@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Foundations;
-using Foundations.Optional;
 using GapTraderCore.Candles;
 using GapTraderCore.Interfaces;
 using GapTraderCore.ViewModels;
+using TradingSharedCore;
+using TradingSharedCore.Optional;
 using static GapTraderCore.DataProcessor;
-using static GapTraderCore.FibonacciServices;
+using static TradingSharedCore.FibonacciServices;
+using Option = TradingSharedCore.Optional.Option;
 
 namespace GapTraderCore
 {
-    public class Market : SerializableBase, IMarket, ISelectable
+    public class Market : IMarket
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -31,17 +32,9 @@ namespace GapTraderCore
 
         public bool IsUkData { get; set; }
 
-        public bool IsSelected
-        {
-            get => _isSelected;
-            set
-            {
-                value = !_isSelected;
-                _isSelected = value;
-            }
-        }
+        public string Name { get; protected set; }
 
-        public Market(string name = "") : base(name)
+        public Market(string name = "") 
         {
             
         }
@@ -512,6 +505,5 @@ namespace GapTraderCore
         }
 
         private double _averageGapSize;
-        private bool _isSelected;
     }
 }

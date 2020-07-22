@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using Foundations.Optional;
 using GapTraderCore.Candles;
 using GapTraderCore.Interfaces;
-using GapTraderCore.Trades;
+using TradingSharedCore;
+using TradingSharedCore.Optional;
+using TradingSharedCore.Trades;
+using Option = TradingSharedCore.Optional.Option;
 
 namespace GapTraderCore
 {
-    public enum TradeDirection
-    {
-        Long,
-        Short,
-        Both
-    }
-
     internal static class TradeServices
     {
         internal static Optional<ITrade> AttemptTrade(IEnumerable<BidAskCandle> candles, double entry, double stop,

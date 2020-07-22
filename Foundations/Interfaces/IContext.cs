@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 
-namespace Foundations.Interfaces
+namespace TradingSharedCore.Interfaces
 {
     public interface IContext
     {

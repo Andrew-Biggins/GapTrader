@@ -1,0 +1,30 @@
+﻿<Window x:Class="GapTraderWPF.Windows.GapTraderMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:GapTraderCore.ViewModels;assembly=GapTraderCore"
+        xmlns:views="clr-namespace:GapTraderWPF.Views"
+        d:DataContext="{d:DesignInstance {x:Type viewModels:GapTraderMainViewModel}}"
+        mc:Ignorable="d"
+        Title="Gap Trader" Height="750" Width="1360"
+        MinWidth="1360" MinHeight="750" >
+    <TabControl>
+        <TabItem>
+            <TabItem.HeaderTemplate>
+                <DataTemplate>
+                    <TextBlock Text="Data Management" ToolTip="Load or Save Data For Use on the Strategy Tester"/>
+                </DataTemplate>
+            </TabItem.HeaderTemplate>
+            <views:MarketDetailsView DataContext="{Binding MarketDetailsViewModel}"/>
+        </TabItem>
+        <TabItem >
+            <TabItem.HeaderTemplate>
+                <DataTemplate>
+                    <TextBlock Text="Strategy Tester" ToolTip="Test Gap-fill Strategies"/>
+                </DataTemplate>
+            </TabItem.HeaderTemplate>
+            <views:StrategyTesterView DataContext="{Binding StrategyTesterViewModel}"/>
+        </TabItem>
+    </TabControl>
+</Window>

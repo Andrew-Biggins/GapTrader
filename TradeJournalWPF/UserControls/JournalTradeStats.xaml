@@ -1,0 +1,117 @@
+﻿<UserControl x:Class="TradeJournalWPF.UserControls.JournalTradeStats"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:converters="clr-namespace:TradingSharedWPF.Converters;assembly=TradingSharedWPF"
+             xmlns:viewModels="clr-namespace:TradingSharedCore.ViewModels;assembly=TradingSharedCore"
+             d:DataContext="{d:DesignInstance {x:Type viewModels:StrategyResultsStatsViewModel}}"
+             mc:Ignorable="d" 
+             d:DesignHeight="75" d:DesignWidth="680">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="Margin" Value="0,2,0,0" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding HasResults}" Value="True">
+                    <Setter Property="ToolTip.ToolTip" Value="Click For More Details"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Stretch">
+        <Grid Background="Transparent" MouseLeftButtonUp="OnMouseLeftButtonUpOnStrategyResults">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35" />
+                <RowDefinition Height="18" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition Width="1.8*"/>
+                <ColumnDefinition Width="1.8*"/>
+                <ColumnDefinition Width="0.7*"/>
+                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="0.55*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="18" Background="BurlyWood"
+                    BorderThickness="1" BorderBrush="White" Margin="0,-1,0,0">
+            </Border>
+
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Trades" ToolTip="Number of Trades" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+            <TextBlock Grid.Column="1" Grid.Row="0" Text="Wins" ToolTip="Wins" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+            <TextBlock Grid.Column="2" Grid.Row="0" Text="Loses" ToolTip="Loses" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+            <TextBlock Grid.Column="3" Grid.Row="0" Text="Win Probability" TextAlignment="Center"
+                   TextWrapping="Wrap" ToolTip="Win Probability" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+            <TextBlock Grid.Column="4" Grid.Row="0" Text="Total points" TextAlignment="Center" 
+                   TextWrapping="Wrap" ToolTip="Total Points" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+            <TextBlock Grid.Column="5" Grid.Row="0" Text="Profit / Loss (£)" TextAlignment="Center" 
+                       TextWrapping="Wrap" ToolTip="Profit / Loss (£)" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+            <TextBlock Grid.Column="6" Grid.Row="0" Text="Gain" TextAlignment="Center" 
+                       TextWrapping="Wrap" ToolTip="Gain" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+            <TextBlock Grid.Column="7" Grid.Row="0" Text="Average Win" TextAlignment="Center" 
+                   TextWrapping="Wrap" ToolTip="Average Win" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+            <TextBlock Grid.Column="8" Grid.Row="0" Text="Average Loss" TextAlignment="Center" 
+                       TextWrapping="Wrap" ToolTip="Average Loss" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+            <TextBlock Grid.Column="9" Grid.Row="0" Text="Average RRR" ToolTip="Average Risk Reward Ratio" 
+                               TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+            <TextBlock Grid.Column="10" Grid.Row="0" Text="Average Result In R" ToolTip="Average Result Measured In Relation To Risk" 
+                               TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+            <TextBlock Grid.Column="11" Grid.Row="0" Text="Average MAE" ToolTip="Average Maximum Adverse Excursion" 
+                               TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+            <TextBlock Grid.Column="12" Grid.Row="0" Text="Average MFE" ToolTip="Average Maximum Favourable Excursion" 
+                               TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+            <TextBlock Grid.Column="13" Grid.Row="0" Text="Average Drawdown" ToolTip="Average or 'Heat'. &#x0a;&#x0a;Measured as percentage of stop/risk." 
+                               TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+            <TextBlock Grid.Column="14" Grid.Row="0" Text="Average Realised Profit" ToolTip="Realised Profit Percentage. &#x0a;&#x0a;Measure of trade efficiency in relation &#x0a;to its Maximum Favourable Excursion." 
+                               TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+            <TextBlock Grid.Column="15" Grid.Row="0" Text="Average Unrealised Profit"
+                               TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+            <TextBlock Grid.Column="16" Grid.Row="0" Text="Profit Factor" ToolTip="Profit Factor" TextWrapping="Wrap" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+            <TextBlock Grid.Column="17" Grid.Row="0" Text="Expectancy" ToolTip="Expectancy" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding TradeCount, Mode=OneWay}" Foreground="White" />
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Wins, Mode=OneWay}" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Loses, Mode=OneWay}" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding WinProbability, Mode=OneWay}" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="4" Text="{Binding PointsProfit, Mode=OneWay}" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="5" Text="{Binding CashProfit, Mode=OneWay}">
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                        <Setter Property="Foreground" Value="{Binding CashProfit, Converter={converters:StringToBrushConverter}}"/>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="6" Text="{Binding Gain, Mode=OneWay}">
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                        <Setter Property="Foreground" Value="{Binding Gain, Converter={converters:StringToBrushConverter}}"/>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="7" Text="{Binding AverageWin, Mode=OneWay}" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="8" Text="{Binding AverageLoss, Mode=OneWay}" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="9" Text="{Binding AverageRiskRewardRatio, Mode=OneWay}" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="10" Text="{Binding AverageResultInR, Mode=OneWay}" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="11" Text="{Binding AverageMaximumAdverseExcursion, Mode=OneWay}" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="12" Text="{Binding AverageMaximumFavourableExcursion, Mode=OneWay}" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="13" Text="{Binding AverageDrawdown, Mode=OneWay}" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="14" Text="{Binding AverageRealisedProfitPercentage, Mode=OneWay}" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="15" Text="{Binding AverageUnrealisedProfit, Mode=OneWay}" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="16" Text="{Binding ProfitFactor, Mode=OneWay}" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="17" Text="{Binding Expectancy, Mode=OneWay}" Foreground="White"/>
+        </Grid>
+    </Border>
+</UserControl>

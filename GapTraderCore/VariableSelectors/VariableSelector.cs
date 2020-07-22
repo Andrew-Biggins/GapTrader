@@ -1,5 +1,5 @@
-﻿using Foundations;
-using GapTraderCore.Interfaces;
+﻿using GapTraderCore.Interfaces;
+using TradingSharedCore;
 
 namespace GapTraderCore.VariableSelectors
 {

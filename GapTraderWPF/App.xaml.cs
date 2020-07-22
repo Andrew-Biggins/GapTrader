@@ -1,8 +1,9 @@
-﻿using Foundations;
-using Foundations.Interfaces;
-using GapTraderCore.ViewModels;
+﻿using GapTraderCore.ViewModels;
 using System.Threading;
 using System.Windows;
+using GapTraderWPF.Windows;
+using TradingSharedCore;
+using TradingSharedCore.Interfaces;
 
 namespace GapTraderWPF
 {
@@ -11,10 +12,10 @@ namespace GapTraderWPF
         protected override void OnStartup(StartupEventArgs e)
         {
             var context = GetDispatcherContext();
-            var runner = new Runner(context);
-            Window window = new MainWindow();
+            var runner = new GapTraderRunner(context);
+            Window window = new GapTraderMainWindow();
             window.Show();
-            var mainViewModel = new MainViewModel(runner);
+            var mainViewModel = new GapTraderMainViewModel(runner);
             window.DataContext = mainViewModel;
         }
 

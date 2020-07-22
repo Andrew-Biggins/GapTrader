@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:GapTraderWPF.UserControls"
              xmlns:viewModels="clr-namespace:GapTraderCore.ViewModels;assembly=GapTraderCore"
              xmlns:variableSelectors="clr-namespace:GapTraderCore.VariableSelectors;assembly=GapTraderCore"
-             xmlns:converters="clr-namespace:GapTraderWPF.Converters"
+             xmlns:converters="clr-namespace:TradingSharedWPF.Converters;assembly=TradingSharedWPF"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance {x:Type viewModels:DynamicStrategyFinderViewModel}}"
              d:DesignHeight="350" d:DesignWidth="660">

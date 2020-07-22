@@ -1,6 +1,7 @@
 ﻿using GapTraderCore.Candles;
 using GapTraderCore.Interfaces;
-using GapTraderCore.Strategies;
+using TradingSharedCore;
+using TradingSharedCore.Strategies;
 
 namespace GapTraderCore.StrategyTesters
 {

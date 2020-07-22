@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Windows.Input;
-using Foundations;
 using GapTraderCore.Interfaces;
 using GapTraderCore.StrategyTesters;
 using GapTraderCore.TradeCalculators;
+using TradingSharedCore;
+using TradingSharedCore.Interfaces;
+using TradingSharedCore.ViewModels;
 
 namespace GapTraderCore.ViewModels
 {
@@ -15,7 +17,7 @@ namespace GapTraderCore.ViewModels
             set => SetProperty(ref _strategyTester, value);
         }
 
-        public StrategyResultsStatsViewModel StrategyResultsStatsViewModel
+        public GapTraderStrategyResultsStatsViewModel StrategyResultsStatsViewModel
         {
             get => _strategyResultsStatsViewModel;
             set => SetProperty(ref _strategyResultsStatsViewModel, value);
@@ -78,7 +80,7 @@ namespace GapTraderCore.ViewModels
 
         public ICommand TestStrategyCommand => new BasicCommand(TestStrategy);
 
-        protected StrategyTesterViewModel(IMarket market, IRunner runner)
+        protected StrategyTesterViewModel(IMarket market, IGapTraderRunner runner)
         {
             Market = market;
             Runner = runner;
@@ -124,9 +126,9 @@ namespace GapTraderCore.ViewModels
         }
 
 
-        protected readonly IRunner Runner;
+        protected readonly IGapTraderRunner Runner;
 
-        private StrategyResultsStatsViewModel _strategyResultsStatsViewModel = new StrategyResultsStatsViewModel();
+        private GapTraderStrategyResultsStatsViewModel _strategyResultsStatsViewModel = new GapTraderStrategyResultsStatsViewModel();
         private GapFillStrategyTester _strategyTester;
         private DateTime _testStartDate;
         private DateTime _testEndDate;

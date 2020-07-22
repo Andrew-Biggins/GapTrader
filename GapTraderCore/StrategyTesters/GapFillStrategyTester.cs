@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using GapTraderCore.Interfaces;
+using TradingSharedCore;
+using TradingSharedCore.Interfaces;
 
 namespace GapTraderCore.StrategyTesters
 {

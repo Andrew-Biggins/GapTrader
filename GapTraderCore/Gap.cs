@@ -1,5 +1,6 @@
 ﻿using System;
-using Foundations.Optional;
+using TradingSharedCore.Optional;
+using Option = TradingSharedCore.Optional.Option;
 
 namespace GapTraderCore
 {

@@ -1,0 +1,20 @@
+﻿<Window x:Class="TradingSharedWPF.Windows.GenericWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:interfaces="clr-namespace:GapTraderCore.Interfaces;assembly=GapTraderCore"
+        xmlns:interfaces1="clr-namespace:GapTraderCore.Interfaces;assembly=TradingSharedCore"
+        ResizeMode="NoResize"
+        Title="{Binding Title, Mode=OneTime}"
+        SizeToContent="WidthAndHeight"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance {x:Type interfaces1:IRunnable}}"
+        MaxHeight="300" MaxWidth="300"
+        WindowStartupLocation="CenterOwner">
+    <ContentPresenter Content="{Binding Mode=OneTime}" Width="300"
+                      Height="300">
+        <ContentPresenter.Resources>
+        </ContentPresenter.Resources>
+    </ContentPresenter>
+</Window>

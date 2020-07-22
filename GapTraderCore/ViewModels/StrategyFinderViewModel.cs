@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Input;
-using Foundations;
 using GapTraderCore.Interfaces;
 using GapTraderCore.StrategyTesters;
+using TradingSharedCore;
+using TradingSharedCore.Interfaces;
 
 namespace GapTraderCore.ViewModels
 {
@@ -34,7 +35,7 @@ namespace GapTraderCore.ViewModels
 
         public ICommand FindStrategiesCommand => new BasicCommand(StartStrategySearch);
 
-        protected StrategyFinderViewModel(GapFillStrategyTester strategyTester, IMarket market, IRunner runner,
+        protected StrategyFinderViewModel(GapFillStrategyTester strategyTester, IMarket market, IGapTraderRunner runner,
             AccountSizerViewModel accountSizer)
         {
             Runner = runner;
@@ -132,7 +133,7 @@ namespace GapTraderCore.ViewModels
             }
         }
 
-        protected readonly IRunner Runner;
+        protected readonly IGapTraderRunner Runner;
         protected readonly IMarket Market;
         protected GapFillStrategyTester StrategyTester;
         protected readonly LoadingBarViewModel LoadingBar = new LoadingBarViewModel();

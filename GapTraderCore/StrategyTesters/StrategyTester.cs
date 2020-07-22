@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using GapTraderCore.Candles;
 using GapTraderCore.Interfaces;
 using GapTraderCore.ViewModels;
+using TradingSharedCore;
+using TradingSharedCore.ViewModels;
 using static GapTraderCore.TradeServices;
-using static GapTraderCore.DataProcessor;
+using static TradingSharedCore.StrategyStatsGenerator;
 
 namespace GapTraderCore.StrategyTesters
 {

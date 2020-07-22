@@ -5,10 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModels="clr-namespace:GapTraderCore.ViewModels;assembly=GapTraderCore"
              xmlns:strategyTesters="clr-namespace:GapTraderCore.StrategyTesters;assembly=GapTraderCore"
-             xmlns:converters="clr-namespace:GapTraderWPF.Converters"
-             xmlns:helpers="clr-namespace:GapTraderWPF.Helpers"
-             xmlns:validationRules="clr-namespace:GapTraderWPF.ValidationRules"
+             xmlns:converters="clr-namespace:TradingSharedWPF.Converters;assembly=TradingSharedWPF"
              xmlns:userControls="clr-namespace:GapTraderWPF.UserControls"
+             xmlns:helpers="clr-namespace:TradingSharedWPF.Helpers;assembly=TradingSharedWPF"
+             xmlns:validationRules="clr-namespace:TradingSharedWPF.ValidationRules;assembly=TradingSharedWPF"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance {x:Type viewModels:GapFillStrategyTesterViewModel}}"
              d:DesignHeight="150" d:DesignWidth="620">

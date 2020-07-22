@@ -1,4 +1,6 @@
-﻿namespace GapTraderCore.Interfaces
+﻿using TradingSharedCore;
+
+namespace GapTraderCore.Interfaces
 {
     public interface ITradeLevelCalculator
     {

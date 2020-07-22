@@ -1,6 +1,6 @@
-﻿using Foundations;
-using System.Threading;
+﻿using System.Threading;
 using System.Windows.Input;
+using TradingSharedCore;
 
 namespace GapTraderCore.ViewModels
 {

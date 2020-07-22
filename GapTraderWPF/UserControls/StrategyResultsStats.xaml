@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GapTraderWPF.UserControls"
              mc:Ignorable="d"
+             xmlns:converters="clr-namespace:TradingSharedWPF.Converters;assembly=TradingSharedWPF"
              xmlns:viewModels="clr-namespace:GapTraderCore.ViewModels;assembly=GapTraderCore"
-             xmlns:converters="clr-namespace:GapTraderWPF.Converters"
-             d:DataContext="{d:DesignInstance {x:Type viewModels:StrategyResultsStatsViewModel}}"
+             d:DataContext="{d:DesignInstance {x:Type viewModels:GapTraderStrategyResultsStatsViewModel}}"
              d:DesignHeight="65" d:DesignWidth="590">
     <UserControl.Resources>
         <Style TargetType="TextBlock">

@@ -1,4 +1,5 @@
 ﻿using GapTraderCore.Interfaces;
+using TradingSharedCore;
 using static GapTraderCore.TradeServices;
 
 namespace GapTraderCore.TradeCalculators

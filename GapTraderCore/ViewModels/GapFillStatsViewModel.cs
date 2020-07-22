@@ -1,4 +1,5 @@
 ﻿using GapTraderCore.Interfaces;
+using TradingSharedCore;
 
 namespace GapTraderCore.ViewModels
 {

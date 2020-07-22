@@ -3,6 +3,8 @@ using System.ComponentModel;
 using GapTraderCore.Interfaces;
 using GapTraderCore.StrategyTesters;
 using GapTraderCore.TradeCalculators;
+using TradingSharedCore.Interfaces;
+using TradingSharedCore.ViewModels;
 
 namespace GapTraderCore.ViewModels
 {
@@ -34,7 +36,7 @@ namespace GapTraderCore.ViewModels
             }
         }
 
-        public GapFillStrategyTesterViewModel(IMarket market, IRunner runner) : base(market, runner)
+        public GapFillStrategyTesterViewModel(IMarket market, IGapTraderRunner runner) : base(market, runner)
         {
             StrategyTester.PropertyChanged += OnInputsChanged;
             AccountSizer.PropertyChanged += OnInputsChanged;
@@ -50,7 +52,7 @@ namespace GapTraderCore.ViewModels
             StrategyTester.SelectedDirection = TradeDirection;
             StrategyTester.SetSizing(AccountSizer.AccountStartSize, AccountSizer.RiskPercentage, AccountSizer.Compound);
             StrategyTester.TestStrategy(Market, filters, MinimumGapSize);
-            StrategyResultsStatsViewModel = new StrategyResultsStatsViewModel(StrategyTester.Strategy, Runner, AccountSizer.AccountStartSize);
+            StrategyResultsStatsViewModel = new GapTraderStrategyResultsStatsViewModel(StrategyTester.Strategy, Runner, AccountSizer.AccountStartSize);
         }
 
         private void OnMarketDataChanged(object sender, PropertyChangedEventArgs e)
@@ -103,7 +105,7 @@ namespace GapTraderCore.ViewModels
 
             StrategyFinderViewModel.UpdateTester(StrategyTester);
             StrategyFinderViewModel.ClearSearchResults();
-            StrategyResultsStatsViewModel = new StrategyResultsStatsViewModel();
+            StrategyResultsStatsViewModel = new GapTraderStrategyResultsStatsViewModel();
         }
 
         private bool _tradeIntoGap;

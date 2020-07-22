@@ -1,4 +1,4 @@
-﻿using Foundations;
+﻿using TradingSharedCore;
 
 namespace GapTraderCore.ViewModels
 {

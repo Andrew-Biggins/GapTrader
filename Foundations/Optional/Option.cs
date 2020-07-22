@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Foundations.Optional
+namespace TradingSharedCore.Optional
 {
     public static partial class Option
     {
@@ -8,9 +8,9 @@ namespace Foundations.Optional
         {
             return value is null
                ? throw new ArgumentNullException(nameof(value))
-               : new OptionSome<T>(value);
+               : new Option.OptionSome<T>(value);
         }
 
-        public static Optional<T> None<T>() => new OptionNone<T>();
+        public static Optional<T> None<T>() => new Option.OptionNone<T>();
     }
 }

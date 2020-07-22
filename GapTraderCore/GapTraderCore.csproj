@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Foundations\Foundations.csproj" />
+    <ProjectReference Include="..\Foundations\TradingSharedCore.csproj" />
   </ItemGroup>
 
 </Project>

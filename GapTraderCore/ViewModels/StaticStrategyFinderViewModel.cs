@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Input;
-using Foundations;
 using GapTraderCore.Interfaces;
 using GapTraderCore.StrategyTesters;
 using GapTraderCore.VariableSelectors;
+using TradingSharedCore;
+using TradingSharedCore.Interfaces;
+using TradingSharedCore.ViewModels;
 
 namespace GapTraderCore.ViewModels
 {
@@ -24,7 +26,7 @@ namespace GapTraderCore.ViewModels
         public ICommand MoreDetailsCommand => new BasicCommand(() =>
             Runner?.ShowStrategyStatsWindow(new StrategyResultsStatsViewModel(SelectedStrategy.Stats, SelectedStrategy.Name)));
 
-        public StaticStrategyFinderViewModel(GapFillStrategyTester strategyTester, IMarket market, IRunner runner,
+        public StaticStrategyFinderViewModel(GapFillStrategyTester strategyTester, IMarket market, IGapTraderRunner runner,
             AccountSizerViewModel accountSizer) : base(strategyTester, market, runner, accountSizer)
         {
             VariableSelector = _selector;

@@ -3,13 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29721.120
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foundations", "Foundations\Foundations.csproj", "{ADF5C277-F611-413E-89D6-E6EE4B25E20D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingSharedCore", "Foundations\TradingSharedCore.csproj", "{ADF5C277-F611-413E-89D6-E6EE4B25E20D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GapTraderCore", "GapTraderCore\GapTraderCore.csproj", "{F0375826-575D-4262-8E29-BE8766860A6D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GapTrader.MicroTests", "GapTrader.MicroTests\GapTrader.MicroTests.csproj", "{A7D2295F-502D-43B5-82E8-027DD10B7A15}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GapTraderWPF", "GapTraderWPF\GapTraderWPF.csproj", "{DA2DACAF-1A6E-4829-8AC7-E18A21394A0E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradeJournalWPF", "TradeJournalWPF\TradeJournalWPF.csproj", "{DA4D0E27-A435-484B-8D1A-28E2962AD290}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingSharedWPF", "TradingSharedWPF\TradingSharedWPF.csproj", "{BAA92910-BED4-45CF-B72A-78ABA274DB6D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradeJournalCore", "TradeJournalCore\TradeJournalCore.csproj", "{024C4EBA-62FD-4857-B881-4BE8408BA380}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CombinedWPF", "CombinedWPF\CombinedWPF.csproj", "{C9207C2A-6E21-4AB5-9C80-C7256CAC772A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CombinedCore", "CombinedCore\CombinedCore.csproj", "{BB86402D-476C-4EB3-9459-C2EF407CFE95}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +43,26 @@ Global
 		{DA2DACAF-1A6E-4829-8AC7-E18A21394A0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA2DACAF-1A6E-4829-8AC7-E18A21394A0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA2DACAF-1A6E-4829-8AC7-E18A21394A0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA4D0E27-A435-484B-8D1A-28E2962AD290}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA4D0E27-A435-484B-8D1A-28E2962AD290}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA4D0E27-A435-484B-8D1A-28E2962AD290}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA4D0E27-A435-484B-8D1A-28E2962AD290}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAA92910-BED4-45CF-B72A-78ABA274DB6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAA92910-BED4-45CF-B72A-78ABA274DB6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAA92910-BED4-45CF-B72A-78ABA274DB6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAA92910-BED4-45CF-B72A-78ABA274DB6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{024C4EBA-62FD-4857-B881-4BE8408BA380}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{024C4EBA-62FD-4857-B881-4BE8408BA380}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{024C4EBA-62FD-4857-B881-4BE8408BA380}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{024C4EBA-62FD-4857-B881-4BE8408BA380}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9207C2A-6E21-4AB5-9C80-C7256CAC772A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9207C2A-6E21-4AB5-9C80-C7256CAC772A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9207C2A-6E21-4AB5-9C80-C7256CAC772A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9207C2A-6E21-4AB5-9C80-C7256CAC772A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB86402D-476C-4EB3-9459-C2EF407CFE95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB86402D-476C-4EB3-9459-C2EF407CFE95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB86402D-476C-4EB3-9459-C2EF407CFE95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB86402D-476C-4EB3-9459-C2EF407CFE95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

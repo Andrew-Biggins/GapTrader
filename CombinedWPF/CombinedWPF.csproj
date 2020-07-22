@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Icons\Delete.png" />
+    <None Remove="Icons\Edit.png" />
+    <None Remove="Icons\Graph.png" />
+    <None Remove="Icons\GreenTick.png" />
+    <None Remove="Icons\List.png" />
+    <None Remove="Icons\Plus.png" />
+    <None Remove="Images\GapFibExtensionExample.PNG" />
+    <None Remove="Images\GapFibRetraceExample.PNG" />
+    <None Remove="Images\TradeIntoGapExample.PNG" />
+    <None Remove="Images\TradeOutOfGapExample.PNG" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CombinedCore\CombinedCore.csproj" />
+    <ProjectReference Include="..\GapTraderCore\GapTraderCore.csproj" />
+    <ProjectReference Include="..\GapTraderWPF\GapTraderWPF.csproj" />
+    <ProjectReference Include="..\TradeJournalCore\TradeJournalCore.csproj" />
+    <ProjectReference Include="..\TradeJournalWPF\TradeJournalWPF.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icons\Delete.png" />
+    <Resource Include="Icons\Edit.png" />
+    <Resource Include="Icons\Graph.png" />
+    <Resource Include="Icons\GreenTick.png" />
+    <Resource Include="Icons\List.png" />
+    <Resource Include="Icons\Plus.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="Images\GapFibExtensionExample.PNG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\GapFibRetraceExample.PNG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TradeIntoGapExample.PNG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TradeOutOfGapExample.PNG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

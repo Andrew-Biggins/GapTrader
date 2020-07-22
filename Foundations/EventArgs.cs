@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Foundations
+namespace TradingSharedCore
 {
     public sealed class EventArgs<T> : EventArgs
     {

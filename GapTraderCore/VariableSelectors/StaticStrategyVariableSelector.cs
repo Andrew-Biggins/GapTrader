@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Input;
-using Foundations;
 using GapTraderCore.ViewModels;
-using static GapTraderCore.FibonacciServices;
+using TradingSharedCore;
+using static TradingSharedCore.FibonacciServices;
 
 namespace GapTraderCore.VariableSelectors
 {

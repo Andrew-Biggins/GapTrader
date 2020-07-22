@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GapTraderWPF.UserControls"
              xmlns:variableSelectors="clr-namespace:GapTraderCore.VariableSelectors;assembly=GapTraderCore"
-             xmlns:converters="clr-namespace:GapTraderWPF.Converters"
+             xmlns:converters="clr-namespace:TradingSharedWPF.Converters;assembly=TradingSharedWPF"
              xmlns:userControls="clr-namespace:GapTraderWPF.UserControls"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance {x:Type variableSelectors:DynamicTestVariableSelector}}"

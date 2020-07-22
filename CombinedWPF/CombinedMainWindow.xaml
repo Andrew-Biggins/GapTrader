@@ -1,0 +1,39 @@
+﻿<Window x:Class="CombinedWPF.CombinedMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:CombinedCore.ViewModels;assembly=CombinedCore"
+        xmlns:views="clr-namespace:TradeJournalWPF.Views;assembly=TradeJournalWPF"
+        xmlns:views2="clr-namespace:GapTraderWPF.Views;assembly=GapTraderWPF"
+        d:DataContext="{d:DesignInstance {x:Type viewModels:CombinedMainViewModel}}"
+        mc:Ignorable="d"
+        Title="Gap Trader" Height="750" Width="1360"
+        MinWidth="1360" MinHeight="750" >
+    <TabControl>
+        <TabItem>
+            <TabItem.HeaderTemplate>
+                <DataTemplate>
+                    <TextBlock Text="Trade Journal" ToolTip="Trade Journal"/>
+                </DataTemplate>
+            </TabItem.HeaderTemplate>
+            <views:TradeJournalView DataContext="{Binding TradeJournalViewModel}"/>
+        </TabItem>
+        <TabItem>
+            <TabItem.HeaderTemplate>
+                <DataTemplate>
+                    <TextBlock Text="Data Management" ToolTip="Load or Save Data For Use on the Strategy Tester"/>
+                </DataTemplate>
+            </TabItem.HeaderTemplate>
+            <views2:MarketDetailsView DataContext="{Binding MarketDetailsViewModel}"/>
+        </TabItem>
+        <TabItem >
+            <TabItem.HeaderTemplate>
+                <DataTemplate>
+                    <TextBlock Text="Strategy Tester" ToolTip="Test Gap-fill Strategies"/>
+                </DataTemplate>
+            </TabItem.HeaderTemplate>
+            <views2:StrategyTesterView DataContext="{Binding StrategyTesterViewModel}"/>
+        </TabItem>
+    </TabControl>
+</Window>

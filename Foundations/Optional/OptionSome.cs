@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Foundations.Optional
+namespace TradingSharedCore.Optional
 {
     public static partial class Option
     {

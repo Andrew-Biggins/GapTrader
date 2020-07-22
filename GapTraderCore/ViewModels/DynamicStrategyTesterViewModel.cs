@@ -5,16 +5,11 @@ using GapTraderCore.Interfaces;
 using GapTraderCore.StrategyTesters;
 using GapTraderCore.TradeCalculators;
 using GapTraderCore.VariableSelectors;
+using TradingSharedCore;
+using TradingSharedCore.Interfaces;
 
 namespace GapTraderCore.ViewModels
 {
-    public enum TradeType
-    {
-        IntoGap,
-        OutOfGap,
-        Both
-    }
-
     public sealed class DynamicStrategyFinderViewModel : StrategyFinderViewModel
     {
         public List<ITrade> Trades
@@ -41,7 +36,7 @@ namespace GapTraderCore.ViewModels
             set => SetProperty(ref _endBalance, value);
         }
 
-        public DynamicStrategyFinderViewModel(GapFillStrategyTester strategyTester, IMarket market, IRunner runner,
+        public DynamicStrategyFinderViewModel(GapFillStrategyTester strategyTester, IMarket market, IGapTraderRunner runner,
             AccountSizerViewModel accountSizer) : base(strategyTester, market, runner, accountSizer)
         {
             _selector = new DynamicTestVariableSelector(market.DataDetails);

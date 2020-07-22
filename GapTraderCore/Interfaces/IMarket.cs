@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Foundations.Optional;
 using GapTraderCore.Candles;
 using GapTraderCore.ViewModels;
+using TradingSharedCore;
+using TradingSharedCore.Optional;
 
 namespace GapTraderCore.Interfaces
 {

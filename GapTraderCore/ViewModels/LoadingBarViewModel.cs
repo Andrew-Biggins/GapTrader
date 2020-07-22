@@ -1,5 +1,5 @@
-﻿using Foundations;
-using GapTraderCore.Interfaces;
+﻿using GapTraderCore.Interfaces;
+using TradingSharedCore;
 
 namespace GapTraderCore.ViewModels
 {
@@ -10,7 +10,7 @@ namespace GapTraderCore.ViewModels
             get => _progress;
             set
             {
-                PercentProgress = value / Maximum;
+                PercentProgress = value / Maximum < 1 ? value / Maximum : 1;
                 SetProperty(ref _progress, value);
             }
         }

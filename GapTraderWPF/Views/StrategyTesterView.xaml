@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:GapTraderCore.ViewModels;assembly=GapTraderCore"
-             xmlns:converters="clr-namespace:GapTraderWPF.Converters"
+             xmlns:converters="clr-namespace:TradingSharedWPF.Converters;assembly=TradingSharedWPF"
              xmlns:userControls="clr-namespace:GapTraderWPF.UserControls"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance {x:Type viewModels:StrategyTesterViewModel}}"
@@ -24,7 +24,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="260" />
                 <!--<RowDefinition Height="28"/>-->
-                <RowDefinition Height="520" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Border Width="auto" MinWidth="100" HorizontalAlignment="Left" VerticalAlignment="Top" Background="BurlyWood" Grid.Row="0" Margin="10,3,0,0">
                 <TextBlock Text="{Binding Market.Name}" FontSize="12" Foreground="Black"/>

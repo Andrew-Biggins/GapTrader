@@ -7,7 +7,7 @@
              xmlns:viewModels="clr-namespace:GapTraderCore.ViewModels;assembly=GapTraderCore"
              xmlns:core="clr-namespace:GapTraderCore;assembly=GapTraderCore"
              xmlns:variableSelectors="clr-namespace:GapTraderCore.VariableSelectors;assembly=GapTraderCore"
-             xmlns:converters="clr-namespace:GapTraderWPF.Converters"
+             xmlns:converters="clr-namespace:TradingSharedWPF.Converters;assembly=TradingSharedWPF"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance {x:Type viewModels:StaticStrategyFinderViewModel}}"
              d:DesignHeight="350" d:DesignWidth="800" Language="en-GB">
@@ -51,7 +51,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="115" />
-                <RowDefinition Height="370" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Column="0" Text="Strategy Finder" FontWeight="Bold" HorizontalAlignment="Center" Foreground="White"/>
@@ -76,10 +76,10 @@
                     Visibility="{Binding IsSearching, Converter={converters:InverseBoolToHiddenVisibilityConverter}}"/>
             </Grid>
 
-            <DataGrid Grid.Column="0" Grid.Row="2" CanUserResizeRows="False" Background="Black"
+            <DataGrid Grid.Column="0" Grid.Row="2" CanUserResizeRows="False" Background="Black" VerticalAlignment="Stretch"
                       AutoGenerateColumns="False" Margin="5" HorizontalContentAlignment="Center" 
                       ItemsSource="{Binding Strategies, Mode=OneWay}" RowHeaderWidth="0"
-                      SelectedItem="{Binding SelectedStrategy}"
+                      SelectedItem="{Binding SelectedStrategy}" CanUserResizeColumns="False"
                       IsReadOnly="True" HorizontalAlignment="Stretch">
                 <DataGrid.Resources>
                     <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">

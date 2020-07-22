@@ -1,5 +1,6 @@
 ﻿using System;
 using GapTraderCore.ViewModels;
+using TradingSharedCore;
 
 namespace GapTraderCore.VariableSelectors
 {

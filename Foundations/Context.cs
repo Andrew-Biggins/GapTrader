@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
-using Foundations.Interfaces;
+using TradingSharedCore.Interfaces;
 
-namespace Foundations
+namespace TradingSharedCore
 {
     public sealed class Context : IContext
     {

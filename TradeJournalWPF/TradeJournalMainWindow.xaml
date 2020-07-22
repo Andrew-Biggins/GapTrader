@@ -1,0 +1,16 @@
+﻿<Window x:Class="TradeJournalWPF.TradeJournalMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TradeJournalWPF"
+        xmlns:views="clr-namespace:TradeJournalWPF.Views"
+        xmlns:viewModels="clr-namespace:TradeJournalCore.ViewModels;assembly=TradeJournalCore"
+        d:DataContext="{d:DesignInstance {x:Type viewModels:TradeJournalViewModel}}"
+        mc:Ignorable="d"
+        Title="Trade Journal" Height="750" Width="1360"
+        MinWidth="1360" MinHeight="750" >
+    <Grid>
+        <views:TradeJournalView />
+    </Grid>
+</Window>

@@ -1,7 +1,5 @@
-﻿using System;
-using Foundations;
-using Foundations.Optional;
-using GapTraderCore.Interfaces;
+﻿using GapTraderCore.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,9 +8,12 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System.Windows.Input;
+using TradingSharedCore;
+using TradingSharedCore.Optional;
 using static GapTraderCore.CsvServices;
-using static GapTraderCore.Strings;
 using static System.IO.Directory;
+using static TradingSharedCore.Strings;
+using Option = TradingSharedCore.Optional.Option;
 
 namespace GapTraderCore.ViewModels
 {
@@ -71,7 +72,11 @@ namespace GapTraderCore.ViewModels
 
         public string NewName { get; set; }
 
-        public bool DataExists { get; private set; }
+        public bool DataExists
+        {
+            get => _dataExists;
+            private set => SetProperty(ref _dataExists, value, nameof(DataExists));
+        }
 
         public ICommand NewSaveDataCommand => new BasicCommand(() => _runner.GetName(this, "Enter Save Name"));
 
@@ -91,7 +96,7 @@ namespace GapTraderCore.ViewModels
 
         public ICommand OverwriteSavedDataCommand => new BasicCommand(OverwriteSavedData);
 
-        public MarketDetailsViewModel(IRunner runner, IMarket market)
+        public MarketDetailsViewModel(IGapTraderRunner runner, IMarket market)
         {
             Market = market;
             _runner = runner;
@@ -247,15 +252,18 @@ namespace GapTraderCore.ViewModels
         private void ProcessSavedData(SerializableMarketData marketData)
         {
             MarketStats = _loadingBar;
-            _loadingBar.Maximum = WriteSafeReadAllLines(marketData.MinuteDataFilePath).Length +
-                                  WriteSafeReadAllLines(marketData.DailyDataFilePath).Length;
+
+            CreateDirectory(_savedDataPath);
+
+            _loadingBar.Maximum = WriteSafeReadAllLines($"{_savedDataPath}\\{marketData.MinuteDataFilePath}").Length +
+                                  WriteSafeReadAllLines($"{_savedDataPath}\\{marketData.DailyDataFilePath}").Length;
 
             ClearExistingData();
 
             Market.MinuteData = ReadInSavedMinuteData(marketData, () => { _loadingBar.Progress++; });
 
             var firstMinuteDataDate = Market.MinuteData.Keys.First();
-            Market.DailyCandles = ReadInDailyData(marketData.DailyDataFilePath, () => { _loadingBar.Progress++; },
+            Market.DailyCandles = ReadInDailyData($"{_savedDataPath}\\{marketData.DailyDataFilePath}", () => { _loadingBar.Progress++; },
                 firstMinuteDataDate);
 
             _previousClose = Option.Some(SelectedSerializableMarket.PreviousDailyClose);
@@ -401,7 +409,7 @@ namespace GapTraderCore.ViewModels
 
         private readonly string _savedDataPath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Saved Data\\MarketData";
 
-        private readonly IRunner _runner;
+        private readonly IGapTraderRunner _runner;
         private readonly LoadingBarViewModel _loadingBar = new LoadingBarViewModel();
 
         private ILoadable _marketStats;
@@ -412,5 +420,6 @@ namespace GapTraderCore.ViewModels
         private Optional<double> _previousClose = Option.None<double>();
         private GapFillStatsViewModel _gapFillStatsViewModel;
         private bool _dataInUse;
+        private bool _dataExists;
     }
 }

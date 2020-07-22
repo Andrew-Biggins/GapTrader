@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Foundations.Optional
+namespace TradingSharedCore.Optional
 {
     public static partial class Option
     {

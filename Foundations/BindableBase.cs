@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System.ComponentModel;
 
-namespace Foundations
+namespace TradingSharedCore
 {
 #nullable enable
     public abstract class BindableBase : INotifyPropertyChanged

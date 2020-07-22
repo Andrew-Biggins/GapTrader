@@ -1,12 +1,13 @@
-﻿using System;
+﻿using GapTraderCore.Candles;
+using GapTraderCore.ViewModels;
+using Microsoft.VisualBasic.FileIO;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Reflection;
 using System.Text;
-using GapTraderCore.Candles;
-using GapTraderCore.Interfaces;
-using GapTraderCore.ViewModels;
-using Microsoft.VisualBasic.FileIO;
+using static System.IO.Directory;
 
 namespace GapTraderCore
 {
@@ -26,8 +27,14 @@ namespace GapTraderCore
             var minuteData = new Dictionary<DateTime, List<BidAskCandle>>();
             var timezone = marketData.IsUkData ? Timezone.Uk : Timezone.Us;
 
+            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+            path += "\\Saved Data\\MarketData";
+
+            CreateDirectory(path);
+
             var date = DateTime.MinValue;
-            using var csvParser = SetUpParser(marketData.MinuteDataFilePath);
+            using var csvParser = SetUpParser($"{path}\\{marketData.MinuteDataFilePath}");
             var minuteCandles = new List<BidAskCandle>();
 
             while (!csvParser.EndOfData)
@@ -124,51 +131,9 @@ namespace GapTraderCore
             File.WriteAllText(filePath, csv.ToString());
         }
 
-        public static void WriteTradeDataCsv(IEnumerable<IJournalTrade> trades, string filePath)
+        public static string[] WriteSafeReadAllLines(string filePath)
         {
-            var csv = new StringBuilder();
-
-            csv.AppendLine(
-                "Market, Strategy, Strategy Entry, Stop, Target, Long/Short, Risk Reward Ratio, Open Date/Time, Open Level, Size, Close Date/Time, Close Level, Total Points, Profit/Loss, Result in R, MAE, MFA, Drawdown, Realised Profit %, Unrealised Profit Points, Unrealised Profit Cash"); 
-
-            foreach (var trade in trades)
-            {
-                var closeLevel = string.Empty;
-                var closeDateTime = string.Empty;
-                var totalPoints = string.Empty;
-                var profit = string.Empty;
-                var resultInR = string.Empty;
-                var mae = string.Empty;
-                var mfe = string.Empty;
-                var drawdown = string.Empty;
-                var realisedProfitPercentage = string.Empty;
-                var unrealisedProfitPoints = string.Empty;
-                var unrealisedProfitCash = string.Empty;
-
-                trade.CloseLevel.IfExistsThen(x => { closeLevel = x.ToString(CultureInfo.CurrentCulture); });
-                trade.CloseTime.IfExistsThen(x => { closeDateTime = x.ToString(CultureInfo.CurrentCulture); });
-                trade.PointsProfit.IfExistsThen(x => { totalPoints = x.ToString(CultureInfo.CurrentCulture); });
-                trade.CashProfit.IfExistsThen(x => { profit = x.ToString(CultureInfo.CurrentCulture); });
-                trade.ResultInR.IfExistsThen(x => { resultInR = x.ToString(CultureInfo.CurrentCulture); });
-                trade.MaximumAdverseExcursionPoints.IfExistsThen(x => { mae = x.ToString(CultureInfo.CurrentCulture); });
-                trade.MaximumFavourableExcursionPoints.IfExistsThen(x => { mfe = x.ToString(CultureInfo.CurrentCulture); });
-                trade.MaximumAdverseExcursionPercentageOfStop.IfExistsThen(x => { drawdown = x.ToString(CultureInfo.CurrentCulture); });
-                trade.PointsProfitPercentageOfMaximumFavourableExcursion.IfExistsThen(x => { realisedProfitPercentage = x.ToString(CultureInfo.CurrentCulture); });
-                trade.UnrealisedProfitPoints.IfExistsThen(x => { unrealisedProfitPoints = x.ToString(CultureInfo.CurrentCulture); });
-                trade.UnrealisedProfitCash.IfExistsThen(x => { unrealisedProfitCash = x.ToString(CultureInfo.CurrentCulture); });
-
-
-                var newLine =
-                    $"{trade.Market},{trade.Strategy.Name},{trade.StrategyEntryLevel},{trade.StopLevel},{trade.Target},{trade.Direction},{trade.RiskRewardRatio},{trade.OpenTime},{trade.OpenLevel},{trade.Size},{closeDateTime},{closeLevel},{totalPoints},{profit},{resultInR},{mae},{mfe},{drawdown},{realisedProfitPercentage},{unrealisedProfitPoints},{unrealisedProfitCash}";
-                csv.AppendLine(newLine);
-            }
-
-            File.WriteAllText(filePath, csv.ToString());
-        }
-
-        public static string[] WriteSafeReadAllLines(string path)
-        {
-            using var csv = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            using var csv = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             using var sr = new StreamReader(csv);
             var file = new List<string>();
 

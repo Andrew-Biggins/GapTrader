@@ -27,6 +27,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GapTraderCore\GapTraderCore.csproj" />
+    <ProjectReference Include="..\TradeJournalWPF\TradeJournalWPF.csproj" />
+    <ProjectReference Include="..\TradingSharedWPF\TradingSharedWPF.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,11 +37,25 @@
     <Resource Include="Icons\Graph.png" />
     <Resource Include="Icons\GreenTick.png" />
     <Resource Include="Icons\List.png" />
-    <Resource Include="Icons\Plus.png" />
+    <Resource Include="Icons\Plus.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\GapFibExtensionExample.PNG" />
     <Resource Include="Images\GapFibRetraceExample.PNG" />
     <Resource Include="Images\TradeIntoGapExample.PNG" />
     <Resource Include="Images\TradeOutOfGapExample.PNG" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Windows\TradeListWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Windows\TradeListWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>

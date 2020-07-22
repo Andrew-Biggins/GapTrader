@@ -1,0 +1,109 @@
+﻿<Window x:Class="GapTraderWPF.Windows.LoadSavedDataWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GapTraderWPF"
+        xmlns:viewModels="clr-namespace:GapTraderCore.ViewModels;assembly=GapTraderCore"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance {x:Type viewModels:MarketDetailsViewModel}}"
+        Background="Black"
+        Title="Load Data" Height="300" MinHeight="300" Width="550">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+        <Style TargetType="{x:Type DataGridCell}">
+            <Setter Property="Foreground" Value="Black" />
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{x:Null}" />
+                    <Setter Property="BorderBrush" Value="{x:Null}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <DataGrid CanUserResizeRows="False" IsReadOnly="True" Width="auto"
+                  AutoGenerateColumns="False" Margin="5" HorizontalContentAlignment="Center" 
+                  ItemsSource="{Binding SavedMarkets, Mode=OneWay}" Background="Black"
+                  SelectedItem="{Binding SelectedSerializableMarket}">
+            <DataGrid.Resources>
+                <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background" Value="BurlyWood" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name"
+                                    Binding="{Binding SaveName, StringFormat=dd-MM-yy}" Width="*" >
+                    <DataGridTextColumn.ElementStyle>
+                        <Style>
+                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="Data Start Date"
+                                    Binding="{Binding StartDate, StringFormat=dd-MM-yy}" Width="*" />
+
+                <DataGridTextColumn Header="Data End Date"
+                                    Binding="{Binding EndDate, StringFormat=dd-MM-yy}" Width="*" />
+
+                <DataGridTextColumn Header="Saved Date/Time"
+                                    Binding="{Binding SavedDate, StringFormat=dd-MM-yy HH:mm}" Width="*" />
+
+                <DataGridTemplateColumn Header="Delete" MinWidth="45" MaxWidth="45">
+                    <DataGridTemplateColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <EventSetter Event="MouseDoubleClick"
+                                         Handler="OnDeleteDataClicked"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{x:Null}" />
+                                    <Setter Property="BorderBrush" Value="{x:Null}" />
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="Brown" />
+                                    <Setter Property="BorderBrush" Value="CornflowerBlue" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTemplateColumn.CellStyle>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="/Icons/Delete.png" Height="35" Width="25" ToolTip="Double Click to Delete"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Load" MinWidth="45" MaxWidth="45">
+                    <DataGridTemplateColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <EventSetter Event="MouseDoubleClick"
+                                         Handler="OnLoadDataClicked"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{x:Null}" />
+                                    <Setter Property="BorderBrush" Value="{x:Null}" />
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="Brown" />
+                                    <Setter Property="BorderBrush" Value="CornflowerBlue" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTemplateColumn.CellStyle>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="/Icons/GreenTick.png" Height="35" Width="25" ToolTip="Double Click to Load"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
+

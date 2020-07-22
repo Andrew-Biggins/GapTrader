@@ -7,9 +7,10 @@
              mc:Ignorable="d"
              xmlns:strategyTesters="clr-namespace:GapTraderCore.StrategyTesters;assembly=GapTraderCore"
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
-             xmlns:converters="clr-namespace:GapTraderWPF.Converters"
-             xmlns:helpers="clr-namespace:GapTraderWPF.Helpers"
-             xmlns:validationRules="clr-namespace:GapTraderWPF.ValidationRules"
+             xmlns:converters="clr-namespace:TradingSharedWPF.Converters;assembly=TradingSharedWPF"
+             xmlns:helpers="clr-namespace:TradingSharedWPF.Helpers;assembly=TradingSharedWPF"
+             xmlns:validationRules="clr-namespace:TradingSharedWPF.ValidationRules;assembly=TradingSharedWPF"
+             xmlns:userControls="clr-namespace:TradingSharedWPF.UserControls;assembly=TradingSharedWPF"
              d:DataContext="{d:DesignInstance {x:Type strategyTesters:OutOfGapStrategyTester}}"
              d:DesignHeight="95" d:DesignWidth="595">
 
@@ -138,7 +139,7 @@
             </Grid>
         </Border>
 
-        <local:StopSizeSetter Grid.Column="1"/>
+        <userControls:StopSizeSetter Grid.Column="1"/>
 
         <Border BorderBrush="White" BorderThickness="1" 
                 Grid.Column="2" Grid.Row="0" Margin="5,0,0,0">
