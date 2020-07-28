@@ -87,6 +87,10 @@ namespace TradingSharedCore.Trades
             Target = savedTrade.Target;
             OpenLevel = savedTrade.OpenLevel;
 
+            Direction = Target > StopLevel
+                ? TradeDirection.Long
+                : TradeDirection.Short;
+
             CloseLevel = savedTrade.CloseLevel == -1 
                 ? Option.None<double>() 
                 : Option.Some(savedTrade.CloseLevel);

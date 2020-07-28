@@ -346,7 +346,7 @@
                         </DataGridTextColumn>
 
                         <DataGridTextColumn Header="Drawdown" x:Name="DrawdownColumn"
-                                            Binding="{Binding MaximumAdverseExcursionPercentageOfStop, Converter={converters:OptionalDoubleToStringConverter}, StringFormat=P}" Width="0.9*" >
+                                            Binding="{Binding MaximumAdverseExcursionPercentageOfStop, Converter={converters:OptionalDoubleToStringConverter}, StringFormat=P}" Width="1*" >
                             <DataGridTextColumn.HeaderStyle>
                                 <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
                                     <Setter Property="ToolTip" Value="Drawdown or 'Heat'. &#x0a;&#x0a;Measured as percentage of stop/risk."/>

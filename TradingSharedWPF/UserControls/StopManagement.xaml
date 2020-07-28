@@ -3,9 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:viewModels="clr-namespace:GapTraderCore.ViewModels;assembly=GapTraderCore"
-             xmlns:viewModels1="clr-namespace:TradeJournalCore.ViewModels;assembly=TradeJournalCore"
-             d:DataContext="{d:DesignInstance {x:Type viewModels1:StrategyDetailsViewModel}}"
+             xmlns:viewModels="clr-namespace:TradeJournalCore.ViewModels;assembly=TradeJournalCore"
+             d:DataContext="{d:DesignInstance {x:Type viewModels:StrategyDetailsViewModel}}"
              mc:Ignorable="d" 
              d:DesignHeight="95" d:DesignWidth="115">
     <Border BorderBrush="White" BorderThickness="0.5">

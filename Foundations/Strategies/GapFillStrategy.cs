@@ -31,7 +31,7 @@ namespace TradingSharedCore.Strategies
 
             if (isStopTrailed)
             {
-                Name = $"Entry: {e} | Target: {t} | Stop: {stopSize}, trailed by {trailedStopSize}pts | Min Gap Size: {MinimumGapSize}pts";
+                Name = $"Entry: {e} | Target: {t} | Stop: {stopSize}; trailed by {trailedStopSize}pts | Min Gap Size: {MinimumGapSize}pts";
                 ShortName = $"E: {e} | T: {t} | S: {stopSize} / {trailedStopSize}pts | MGS: {MinimumGapSize}pts";
             }
             else

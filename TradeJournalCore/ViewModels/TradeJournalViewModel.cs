@@ -496,7 +496,7 @@ namespace TradeJournalCore.ViewModels
 
 
                 var newLine =
-                    $"{trade.Market},{trade.Strategy.Name},{trade.StrategyEntryLevel},{trade.StopLevel},{trade.Target},{trade.Direction},{trade.RiskRewardRatio},{trade.OpenTime},{trade.OpenLevel},{trade.Size},{closeDateTime},{closeLevel},{totalPoints},{profit},{resultInR},{mae},{mfe},{drawdown},{realisedProfitPercentage},{unrealisedProfitPoints},{unrealisedProfitCash}";
+                    $"{trade.Market.Name},{trade.Strategy.Name},{trade.StrategyEntryLevel},{trade.StopLevel},{trade.Target},{trade.Direction},{trade.RiskRewardRatio},{trade.OpenTime},{trade.OpenLevel},{trade.Size},{closeDateTime},{closeLevel},{totalPoints},{profit},{resultInR},{mae},{mfe},{drawdown},{realisedProfitPercentage},{unrealisedProfitPoints},{unrealisedProfitCash}";
                 csv.AppendLine(newLine);
             }
 
